@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+
+<body>
+</body>
+<script>
+//判断用户客户端类型
+var system_links, system;
+var appid;
+var ua = navigator.userAgent.toLowerCase();
+if (/iphone|ipad|ipod/.test(ua)) {
+    system_links = 'https://app.appsflyer.com/id1153913455?pid=ios_share&c=news_comment_share';
+	window.open(system_links);	
+} else if (/android/.test(ua)) {
+    system_links = 'https://app.appsflyer.com/com.newsjet.app?pid=android_share&c=news_comment_share';
+    window.open(system_links);
+}
+    console.log(system_links);
+</script>
+
+</html>
