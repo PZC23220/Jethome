@@ -147,6 +147,7 @@ $(function($) {
     var plus_init = $('.plus_init');
     var update_optimize = $('.update_optimize');
     var table_headlineOptimize_tbody = table_headlineOptimize.find('tbody');
+    var category = $('.category');
 
     var server_host = "http://jethome.newsjet.io:9000";
     // var server_host = "http://localhost:9000";
@@ -743,8 +744,9 @@ $(function($) {
 
     // 点击修改新闻分类
     c_news_sure.click(function() {
+        console.log(c_news_category.find('option:selected').attr('data-id'));
         $.ajax({
-            url: 'news_fixCID?aid='+ c_news_id.val() + '&did=' + c_news_category.find('option:selected').attr('data-id'),
+            url: 'news_fixCID?aid='+ c_news_id.val() + '&cid=' + c_news_category.find('option:selected').attr('data-id'),
             success: function(res) {
                 console.log(res);
                 share_success.show();
@@ -2385,6 +2387,7 @@ $(function($) {
         $.ajax({
             url: server_host + '/get_news_category',
             success: function(res) {
+                table_headlineOptimize_tbody.empty();
                 var list = JSON.parse(res);
                 for(var i=0;i<list.length;i++) {
                     createOptimize(list[i]);
