@@ -31,9 +31,9 @@ p {
 .nav_left li a {
     display: block;
     margin: 0 0 -1px;
-    padding: 8px 14px;
+    padding: 12px 14px;
     border: 1px solid #e5e5e5;
-    line-height: 30px;
+    /*line-height: 30px;*/
 }
 
 .nav_left ul>li:first-child > a {

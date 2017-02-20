@@ -20,6 +20,7 @@
             <li><a href="#switchActivityAppbottombar">App活动配置页<span class="glyphicon glyphicon-chevron-right"></span> </a></li>
             <li><a href="#newsUpload">新闻上传<span class="glyphicon glyphicon-chevron-right"></span> </a></li>
             <li><a href="#commentAutomation">评论自动化<span class="glyphicon glyphicon-chevron-right"></span> </a></li>
+            <li><a href="#headlineOptimize">头条优化(栏目权重)<span class="glyphicon glyphicon-chevron-right"></span> </a></li>
         </ul>
     </div>
     <!-- main  content-->
@@ -60,6 +61,7 @@
                                 <th>操作</th>
                                 <th>系统推送</th>
                                 <th>立即推送</th>
+                                <th>修改新闻分类</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -234,6 +236,56 @@
                 </div>
                 <div class="likes_success">
                     点赞成功！
+                </div>
+            </div>
+            <div class="reply_comment">
+                <div class="reply_comment_container">
+                    <div class="input-group ">
+                        <span class="input-group-addon">新闻ID</span>
+                        <input type="text" class="form-control c_news_id" placeholder="News ID" value="" disabled>
+                    </div>
+                    <div class="input-group ">
+                        <span class="input-group-addon">新闻标题</span>
+                        <input type="text" class="form-control c_news_title" placeholder="News Title" value="" disabled>
+                    </div>
+                    <div class="input-group">
+                        <span class="input-group-addon">新闻分类</span>
+                        <select class="form-control c_news_category">
+                            <option data-id="top">トップ</option>
+                            <option data-id="ent">エンタメ</option>
+                            <option data-id="spo">スポーツ</option>
+                            <option data-id="cn">中国</option>
+                            <option data-id="kr">韓国</option>
+                            <option data-id="base">野球</option>
+                            <option data-id="int">国際</option>
+                            <option data-id="pol">政治</option>
+                            <option data-id="bus">経済</option>
+                            <option data-id="tech">テクノロジー</option>
+                            <option data-id="socc">サッカー</option>
+                            <option data-id="soci">社会</option>
+                            <option data-id="girl">女性</option>
+                            <option data-id="tra">旅行</option>
+                            <option data-id="cnet">チャイナネット</option>
+                            <option data-id="test">test</option>
+                            <option data-id="video">動画</option>
+                            <option data-id="cul">文化</option>
+                            <option data-id="topic">話題</option>
+                            <option data-id="food">グルメ</option>
+                            <option data-id="pet">ペット</option>
+                            <option data-id="pic">写真</option>
+                            <option data-id="game">ゲーム</option>
+                            <option data-id="anime">アニメ</option>
+                            <option data-id="wea">災害</option>
+                            <option data-id="local">地元</option>
+                        </select>
+                    </div>
+                    <button type="button" class="btn btn-success c_news_sure">确定上传</button>
+                    <button type="button" class="btn btn-danger close4">取消</button>
+                </div>
+            </div>
+            <div class="share_success">
+                <div class="likes_success">
+                    修改新闻分类成功
                 </div>
             </div>
         </div>
@@ -584,8 +636,10 @@
                             <th>分享图片</th>
                             <th>skip开关</th>
                             <th>闪屏时间</th>
-                            <th>(日本时区)<br>开始时间</th>
-                            <th>(日本时区)<br>结束时间</th>
+                            <th>(日本时区)
+                                <br>开始时间</th>
+                            <th>(日本时区)
+                                <br>结束时间</th>
                             <th>闪屏展现形式</th>
                             <th>当前闪屏</th>
                             <th>修改</th>
@@ -712,8 +766,10 @@
                             <th>活动链接</th>
                             <th>分享图片</th>
                             <th>按钮文本</th>
-                            <th>(日本时区)<br>开始时间</th>
-                            <th>(日本时区)<br>结束时间</th>
+                            <th>(日本时区)
+                                <br>开始时间</th>
+                            <th>(日本时区)
+                                <br>结束时间</th>
                             <th>当前按钮</th>
                             <th>修改</th>
                             <th>删除</th>
@@ -1073,6 +1129,64 @@
                     <button type="button" class="btn btn-success mould_add" style="margin-top: 20px;">添加模板</button>
                 </nav>
             </div>
+        </div>
+        <!-- 头条优化(栏目权重) -->
+        <div class="headline_optimize table_container" id="headlineOptimize">
+            <p style="font-weight: 600;font-size: 16px;margin-bottom: 20px;">说明：<br>
+            plus_weight: 默认值1.0，越高代表用户行为的影响越大，值不能<=0;<br>
+            minus_weight: 默认值1.0，越低代表时间衰减速度越慢，值不能<=0;<br>
+            plus_init: 默认值0， 越高代表初始值越大，相比于其他栏目一旦有新新闻更容易出现在头条</p>
+                    <div class="table table-responsive">
+                        <table class="table table-bordered table_headlineOptimize">
+                            <thead>
+                                <tr>
+                                    <th>id</th>
+                                    <th>cid</th>
+                                    <th>channel</th>
+                                    <th>pos</th>
+                                    <th>status</th>
+                                    <th>fixed</th>
+                                    <th>plus_weight</th>
+                                    <th>minus_weight</th>
+                                    <th>plus_init</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                        </table>
+                        <!-- 发表回复 -->
+                        <div class="reply_comment">
+                            <div class="reply_comment_container">
+                                <div class="input-group">
+                                    <span class="input-group-addon">CID</span>
+                                    <input type="text" class="form-control optimize_cid" placeholder="CID" disabled>
+                                </div>
+                                 <div class="input-group">
+                                    <span class="input-group-addon">CHANNEL</span>
+                                    <input type="text" class="form-control channel" placeholder="CHANNEL" disabled>
+                                </div>
+                                <div class="input-group">
+                                    <span class="input-group-addon">plus_weight</span>
+                                    <input type="text" class="form-control plus_weight" placeholder="Plus Weight">
+                                </div>
+                                <div class="input-group">
+                                    <span class="input-group-addon">minus_weight</span>
+                                    <input type="text" class="form-control minus_weight" placeholder="Minus Weight">
+                                </div>
+                                <div class="input-group">
+                                    <span class="input-group-addon">plus_init</span>
+                                    <input type="text" class="form-control plus_init" placeholder="Plus Init">
+                                </div>
+                                <button type="button" class="btn btn-success update_optimize">添加模板</button>
+                                <button type="button" class="btn btn-danger close4">取消</button>
+                            </div>
+                        </div>
+                        <div class="share_success">
+                            <div class="likes_success">
+                                修改栏目权重成功！
+                            </div>
+                        </div>
+                    </div>
         </div>
 </body>
 <script src="lib/jquery/jquery-1.12.0.js"></script>

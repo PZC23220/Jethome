@@ -221,8 +221,48 @@ var server = http.createServer(function(request, response) {
                 arr.push(resObj[i]);
             }
             console.log(arr);
-            console.log(resObj.publish_time);
-            // var arr = [resObj.id, resObj.title, resObj.publish_time, resObj.content, resObj.url, resObj.create_time, resObj.category_id, resObj.site, resObj.source];
+            connection.query(sql, arr, function(err, result) {
+                if (err) {
+                    console.log(err, result);
+                    return;
+                }
+
+                response.write(JSON.stringify(result));
+                response.end();
+            });
+        });
+    } else if (params.pathname == '/get_news_category') {
+        var sql = "SELECT * from news_category";
+        connection.query(sql, function(err, rows, fields) {
+            //处理你的结果
+            if (err) {
+                console.log(err);
+                return;
+            }
+            // console.log('The solution is: ', rows);
+            resText = rows;
+            response.write(JSON.stringify(resText));
+            response.end();
+        });
+    } else if (params.pathname == '/set_news_category') {
+        var sql = "UPDATE news_category SET plus_weight = ?,minus_weight = ?,plus_init = ? WHERE cid = ?";
+        var jsonData = "";
+        request.on('data', function(chunk) {
+            jsonData += chunk;
+        });
+        request.on('end', function() {
+            var reqObj = JSON.parse(jsonData);
+            var resObj = {
+                plus_weight: reqObj.plus_weight,
+                minus_weight: reqObj.minus_weight,
+                plus_init: reqObj.plus_init,
+                cid: reqObj.cid
+            };
+            var arr = []
+            for(var i in resObj) {
+                arr.push(resObj[i]);
+            }
+            console.log(arr);
             connection.query(sql, arr, function(err, result) {
                 if (err) {
                     console.log(err, result);
