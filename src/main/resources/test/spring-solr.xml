@@ -7,7 +7,7 @@
 
     <bean id="solrClient" class="org.apache.solr.client.solrj.impl.CloudSolrClient">
         <constructor-arg value="newsjet01:2181,newsjet02:2181,newsjet03:2181/solrcloud"/>
-        <property name="defaultCollection" value="news"/>
+        <property name="defaultCollection" value="tnewsjet"/>
     </bean>
 
 </beans>
