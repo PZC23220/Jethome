@@ -38,6 +38,9 @@ public class NewsController extends AbstractNewsjetController {
             getLogger().info("Request = [{}]. ", JSON.toJSONString(request));
 
             String aid = request.getParamAsStr("aid");
+
+            Objects.requireNonNull(aid, "Aid cannot be empty. ");
+
             List<String> ids = getIDByAID(aid);
 
             for (String id : ids) {
