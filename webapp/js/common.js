@@ -129,14 +129,30 @@ $(function($) {
     var appbtmbar_acticity_url = $('.appbtmbar_acticity_url');
     var appbtmbar_text = $('.appbtmbar_text');
     var appbtmbar_active = $('.appbtmbar_active');
-    var appbtmbar_start_time =$('.appbtmbar_start_time');
-    var appbtmbar_end_time =$('.appbtmbar_end_time');
+    var appbtmbar_start_time = $('.appbtmbar_start_time');
+    var appbtmbar_end_time = $('.appbtmbar_end_time');
     var add_appbtmbar = $('.add_appbtmbar');
     var appbtmbar_shareImage = $('.appbtmbar_shareImage');
     var splash_shareimg = $('.splash_shareimg');
 
     var server_host = "http://jethome.newsjet.io:9000";
     // var server_host = "http://localhost:9000";
+    // 
+
+    var arr10 = getUserimg();
+    // 获取机器人账户
+    function getUserimg() {
+        var arr;
+        $.ajax({
+            url: server_host + '/get_username',
+            async: false,
+            success: function(res) {
+                arr = JSON.parse(res);
+            }
+        });
+        return arr;
+    }
+
 
     // 判断用户有没有登录
     var obj = sessionStorage.getItem('username');
@@ -657,7 +673,7 @@ $(function($) {
             }
         });
         table_comment_tbody.empty();
-        for (var i = 0; i < number; i++) {
+        for (var i = 0; i < list.length; i++) {
             var tr = $('<tr/>');
             var td1 = $('<td/>').html(j++).appendTo(tr);
             var td2 = $('<td/>').html(list[i].id).addClass('newsid').appendTo(tr);
@@ -685,7 +701,7 @@ $(function($) {
             }
         });
         table_video_tbody.empty();
-        for (var i = 0; i < number; i++) {
+        for (var i = 0; i < list.length; i++) {
             var tr = $('<tr/>');
             var td1 = $('<td/>').html(j++).appendTo(tr);
             var td2 = $('<td/>').html(list[i].id).addClass('videoid').attr('data-id', list[i].videoId).appendTo(tr);
@@ -903,19 +919,6 @@ $(function($) {
             }
         });
 
-    }
-    var arr10 = getUserimg();
-    // 获取机器人账户
-    function getUserimg() {
-        var arr;
-        $.ajax({
-            url: server_host + '/get_username',
-            async: false,
-            success: function(res) {
-                arr = JSON.parse(res);
-            }
-        });
-        return arr;
     }
 
     // 获取原评论链接
@@ -1453,8 +1456,8 @@ $(function($) {
             var td5 = $('<td/>').html('无').appendTo(tr);
         }
         var td6 = $('<td/>').html(list.skipDuration).appendTo(tr);
-        var td7 = $('<td/>').html(getTime(list.validityStart)).appendTo(tr);
-        var td8 = $('<td/>').html(getTime(list.validityEnd)).appendTo(tr);
+        var td7 = $('<td/>').html(getTime(list.validityStart -(8*60*60*1000))).appendTo(tr);
+        var td8 = $('<td/>').html(getTime(list.validityEnd -(8*60*60*1000))).appendTo(tr);
 
         switch (list.showtimes) {
             case 1:
@@ -1482,11 +1485,10 @@ $(function($) {
 
     function getTime(time) {
         var d = new Date(time);
-        var hours = d.getHours() > 10 ? d.getHours() : '0' + d.getHours();
+        var hours = d.getHours() >= 10 ? d.getHours() : '0' + d.getHours();
         var minutes = d.getMinutes() >= 10 ? d.getMinutes() : '0' + d.getMinutes();
         var seconds = d.getSeconds() >= 10 ? d.getSeconds() : '0' + d.getSeconds();
         var str = d.getUTCFullYear() + '/' + (d.getMonth() + 1) + '/' + d.getDate() + '  ' + hours + ':' + minutes + ':' + seconds;
-
         return str;
     }
 
@@ -1506,8 +1508,8 @@ $(function($) {
         var image2x = splash_image2x.val();
         var image3x = splash_image3x.val();
         var a_url = acticity_url.val();
-        var s_time = Date.parse(new Date(start_time.val()));
-        var e_time = Date.parse(new Date(end_time.val()));
+        var s_time = (new Date(start_time.val())).valueOf();
+        var e_time =(new Date(end_time.val())).valueOf();
         var skipDuration = splash_time.val();
         var skip = splash_skip.find('option:selected').attr('data-id');
         var showtimes = splash_showtimes.find('option:selected').attr('data-id');
@@ -1583,8 +1585,8 @@ $(function($) {
         acticity_url.val(info.actUrl);
         splash_shareimg.val(info.shareImage);
         // console.log(getTime(info.validityStart));
-        start_time.val(new Date(info.validityStart).Format("yyyy-MM-ddThh:mm:ss"));
-        end_time.val(new Date(info.validityEnd).Format("yyyy-MM-ddThh:mm:ss"));
+        start_time.val(new Date(info.validityStart -(8*60*60*1000)).Format("yyyy-MM-ddThh:mm:ss"));
+        end_time.val(new Date(info.validityEnd -(8*60*60*1000)).Format("yyyy-MM-ddThh:mm:ss"));
         // console.log(start_time.val());
         // end_time.val(getTime(info.validityEnd));
         var option1 = splash_skip.find('option');
@@ -1610,19 +1612,19 @@ $(function($) {
     });
 
     // 删除闪屏
-    table_splash_tbody.on('click','.del_splash',function(){
+    table_splash_tbody.on('click', '.del_splash', function() {
         $.ajax({
             url: 'switchconfig_deleteSplash?id=' + $(this).attr('data-id'),
             success: function(res) {
                 console.log(res);
                 del_success.show();
-                setTimeout(function(){
+                setTimeout(function() {
                     getSplash();
                     del_success.hide();
-                },2000);
+                }, 2000);
             }
         });
-        
+
     });
 
 
@@ -1665,8 +1667,8 @@ $(function($) {
         var td4 = $('<td/>').html(list.actUrl).appendTo(tr);
         var td11 = $('<td/>').html(list.shareImage).appendTo(tr);
         var td5 = $('<td/>').html(list.btntext).appendTo(tr);
-        var td6 = $('<td/>').html(getTime(list.validityStart)).appendTo(tr);
-        var td7 = $('<td/>').html(getTime(list.validityEnd)).appendTo(tr);
+        var td6 = $('<td/>').html(getTime(list.validityStart -(8*60*60*1000))).appendTo(tr);
+        var td7 = $('<td/>').html(getTime(list.validityEnd -(8*60*60*1000))).appendTo(tr);
         var td8 = $('<td/>').html(list.active).appendTo(tr);
         var td9 = $('<td/>').html('<a href="#">修改</a>').addClass('modify_appbtmbar').attr('data-info', JSON.stringify(list)).appendTo(tr);
         var td10 = $('<td/>').html('<a href="#">删除</a>').addClass('del_appbtmbar').attr('data-id', list.id).appendTo(tr);
@@ -1674,7 +1676,7 @@ $(function($) {
 
     }
 
-    add_appbtmbar_sure.click(function(){
+    add_appbtmbar_sure.click(function() {
         setAppbtmba();
     });
 
@@ -1683,8 +1685,8 @@ $(function($) {
         var image2x = appbtmbar_image2x.val();
         var image3x = appbtmbar_image3x.val();
         var a_url = appbtmbar_acticity_url.val();
-        var s_time = Date.parse(new Date(appbtmbar_start_time.val()));
-        var e_time = Date.parse(new Date(appbtmbar_end_time.val()));
+        var s_time = (new Date(appbtmbar_start_time.val())).valueOf();
+        var e_time = (new Date(appbtmbar_end_time.val())).valueOf();
         var bar_text = appbtmbar_text.val();
         var bar_active = appbtmbar_active.find('option:selected').attr('data-id');
         var shareImage = appbtmbar_shareImage.val();
@@ -1735,7 +1737,7 @@ $(function($) {
         reply_comment.show();
     });
 
-    table_appbtmbar_tbody.on('click','.modify_appbtmbar',function(){
+    table_appbtmbar_tbody.on('click', '.modify_appbtmbar', function() {
         var info = JSON.parse($(this).attr('data-info'));
         appbtmbar_id.val(info.id);
         appbtmbar_image2x.val(info.image2x);
@@ -1743,8 +1745,8 @@ $(function($) {
         appbtmbar_acticity_url.val(info.actUrl);
         appbtmbar_shareImage.val(info.shareImage);
         // console.log(getTime(info.validityStart));
-        appbtmbar_start_time.val(new Date(info.validityStart).Format("yyyy-MM-ddThh:mm:ss"));
-        appbtmbar_end_time.val(new Date(info.validityEnd).Format("yyyy-MM-ddThh:mm:ss"));
+        appbtmbar_start_time.val(new Date(info.validityStart -(8*60*60*1000)).Format("yyyy-MM-ddThh:mm:ss"));
+        appbtmbar_end_time.val(new Date(info.validityEnd -(8*60*60*1000)).Format("yyyy-MM-ddThh:mm:ss"));
         // console.log(start_time.val());
         // end_time.val(getTime(info.validityEnd));
         var option1 = appbtmbar_active.find('option');
@@ -1757,18 +1759,18 @@ $(function($) {
         reply_comment.show();
     });
 
-    table_appbtmbar_tbody.on('click','.del_appbtmbar',function(){
+    table_appbtmbar_tbody.on('click', '.del_appbtmbar', function() {
         $.ajax({
             url: 'switchconfig_deleteAppbtmbar?id=' + $(this).attr('data-id'),
             success: function(res) {
                 del_success.show();
-                setTimeout(function(){
+                setTimeout(function() {
                     getAppbtmba();
                     del_success.hide();
                 });
             }
         });
-        
+
     });
 
     getNewsupload();
@@ -2167,7 +2169,7 @@ $(function($) {
 
     // 点击模板分页
     comment_li.on('click', function() {
-        if($(this).index() > 0 && $(this).index() < comment_li.length -1) {   
+        if ($(this).index() > 0 && $(this).index() < comment_li.length - 1) {
             $(this).siblings('li').removeClass('active');
             $(this).addClass('active');
             // var number = news_opa.val();

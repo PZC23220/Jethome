@@ -1,5 +1,5 @@
 window.onload = function() {
-	alert("KK");
+	// alert("KK");
 	var main = document.getElementsByTagName('main')[0];
 	var img = main.getElementsByTagName('img');
 
@@ -16,6 +16,7 @@ window.onload = function() {
 	}
 
 	document.addEventListener('DOMSubtreeModified',function(){
+		alert(111);
 		var all_img = document.querySelectorAll('img');
 		if (!all_img) {
 			return;
@@ -27,5 +28,10 @@ window.onload = function() {
 				all_img[k].src = "http:" + all_img[k].src;
 			}
 		}
+		
+
 	},false);
+
+
+	var ad = document.getElementsByClassName('.')
 }
