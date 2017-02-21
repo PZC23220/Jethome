@@ -244,7 +244,7 @@ var server = http.createServer(function(request, response) {
             response.write(JSON.stringify(resText));
             response.end();
         });
-    } else if (params.pathname == '/set_news_category') {
+    } else if (params.pathname == '/set_news_category_weight') {
         var sql = "UPDATE news_category SET plus_weight = ?,minus_weight = ?,plus_init = ? WHERE cid = ?";
         var jsonData = "";
         request.on('data', function(chunk) {
@@ -273,7 +273,68 @@ var server = http.createServer(function(request, response) {
                 response.end();
             });
         });
-    };
+    } else if (params.pathname == '/set_news_category_status') {
+        var sql = "UPDATE news_category SET pos = ?,status = ? WHERE cid = ?";
+        var jsonData = "";
+        request.on('data', function(chunk) {
+            jsonData += chunk;
+        });
+        request.on('end', function() {
+            var reqObj = JSON.parse(jsonData);
+            var resObj = {
+                pos: reqObj.pos,
+                status: reqObj.status,
+                cid: reqObj.cid
+            };
+            var arr = []
+            for(var i in resObj) {
+                arr.push(resObj[i]);
+            }
+            console.log(arr);
+            connection.query(sql, arr, function(err, result) {
+                if (err) {
+                    console.log(err, result);
+                    return;
+                }
+
+                response.write(JSON.stringify(result));
+                response.end();
+            });
+        });
+    } else if (params.pathname == '/insert_news_category') {
+        var sql = "INSERT INTO news_category(cid,channel,pos,status,fixed,icon,plus_weight,minus_weight,plus_init) VALUES(?,?,?,?,0,?,?,?,?)";
+        var jsonData = "";
+        request.on('data', function(chunk) {
+            jsonData += chunk;
+        });
+        request.on('end', function() {
+            var reqObj = JSON.parse(jsonData);
+            var resObj = {
+                cid: reqObj.cid,
+                channel: reqObj.channel,
+                pos: reqObj.pos,
+                status: reqObj.status,
+                icon: reqObj.icon,
+                plus_weight: reqObj.plus_weight,
+                minus_weight: reqObj.minus_weight,
+                plus_init: reqObj.plus_init
+            };
+            var arr = []
+            for(var i in resObj) {
+                arr.push(resObj[i]);
+            }
+            console.log(arr);
+            connection.query(sql, arr, function(err, result) {
+                if (err) {
+                    console.log(err, result);
+                    return;
+                }
+
+                response.write(JSON.stringify(result));
+                response.end();
+            });
+        });
+    } ;
 }).listen(PORT, function() {
     console.log('服务器创建成功，请打开http://localhost:' + PORT);
 });

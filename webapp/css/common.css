@@ -86,6 +86,7 @@ p {
     padding: 20px 10px 0;
     border-radius: 4px;
     display: none;
+    max-height: 93vh;
 }
 
 
@@ -518,6 +519,8 @@ list_container_right {
 
 .share_success,
 .reply_comment,
+.reply_comment2,
+.reply_comment3,
 .del_success,
 .modify_success,
 .tips_success {
@@ -550,7 +553,9 @@ list_container_right {
 
 /*活动评论*/
 
-.reply_comment .reply_comment_container {
+.reply_comment .reply_comment_container,
+.reply_comment2 .reply_comment_container, 
+.reply_comment3 .reply_comment_container {
     position: absolute;
     font-size: 16px;
     font-weight: 600;
@@ -575,17 +580,26 @@ list_container_right {
     line-height: 40px;
 }
 
-.reply_comment:nth-child(n+2) .reply_comment_container .input-group {
+.reply_comment:nth-child(n+2) .reply_comment_container .input-group,
+.reply_comment2 .reply_comment_container .input-group,
+.reply_comment3 .reply_comment_container .input-group {
     width: 45%;
     min-width : 400px;
+    margin-bottom: 20px;
+    height: 40px;
+    line-height: 40px;
 }
 
-.reply_comment:nth-child(n+2) .reply_comment_container .input-group input {
+.reply_comment:nth-child(n+2) .reply_comment_container .input-group input,
+.reply_comment2 .reply_comment_container .input-group input,
+.reply_comment3 .reply_comment_container .input-group input {
     float: left;
 }
 
 .reply_comment .reply_comment_container .input-group input,
-.reply_comment .reply_comment_container .input-group select {
+.reply_comment .reply_comment_container .input-group select,
+.reply_comment2 .reply_comment_container .input-group input,
+.reply_comment3 .reply_comment_container .input-group input {
     height: 40px;
     line-height: 40px;
 }
@@ -594,7 +608,9 @@ list_container_right {
     width: 80%;
 }
 
-.reply_comment .reply_comment_container button {
+.reply_comment .reply_comment_container button,
+.reply_comment2 .reply_comment_container button,
+.reply_comment3 .reply_comment_container button {
     width: 10vw;
     height: 5vh;
     margin-right: 30px;

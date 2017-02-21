@@ -20,7 +20,7 @@
             <li><a href="#switchActivityAppbottombar">App活动配置页<span class="glyphicon glyphicon-chevron-right"></span> </a></li>
             <li><a href="#newsUpload">新闻上传<span class="glyphicon glyphicon-chevron-right"></span> </a></li>
             <li><a href="#commentAutomation">评论自动化<span class="glyphicon glyphicon-chevron-right"></span> </a></li>
-            <li><a href="#headlineOptimize">头条优化(栏目权重)<span class="glyphicon glyphicon-chevron-right"></span> </a></li>
+            <li><a href="#headlineOptimize">栏目优化<span class="glyphicon glyphicon-chevron-right"></span> </a></li>
         </ul>
     </div>
     <!-- main  content-->
@@ -1132,61 +1132,142 @@
         </div>
         <!-- 头条优化(栏目权重) -->
         <div class="headline_optimize table_container" id="headlineOptimize">
-            <p style="font-weight: 600;font-size: 16px;margin-bottom: 20px;">说明：<br>
-            plus_weight: 默认值1.0，越高代表用户行为的影响越大，值不能<=0;<br>
-            minus_weight: 默认值1.0，越低代表时间衰减速度越慢，值不能<=0;<br>
-            plus_init: 默认值0， 越高代表初始值越大，相比于其他栏目一旦有新新闻更容易出现在头条</p>
-                    <div class="table table-responsive">
-                        <table class="table table-bordered table_headlineOptimize">
-                            <thead>
-                                <tr>
-                                    <th>id</th>
-                                    <th>cid</th>
-                                    <th>channel</th>
-                                    <th>pos</th>
-                                    <th>status</th>
-                                    <th>fixed</th>
-                                    <th>plus_weight</th>
-                                    <th>minus_weight</th>
-                                    <th>plus_init</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                            </tbody>
-                        </table>
-                        <!-- 发表回复 -->
-                        <div class="reply_comment">
-                            <div class="reply_comment_container">
-                                <div class="input-group">
-                                    <span class="input-group-addon">CID</span>
-                                    <input type="text" class="form-control optimize_cid" placeholder="CID" disabled>
-                                </div>
-                                 <div class="input-group">
-                                    <span class="input-group-addon">CHANNEL</span>
-                                    <input type="text" class="form-control channel" placeholder="CHANNEL" disabled>
-                                </div>
-                                <div class="input-group">
-                                    <span class="input-group-addon">plus_weight</span>
-                                    <input type="text" class="form-control plus_weight" placeholder="Plus Weight">
-                                </div>
-                                <div class="input-group">
-                                    <span class="input-group-addon">minus_weight</span>
-                                    <input type="text" class="form-control minus_weight" placeholder="Minus Weight">
-                                </div>
-                                <div class="input-group">
-                                    <span class="input-group-addon">plus_init</span>
-                                    <input type="text" class="form-control plus_init" placeholder="Plus Init">
-                                </div>
-                                <button type="button" class="btn btn-success update_optimize">添加模板</button>
-                                <button type="button" class="btn btn-danger close4">取消</button>
-                            </div>
+            <p style="font-weight: 600;font-size: 16px;margin-bottom: 20px;">说明：
+                <br> plus_weight: 默认值1.0，越高代表用户行为的影响越大，值不能
+                <=0;<br>
+                    minus_weight: 默认值1.0，越低代表时间衰减速度越慢，值不能
+                    <=0;<br>
+                        plus_init: 默认值0， 越高代表初始值越大，相比于其他栏目一旦有新新闻更容易出现在头条<br>
+                    position: 在客户端排序位置 ，只能为整数&nbsp;&nbsp;     status: 栏目开启状态  0-关闭  1-开启</p>
+            <div class="table table-responsive" style="max-height: 70vh;">
+                <table class="table table-bordered table_headlineOptimize">
+                    <thead>
+                        <tr>
+                            <th>id</th>
+                            <th>cid</th>
+                            <th>channel</th>
+                            <th>position</th>
+                            <th>status</th>
+                            <th>plus_weight</th>
+                            <th>minus_weight</th>
+                            <th>plus_init</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+                <!-- 发表回复 -->
+                <div class="reply_comment">
+                    <div class="reply_comment_container">
+                        <div class="input-group">
+                            <span class="input-group-addon">CID</span>
+                            <input type="text" class="form-control optimize_cid" placeholder="CID" disabled>
                         </div>
-                        <div class="share_success">
-                            <div class="likes_success">
-                                修改栏目权重成功！
-                            </div>
+                        <div class="input-group">
+                            <span class="input-group-addon">CHANNEL</span>
+                            <input type="text" class="form-control channel" placeholder="CHANNEL" disabled>
                         </div>
+                        <div class="input-group">
+                            <span class="input-group-addon">plus_weight</span>
+                            <input type="number" class="form-control plus_weight" placeholder="Plus Weight" step="0.01">
+                        </div>
+                        <div class="input-group">
+                            <span class="input-group-addon">minus_weight</span>
+                            <input type="number" class="form-control minus_weight" placeholder="Minus Weight" step="0.01">
+                        </div>
+                        <div class="input-group">
+                            <span class="input-group-addon">plus_init</span>
+                            <input type="number" class="form-control plus_init" placeholder="Plus Init" step="0.01">
+                        </div>
+                        <button type="button" class="btn btn-success update_optimize">修改栏目权重</button>
+                        <button type="button" class="btn btn-danger close4">取消</button>
                     </div>
+                </div>
+                <div class="reply_comment2">
+                    <div class="reply_comment_container">
+                        <div class="input-group">
+                            <span class="input-group-addon">CID</span>
+                            <input type="text" class="form-control optimize_cid" placeholder="CID" disabled>
+                        </div>
+                        <div class="input-group">
+                            <span class="input-group-addon">CHANNEL</span>
+                            <input type="text" class="form-control channel" placeholder="CHANNEL" disabled>
+                        </div>
+                        <div class="input-group">
+                            <span class="input-group-addon">position</span>
+                            <input type="number" class="form-control c_position" placeholder="Position">
+                        </div>
+                        <div class="input-group">
+                            <span class="input-group-addon">status</span>
+                            <input type="number" class="form-control c_status" placeholder="Status">
+                        </div>
+
+                        <button type="button" class="btn btn-success update_status">修改栏目位置</button>
+                        <button type="button" class="btn btn-danger close5">取消</button>
+                    </div>
+                </div>
+                <div class="reply_comment3">
+                    <div class="reply_comment_container" style="height: 70vh;">
+                        <div class="input-group">
+                            <span class="input-group-addon">CID</span>
+                            <input type="text" class="form-control category_cid" placeholder="CID">
+                        </div>
+                        <div class="input-group">
+                            <span class="input-group-addon">CHANNEL</span>
+                            <input type="text" class="form-control category_channel" placeholder="CHANNEL">
+                        </div>
+                        <div class="input-group">
+                            <span class="input-group-addon">position</span>
+                            <input type="number" class="form-control category_position" placeholder="Position">
+                        </div>
+                        <div class="input-group">
+                            <span class="input-group-addon">status</span>
+                            <input type="number" class="form-control category_status" placeholder="Status" value="0">
+                        </div>
+                        <div class="input-group">
+                            <span class="input-group-addon">icon</span>
+                            <input type="url" class="form-control category_icon" placeholder="Icon">
+                        </div>
+                        <div class="input-group">
+                            <span class="input-group-addon">plus_weight</span>
+                            <input type="number" class="form-control category_plus_weight" placeholder="Plus Weight" step="0.01" value="1.00">
+                        </div>
+                        <div class="input-group">
+                            <span class="input-group-addon">minus_weight</span>
+                            <input type="number" class="form-control category_minus_weight" placeholder="Minus Weight" step="0.01" value="1.00">
+                        </div>
+                        <div class="input-group">
+                            <span class="input-group-addon">plus_init</span>
+                            <input type="number" class="form-control category_plus_init" placeholder="Plus Init" step="0.01" value="0.00">
+                        </div>
+                        <button type="button" class="btn btn-success add_category_sure">修改栏目位置</button>
+                        <button type="button" class="btn btn-danger close6">取消</button>
+                    </div>
+                </div>
+                <div class="share_success">
+                    <div class="likes_success">
+                        修改栏目权重成功！
+                    </div>
+                </div>
+                <div class="modify_success">
+                    <div class="likes_success">
+                        修改栏目位置成功！
+                    </div>
+                </div>
+                <div class="del_success">
+                    <div class="likes_success">
+                        添加栏目成功！
+                    </div>
+                </div>
+                <div class="tips_success">
+                    <div class="likes_success">
+                        输入内容不能为空！
+                    </div>
+                </div>
+            </div>
+            <div class="add_option">
+                <button type="button" class="btn btn-success add_category">添加栏目</button>
+            </div>
         </div>
 </body>
 <script src="lib/jquery/jquery-1.12.0.js"></script>
