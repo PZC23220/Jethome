@@ -2535,7 +2535,7 @@ $(function($) {
                 plus_init: plus_init
             }
             $.ajax({
-                url: 'insert_news_category',
+                url: server_host + '/insert_news_category',
                 type: 'POST',
                 data: JSON.stringify(data),
                 success: function(res) {
