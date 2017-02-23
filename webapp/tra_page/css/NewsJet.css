@@ -1,3 +1,236 @@
-p {
-	font-size: 1.8rem;
+@charset "UTF-8";
+
+@font-face {
+        font-family:Roboto;font-style:normal;font-weight:100;src:local('Roboto Thin'),local('Roboto-Thin'),url(https://fonts.gstatic.com/s/roboto/v15/Jzo62I39jc0gQRrbndN6nfesZW2xOQ-xsNqO47m55DA.ttf) format('truetype')
+}
+
+@font-face {
+        font-family:Roboto;font-style:normal;font-weight:300;src:local('Roboto Light'),local('Roboto-Light'),url(https://fonts.gstatic.com/s/roboto/v15/Hgo13k-tfSpn0qi1SFdUfaCWcynf_cDxXwCLxiixG1c.ttf) format('truetype')
+}
+
+@font-face {
+        font-family:Roboto;font-style:normal;font-weight:400;src:local('Roboto'),local('Roboto-Regular'),url(https://fonts.gstatic.com/s/roboto/v15/zN7GBFwfMP4uA6AR0HCoLQ.ttf) format('truetype')
+}
+
+@font-face {
+        font-family:Roboto;font-style:normal;font-weight:700;src:local('Roboto Bold'),local('Roboto-Bold'),url(https://fonts.gstatic.com/s/roboto/v15/d-6IYplOFocCacKzxwXSOKCWcynf_cDxXwCLxiixG1c.ttf) format('truetype')
+}
+
+@font-face {
+        font-family:Roboto;font-style:italic;font-weight:100;src:local('Roboto Thin Italic'),local('Roboto-ThinItalic'),url(https://fonts.gstatic.com/s/roboto/v15/12mE4jfMSBTmg-81EiS-YS3USBnSvpkopQaUR-2r7iU.ttf) format('truetype')
+}
+
+@font-face {
+        font-family:Roboto;font-style:italic;font-weight:300;src:local('Roboto Light Italic'),local('Roboto-LightItalic'),url(https://fonts.gstatic.com/s/roboto/v15/7m8l7TlFO-S3VkhHuR0at50EAVxt0G0biEntp43Qt6E.ttf) format('truetype')
+}
+
+@font-face {
+        font-family:Roboto;font-style:italic;font-weight:400;src:local('Roboto Italic'),local('Roboto-Italic'),url(https://fonts.gstatic.com/s/roboto/v15/W4wDsBUluyw0tK3tykhXEfesZW2xOQ-xsNqO47m55DA.ttf) format('truetype')
+}
+
+@font-face {
+        font-family:Roboto;font-style:italic;font-weight:700;src:local('Roboto Bold Italic'),local('Roboto-BoldItalic'),url(https://fonts.gstatic.com/s/roboto/v15/t6Nd4cfPRhZP44Q5QAjcC50EAVxt0G0biEntp43Qt6E.ttf) format('truetype')
+}
+
+a img,button {
+	border: none
+}
+
+.header__link,a,body {
+	color: #222324
+}
+
+a,abbr,acronym,address,applet,.article, #article-body, article,aside,audio,b,big,blockquote,body,canvas,caption,center,cite,code,dd,del,details,dfn,div,dl,dt,em,embed,fieldset,figcaption,figure,footer,form,h1,h2,h3,h4,h5,h6,header,hgroup,html,i,iframe,img,ins,kbd,label,legend,li,mark,menu,nav,object,ol,output,p,pre,q,ruby,s,samp,section,small,span,strike,strong,sub,summary,sup,table,tbody,td,tfoot,th,thead,time,tr,tt,u,ul,var,video {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	font: inherit;
+	font-size: 100%;
+	vertical-align: baseline
+}
+
+button,html {
+	line-height: 1
+}
+
+html {
+	font-size: 62.5%
+}
+
+ol,ul {
+	list-style: none
+}
+
+table {
+	border-collapse: collapse;
+	border-spacing: 0
+}
+
+caption,td,th {
+	text-align: left;
+	font-weight: 400;
+	vertical-align: middle
+}
+
+article p, *[id^='article'], *[class^='article'] {
+	text-align: justify;
+	margin-bottom: 16px;
+	line-height: 1.6;
+	font-size: 1.6rem;
+}
+
+.maBlockquote__p,.ma__p {
+	text-align: justify
+}
+
+blockquote,q {
+	quotes: none
+}
+
+blockquote:after,blockquote:before,q:after,q:before {
+	content: "";
+	content: none
+}
+
+.article, #article-body, article,aside,details,figcaption,figure,footer,header,hgroup,main,menu,nav,section,summary {
+	display: block
+}
+
+.header,.page__error {
+	display: -webkit-flex
+}
+
+* {
+	box-sizing: border-box
+}
+
+body {
+	word-wrap: break-word;
+	font-family: Roboto,"Hiragino Kaku Gothic ProN";
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+	font-weight: 300
+}
+
+a {
+	text-decoration: none;
+	font-weight: 600
+}
+
+.header__link,strong {
+	font-weight: 700
+}
+
+img {
+	vertical-align: text-bottom
+}
+
+button {
+	background: 0 0;
+	padding: 0;
+	outline: 0
+}
+
+@-webkit-keyframes load {
+	0% {
+		-webkit-transform: rotate(0);
+		transform: rotate(0)
+	}
+
+	100% {
+		-webkit-transform: rotate(360deg);
+		transform: rotate(360deg)
+	}
+}
+
+@-ms-keyframes load {
+	0% {
+		-ms-transform: rotate(0);
+		transform: rotate(0)
+	}
+
+	100% {
+		-ms-transform: rotate(360deg);
+		transform: rotate(360deg)
+	}
+}
+
+@keyframes load {
+	0% {
+		transform: rotate(0)
+	}
+
+	100% {
+		transform: rotate(360deg)
+	}
+}
+
+.header {
+	display: flex;
+	-webkit-align-items: center;
+	align-items: center;
+	height: 52px;
+	padding: 0 12px;
+	border-bottom: 3px solid #d5d8db;
+	background-color: #fff
+}
+
+.main__date,.main_titleWrapper {
+	margin-bottom: 12px
+}
+
+.main_subTitle,.main_title {
+	font-family: "Hiragino Sans";
+	line-height: 1.2
+}
+
+.main_title {
+	font-size: 2.4rem;
+	font-weight: 700
+}
+
+.main__subTitle {
+	margin-top: 8px;
+	font-size: 1.8rem
+}
+
+
+@media only screen and (-webkit-min-device-pixel-ratio:2) {
+	.shareButtonList__item--lower {
+		background: url(https://s.yimg.jp/images/newsnor/kiji/img/common/kiji_sprite@2x-1.0.0.png) no-repeat;
+		background-size: 311px 304px
+	}
+}
+
+article img, *[class^='article'] img, *[id^='article'] img {
+	display: block;
+	width: 100%;
+	margin-bottom: 10px;
+	border: 1px solid #f4f5f6;
+	user-select: none;
+	-webkit-user-select: none;
+	pointer-events: none
+}
+
+img:last-of-type {
+	margin-bottom: 0
+}
+
+figcaption {
+	font-size: 1.1rem;
+	display: block;
+	padding-top: 5px;
+	color: #8f9499;
+	line-height: 1.6
+}
+
+.sub__title {
+	padding: 16px 12px;
+	font-size: 1.4rem;
+	font-weight: 600;
+	border-bottom: 1px solid #ebedef
+}
+
+.footer {
+	padding: 40px 20px
 }
