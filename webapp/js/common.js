@@ -134,6 +134,37 @@ $(function($) {
     var add_appbtmbar = $('.add_appbtmbar');
     var appbtmbar_shareImage = $('.appbtmbar_shareImage');
     var splash_shareimg = $('.splash_shareimg');
+    var c_news_id = $('.c_news_id');
+    var c_news_title = $('.c_news_title');
+    var c_news_category = $('.c_news_category');
+    var c_news_sure = $('.c_news_sure');
+    var headline_optimize = $('.headline_optimize');
+    var table_headlineOptimize = $('.table_headlineOptimize');
+    var optimize_cid = $('.optimize_cid');
+    var channel = $('.channel');
+    var plus_weight = $('.plus_weight');
+    var minus_weight = $('.minus_weight');
+    var plus_init = $('.plus_init');
+    var update_optimize = $('.update_optimize');
+    var table_headlineOptimize_tbody = table_headlineOptimize.find('tbody');
+    var category = $('.category');
+    var reply_comment2 = $('.reply_comment2');
+    var reply_comment3 = $('.reply_comment3');
+    var c_position = $('.c_position');
+    var c_status = $('.c_status');
+    var close5 = $('.close5');
+    var add_category_sure = $('.add_category_sure');
+    var close6 = $('.close6');
+    var add_category = $('.add_category');
+    var category_cid = $('.category_cid');
+    var category_channel = $('.category_channel');
+    var category_position = $('.category_position');
+    var category_status = $('.category_status');
+    var category_plus_weight = $('.category_plus_weight');
+    var category_minus_weight = $('.category_minus_weight');
+    var category_plus_init = $('.category_plus_init');
+    var update_status = $('.update_status');
+    var category_icon = $('.category_icon');
 
     var server_host = "http://jethome.newsjet.io:9000";
     // var server_host = "http://localhost:9000";
@@ -189,6 +220,9 @@ $(function($) {
                 break;
             case 7:
                 comment_automation.show();
+                break;
+            case 8:
+                headline_optimize.show();
                 break;
             default:
                 break;
@@ -286,6 +320,81 @@ $(function($) {
                 td6.appendTo(tr);
                 var td7 = $('<td class="system_push"><input type="checkbox" value="noon" class="noon_push">午间<input type="checkbox" value="night" class="night_push">晚间</td>').appendTo(tr);
                 var td8 = $('<td class="people_push"><a href="#">立即推送</a></td>').appendTo(tr);
+                switch (list.category_id) {
+                    case 'all':
+                        var td9 = $('<td class="c_id"><a href="#">' + list.category_id + '</a></td>').attr({ 'data-id': list.id, 'data-cid': list.category_id }).appendTo(tr);
+                        break;
+                    case 'top':
+                        var td9 = $('<td class="c_id"><a href="#">トップ</a></td>').attr({ 'data-id': list.id, 'data-cid': list.category_id }).appendTo(tr);
+                        break;
+                    case 'ent':
+                        var td9 = $('<td class="c_id"><a href="#">エンタメ</a></td>').attr({ 'data-id': list.id, 'data-cid': list.category_id }).appendTo(tr);
+                        break;
+                    case 'spo':
+                        var td9 = $('<td class="c_id"><a href="#">スポーツ</a></td>').attr({ 'data-id': list.id, 'data-cid': list.category_id }).appendTo(tr);
+                        break;
+                    case 'cn':
+                        var td9 = $('<td class="c_id"><a href="#">中国</a></td>').attr({ 'data-id': list.id, 'data-cid': list.category_id }).appendTo(tr);
+                        break;
+                    case 'kr':
+                        var td9 = $('<td class="c_id"><a href="#">韓国</a></td>').attr({ 'data-id': list.id, 'data-cid': list.category_id }).appendTo(tr);
+                        break;
+                    case 'base':
+                        var td9 = $('<td class="c_id"><a href="#">野球</a></td>').attr({ 'data-id': list.id, 'data-cid': list.category_id }).appendTo(tr);
+                        break;
+                    case 'int':
+                        var td9 = $('<td class="c_id"><a href="#">国際</a></td>').attr({ 'data-id': list.id, 'data-cid': list.category_id }).appendTo(tr);
+                        break;
+                    case 'pol':
+                        var td9 = $('<td class="c_id"><a href="#">政治</a></td>').attr({ 'data-id': list.id, 'data-cid': list.category_id }).appendTo(tr);
+                        break;
+                    case 'bus':
+                        var td9 = $('<td class="c_id"><a href="#">経済</a></td>').attr({ 'data-id': list.id, 'data-cid': list.category_id }).appendTo(tr);
+                        break;
+                    case 'tech':
+                        var td9 = $('<td class="c_id"><a href="#">テクノロジー</a></td>').attr({ 'data-id': list.id, 'data-cid': list.category_id }).appendTo(tr);
+                        break;
+                    case 'socc':
+                        var td9 = $('<td class="c_id"><a href="#">サッカー</a></td>').attr({ 'data-id': list.id, 'data-cid': list.category_id }).appendTo(tr);
+                        break;
+                    case 'soci':
+                        var td9 = $('<td class="c_id"><a href="#">社会</a></td>').attr({ 'data-id': list.id, 'data-cid': list.category_id }).appendTo(tr);
+                        break;
+                    case 'girl':
+                        var td9 = $('<td class="c_id"><a href="#">女性</a></td>').attr({ 'data-id': list.id, 'data-cid': list.category_id }).appendTo(tr);
+                        break;
+                    case 'tra':
+                        var td9 = $('<td class="c_id"><a href="#">旅行</a></td>').attr({ 'data-id': list.id, 'data-cid': list.category_id }).appendTo(tr);
+                        break;
+                    case 'cnet':
+                        var td9 = $('<td class="c_id"><a href="#">チャイナネット</a></td>').attr({ 'data-id': list.id, 'data-cid': list.category_id }).appendTo(tr);
+                        break;
+                    case 'video':
+                        var td9 = $('<td class="c_id"><a href="#">動画</a></td>').attr({ 'data-id': list.id, 'data-cid': list.category_id }).appendTo(tr);
+                        break;
+                    case 'pic':
+                        var td9 = $('<td class="c_id"><a href="#">写真</a></td>').attr({ 'data-id': list.id, 'data-cid': list.category_id }).appendTo(tr);
+                        break;
+                    case 'anime':
+                        var td9 = $('<td class="c_id"><a href="#">アニメ</a></td>').attr({ 'data-id': list.id, 'data-cid': list.category_id }).appendTo(tr);
+                        break;
+                    case 'game':
+                        var td9 = $('<td class="c_id"><a href="#">ゲーム</a></td>').attr({ 'data-id': list.id, 'data-cid': list.category_id }).appendTo(tr);
+                        break;
+                    case 'food':
+                        var td9 = $('<td class="c_id"><a href="#">グルメ</a></td>').attr({ 'data-id': list.id, 'data-cid': list.category_id }).appendTo(tr);
+                        break;
+                    case 'cul':
+                        var td9 = $('<td class="c_id"><a href="#">文化</a></td>').attr({ 'data-id': list.id, 'data-cid': list.category_id }).appendTo(tr);
+                        break;
+                    case 'wea':
+                        var td9 = $('<td class="c_id"><a href="#">災害</a></td>').attr({ 'data-id': list.id, 'data-cid': list.category_id }).appendTo(tr);
+                        break;
+                    default:
+                        var td9 = $('<td class="c_id"><a href="#">' + list.category_id + '</a></td>').attr({ 'data-id': list.id, 'data-cid': list.category_id }).appendTo(tr);
+                        break;
+
+                }
                 tr.appendTo(table_comment_tbody);
             }
         });
@@ -636,6 +745,40 @@ $(function($) {
 
     }
 
+    // 点击显示新闻分类
+    table_comment_tbody.on('click', '.c_id', function() {
+        reply_comment.show();
+        c_news_id.val($(this).siblings('.newsid').html());
+        c_news_title.val($(this).siblings('.newstitle').html());
+        var option = c_news_category.find('option');
+        var cid = $(this).attr('data-cid');
+        option.each(function(idx, ele) {
+            if ($(this).attr('data-id') == cid) {
+                $(this).attr('selected', true);
+            }
+        });
+    });
+
+    // 点击修改新闻分类
+    c_news_sure.click(function() {
+        console.log(c_news_category.find('option:selected').attr('data-id'));
+        $.ajax({
+            url: 'news_fixCID?aid=' + c_news_id.val() + '&cid=' + c_news_category.find('option:selected').attr('data-id'),
+            success: function(res) {
+                console.log(res);
+                share_success.show();
+                setTimeout(function() {
+                    getNews(20, 0);
+                    news_li.removeClass('active');
+                    news_li[1].className = 'active';
+                    share_success.hide();
+                    reply_comment.hide();
+                }, 2000);
+            }
+        });
+
+    });
+
     getNews(20, 0);
     getNews(20, 0, 'video');
     var noon_push, night_push, noon_push2, night_push2;
@@ -685,6 +828,81 @@ $(function($) {
             td6.appendTo(tr);
             var td7 = $('<td class="system_push"><input type="checkbox" value="noon" class="noon_push">午间<input type="checkbox" value="night" class="night_push">晚间</td>').appendTo(tr);
             var td8 = $('<td class="people_push"><a href="#">立即推送</a></td>').appendTo(tr);
+            switch (list[i].category_id) {
+                case 'all':
+                    var td9 = $('<td class="c_id"><a href="#">' + list[i].category_id + '</a></td>').attr({ 'data-id': list[i].id, 'data-cid': list[i].category_id }).appendTo(tr);
+                    break;
+                case 'top':
+                    var td9 = $('<td class="c_id"><a href="#">トップ</a></td>').attr({ 'data-id': list[i].id, 'data-cid': list[i].category_id }).appendTo(tr);
+                    break;
+                case 'ent':
+                    var td9 = $('<td class="c_id"><a href="#">エンタメ</a></td>').attr({ 'data-id': list[i].id, 'data-cid': list[i].category_id }).appendTo(tr);
+                    break;
+                case 'spo':
+                    var td9 = $('<td class="c_id"><a href="#">スポーツ</a></td>').attr({ 'data-id': list[i].id, 'data-cid': list[i].category_id }).appendTo(tr);
+                    break;
+                case 'cn':
+                    var td9 = $('<td class="c_id"><a href="#">中国</a></td>').attr({ 'data-id': list[i].id, 'data-cid': list[i].category_id }).appendTo(tr);
+                    break;
+                case 'kr':
+                    var td9 = $('<td class="c_id"><a href="#">韓国</a></td>').attr({ 'data-id': list[i].id, 'data-cid': list[i].category_id }).appendTo(tr);
+                    break;
+                case 'base':
+                    var td9 = $('<td class="c_id"><a href="#">野球</a></td>').attr({ 'data-id': list[i].id, 'data-cid': list[i].category_id }).appendTo(tr);
+                    break;
+                case 'int':
+                    var td9 = $('<td class="c_id"><a href="#">国際</a></td>').attr({ 'data-id': list[i].id, 'data-cid': list[i].category_id }).appendTo(tr);
+                    break;
+                case 'pol':
+                    var td9 = $('<td class="c_id"><a href="#">政治</a></td>').attr({ 'data-id': list[i].id, 'data-cid': list[i].category_id }).appendTo(tr);
+                    break;
+                case 'bus':
+                    var td9 = $('<td class="c_id"><a href="#">経済</a></td>').attr({ 'data-id': list[i].id, 'data-cid': list[i].category_id }).appendTo(tr);
+                    break;
+                case 'tech':
+                    var td9 = $('<td class="c_id"><a href="#">テクノロジー</a></td>').attr({ 'data-id': list[i].id, 'data-cid': list[i].category_id }).appendTo(tr);
+                    break;
+                case 'socc':
+                    var td9 = $('<td class="c_id"><a href="#">サッカー</a></td>').attr({ 'data-id': list[i].id, 'data-cid': list[i].category_id }).appendTo(tr);
+                    break;
+                case 'soci':
+                    var td9 = $('<td class="c_id"><a href="#">社会</a></td>').attr({ 'data-id': list[i].id, 'data-cid': list[i].category_id }).appendTo(tr);
+                    break;
+                case 'girl':
+                    var td9 = $('<td class="c_id"><a href="#">女性</a></td>').attr({ 'data-id': list[i].id, 'data-cid': list[i].category_id }).appendTo(tr);
+                    break;
+                case 'tra':
+                    var td9 = $('<td class="c_id"><a href="#">旅行</a></td>').attr({ 'data-id': list[i].id, 'data-cid': list[i].category_id }).appendTo(tr);
+                    break;
+                case 'cnet':
+                    var td9 = $('<td class="c_id"><a href="#">チャイナネット</a></td>').attr({ 'data-id': list[i].id, 'data-cid': list[i].category_id }).appendTo(tr);
+                    break;
+                case 'video':
+                    var td9 = $('<td class="c_id"><a href="#">動画</a></td>').attr({ 'data-id': list[i].id, 'data-cid': list[i].category_id }).appendTo(tr);
+                    break;
+                case 'pic':
+                    var td9 = $('<td class="c_id"><a href="#">写真</a></td>').attr({ 'data-id': list[i].id, 'data-cid': list[i].category_id }).appendTo(tr);
+                    break;
+                case 'anime':
+                    var td9 = $('<td class="c_id"><a href="#">アニメ</a></td>').attr({ 'data-id': list[i].id, 'data-cid': list[i].category_id }).appendTo(tr);
+                    break;
+                case 'game':
+                    var td9 = $('<td class="c_id"><a href="#">ゲーム</a></td>').attr({ 'data-id': list[i].id, 'data-cid': list[i].category_id }).appendTo(tr);
+                    break;
+                case 'food':
+                    var td9 = $('<td class="c_id"><a href="#">グルメ</a></td>').attr({ 'data-id': list[i].id, 'data-cid': list[i].category_id }).appendTo(tr);
+                    break;
+                case 'cul':
+                    var td9 = $('<td class="c_id"><a href="#">文化</a></td>').attr({ 'data-id': list[i].id, 'data-cid': list[i].category_id }).appendTo(tr);
+                    break;
+                case 'wea':
+                    var td9 = $('<td class="c_id"><a href="#">災害</a></td>').attr({ 'data-id': list[i].id, 'data-cid': list[i].category_id }).appendTo(tr);
+                    break;
+                default:
+                    var td9 = $('<td class="c_id"><a href="#">' + list[i].category_id + '</a></td>').attr({ 'data-id': list[i].id, 'data-cid': list[i].category_id }).appendTo(tr);
+                    break;
+
+            }
             tr.appendTo(table_comment_tbody);
         }
         noon_push = $('.noon_push');
@@ -1456,8 +1674,8 @@ $(function($) {
             var td5 = $('<td/>').html('无').appendTo(tr);
         }
         var td6 = $('<td/>').html(list.skipDuration).appendTo(tr);
-        var td7 = $('<td/>').html(getTime(list.validityStart -(8*60*60*1000))).appendTo(tr);
-        var td8 = $('<td/>').html(getTime(list.validityEnd -(8*60*60*1000))).appendTo(tr);
+        var td7 = $('<td/>').html(getTime(list.validityStart - (8 * 60 * 60 * 1000))).appendTo(tr);
+        var td8 = $('<td/>').html(getTime(list.validityEnd - (8 * 60 * 60 * 1000))).appendTo(tr);
 
         switch (list.showtimes) {
             case 1:
@@ -1509,7 +1727,7 @@ $(function($) {
         var image3x = splash_image3x.val();
         var a_url = acticity_url.val();
         var s_time = (new Date(start_time.val())).valueOf();
-        var e_time =(new Date(end_time.val())).valueOf();
+        var e_time = (new Date(end_time.val())).valueOf();
         var skipDuration = splash_time.val();
         var skip = splash_skip.find('option:selected').attr('data-id');
         var showtimes = splash_showtimes.find('option:selected').attr('data-id');
@@ -1585,8 +1803,8 @@ $(function($) {
         acticity_url.val(info.actUrl);
         splash_shareimg.val(info.shareImage);
         // console.log(getTime(info.validityStart));
-        start_time.val(new Date(info.validityStart -(8*60*60*1000)).Format("yyyy-MM-ddThh:mm:ss"));
-        end_time.val(new Date(info.validityEnd -(8*60*60*1000)).Format("yyyy-MM-ddThh:mm:ss"));
+        start_time.val(new Date(info.validityStart - (8 * 60 * 60 * 1000)).Format("yyyy-MM-ddThh:mm:ss"));
+        end_time.val(new Date(info.validityEnd - (8 * 60 * 60 * 1000)).Format("yyyy-MM-ddThh:mm:ss"));
         // console.log(start_time.val());
         // end_time.val(getTime(info.validityEnd));
         var option1 = splash_skip.find('option');
@@ -1667,8 +1885,8 @@ $(function($) {
         var td4 = $('<td/>').html(list.actUrl).appendTo(tr);
         var td11 = $('<td/>').html(list.shareImage).appendTo(tr);
         var td5 = $('<td/>').html(list.btntext).appendTo(tr);
-        var td6 = $('<td/>').html(getTime(list.validityStart -(8*60*60*1000))).appendTo(tr);
-        var td7 = $('<td/>').html(getTime(list.validityEnd -(8*60*60*1000))).appendTo(tr);
+        var td6 = $('<td/>').html(getTime(list.validityStart - (8 * 60 * 60 * 1000))).appendTo(tr);
+        var td7 = $('<td/>').html(getTime(list.validityEnd - (8 * 60 * 60 * 1000))).appendTo(tr);
         var td8 = $('<td/>').html(list.active).appendTo(tr);
         var td9 = $('<td/>').html('<a href="#">修改</a>').addClass('modify_appbtmbar').attr('data-info', JSON.stringify(list)).appendTo(tr);
         var td10 = $('<td/>').html('<a href="#">删除</a>').addClass('del_appbtmbar').attr('data-id', list.id).appendTo(tr);
@@ -1745,8 +1963,8 @@ $(function($) {
         appbtmbar_acticity_url.val(info.actUrl);
         appbtmbar_shareImage.val(info.shareImage);
         // console.log(getTime(info.validityStart));
-        appbtmbar_start_time.val(new Date(info.validityStart -(8*60*60*1000)).Format("yyyy-MM-ddThh:mm:ss"));
-        appbtmbar_end_time.val(new Date(info.validityEnd -(8*60*60*1000)).Format("yyyy-MM-ddThh:mm:ss"));
+        appbtmbar_start_time.val(new Date(info.validityStart - (8 * 60 * 60 * 1000)).Format("yyyy-MM-ddThh:mm:ss"));
+        appbtmbar_end_time.val(new Date(info.validityEnd - (8 * 60 * 60 * 1000)).Format("yyyy-MM-ddThh:mm:ss"));
         // console.log(start_time.val());
         // end_time.val(getTime(info.validityEnd));
         var option1 = appbtmbar_active.find('option');
@@ -2177,6 +2395,165 @@ $(function($) {
             var idx = ($(this).index() - 1) * 30;
             console.log(idx);
             automation(idx);
+        }
+    });
+
+    getNewsCategory();
+
+    function getNewsCategory() {
+        $.ajax({
+            url: server_host + '/get_news_category',
+            success: function(res) {
+                table_headlineOptimize_tbody.empty();
+                var list = JSON.parse(res);
+                for (var i = 0; i < list.length; i++) {
+                    createOptimize(list[i]);
+                }
+            }
+        });
+
+    }
+
+    function createOptimize(list) {
+        var tr = $('<tr/>');
+        var td1 = $('<td/>').html(list.id).appendTo(tr);
+        var td2 = $('<td/>').html(list.cid).appendTo(tr);
+        var td3 = $('<td/>').html(list.channel).appendTo(tr);
+        if (list.id == 1) {
+            var td4 = $('<td/>').html(list.pos).appendTo(tr);
+            var td5 = $('<td/>').html(list.status).appendTo(tr);
+        } else {
+            var td4 = $('<td/>').html('<a href="#">' + list.pos + '</a>').addClass('p_pos').attr('data-info', JSON.stringify(list)).appendTo(tr);
+            var td5 = $('<td/>').html('<a href="#">' + list.status + '</a>').addClass('p_status').attr('data-info', JSON.stringify(list)).appendTo(tr);
+        }
+        var td6 = $('<td/>').html('<a href="#">' + list.plus_weight + '</a>').addClass('p_weight').attr('data-info', JSON.stringify(list)).appendTo(tr);
+        var td7 = $('<td/>').html('<a href="#">' + list.minus_weight + '</a>').addClass('m_weight').attr('data-info', JSON.stringify(list)).appendTo(tr);
+        var td8 = $('<td/>').html('<a href="#">' + list.plus_init + '</a>').addClass('p_init').attr('data-info', JSON.stringify(list)).appendTo(tr);
+        tr.appendTo(table_headlineOptimize_tbody);
+
+    }
+
+    table_headlineOptimize_tbody.on('click', '.p_weight,.m_weight,.p_init', function() {
+        var info = JSON.parse($(this).attr('data-info'));
+        optimize_cid.val(info.cid);
+        channel.val(info.channel);
+        plus_weight.val(info.plus_weight);
+        minus_weight.val(info.minus_weight);
+        plus_init.val(info.plus_init);
+        reply_comment.show();
+    });
+
+    table_headlineOptimize_tbody.on('click', '.p_pos,.p_status', function() {
+        var info = JSON.parse($(this).attr('data-info'));
+        optimize_cid.val(info.cid);
+        channel.val(info.channel);
+        c_position.val(info.pos);
+        c_status.val(info.status);
+        reply_comment2.show();
+    });
+
+    update_optimize.click(function() {
+        var data = {
+            cid: optimize_cid.val(),
+            plus_weight: plus_weight.val(),
+            minus_weight: minus_weight.val(),
+            plus_init: plus_init.val()
+        }
+        $.ajax({
+            url: server_host + '/set_news_category_weight',
+            type: 'POST',
+            data: JSON.stringify(data),
+            success: function(res) {
+                console.log(res);
+                share_success.show();
+                setTimeout(function() {
+                    getNewsCategory();
+                    share_success.hide();
+                    reply_comment.hide();
+                }, 2000);
+            }
+        });
+
+    });
+
+    update_status.click(function() {
+        var data = {
+            cid: optimize_cid.val(),
+            pos: c_position.val(),
+            status: c_status.val()
+        }
+        $.ajax({
+            url: server_host + '/set_news_category_status',
+            type: 'POST',
+            data: JSON.stringify(data),
+            success: function(res) {
+                console.log(res);
+                modify_success.show();
+                setTimeout(function() {
+                    getNewsCategory();
+                    modify_success.hide();
+                    reply_comment2.hide();
+                }, 2000);
+            }
+        });
+
+    });
+
+    // 关闭页面
+    close5.click(function() {
+        reply_comment2.hide();
+    });
+    close6.click(function() {
+        reply_comment3.hide();
+    });
+
+    // 添加栏目页面显示
+    add_category.click(function() {
+        reply_comment3.show();
+    });
+
+    //提交栏目添加
+    add_category_sure.click(function() {
+        var cid = category_cid.val();
+        var channel = category_channel.val();
+        var pos = category_position.val();
+        var status = category_status.val();
+        var icon = category_icon.val();
+        var plus_weight = category_plus_weight.val();
+        var minus_weight = category_minus_weight.val();
+        var plus_init = category_plus_init.val();
+
+        if (cid && channel && pos && status && icon && plus_weight && minus_weight && plus_init) {
+            var data = {
+                cid: cid,
+                channel: channel,
+                pos: pos,
+                status: status,
+                icon: icon,
+                plus_weight: plus_weight,
+                minus_weight: minus_weight,
+                plus_init: plus_init
+            }
+            $.ajax({
+                url: server_host + '/insert_news_category',
+                type: 'POST',
+                data: JSON.stringify(data),
+                success: function(res) {
+                    console.log(res);
+                    del_success.show();
+                    setTimeout(function() {
+                        getNewsCategory();
+                        del_success.hide();
+                        reply_comment3.hide();
+                    }, 2000);
+                }
+            });
+
+        } else {
+            tips_success.show();
+            setTimeout(function() {
+                tips_success.hide();
+            }, 2000);
         }
     });
 
