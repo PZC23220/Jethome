@@ -165,6 +165,18 @@ $(function($) {
     var category_plus_init = $('.category_plus_init');
     var update_status = $('.update_status');
     var category_icon = $('.category_icon');
+    var related_news = $('.related_news');
+    var table_relatedNews = $('.table_relatedNews');
+    var table_matchList = $('.table_matchList');
+    var match_list = $('.match_list');
+    var table_matchList_tbody = table_matchList.find('tbody');
+    var close_news = $('.close_news');
+    var race_date = $('.race_date');
+    var match_id =$('.match_id');
+    var reply_comment4 = $('.reply_comment4');
+    var reply_comment5 = $('.reply_comment5');
+    var close7 = $('.close7');
+    var close8 = $('.close8');
 
     var server_host = "http://jethome.newsjet.io:9000";
     // var server_host = "http://localhost:9000";
@@ -224,6 +236,15 @@ $(function($) {
             case 8:
                 headline_optimize.show();
                 break;
+            case 9:
+                match_list.show();
+                break;
+            // case 10:
+            //     headline_optimize.show();
+            //     break;
+            // case 11:
+            //     headline_optimize.show();
+            //     break;
             default:
                 break;
         }
@@ -2556,6 +2577,120 @@ $(function($) {
             }, 2000);
         }
     });
+
+    baseball_matchlist();
+    // 获取比赛列表
+    function baseball_matchlist() {
+        // var option1 = appbtmbar_active.find('option');
+        for (var k = 6; k < 24; k++) {
+            var option = $('<option/>').attr('data-time', '2017/3/' + k).html('3月'+ k +"日");
+            option.appendTo(race_date)
+        }
+        $.ajax({
+            url: 'baseball_matchlist',
+            success: function(res) {
+                console.log(res);
+                var list = res.data;
+                for(var i=0;i<list.length;i++) {
+                    createMatchlist(list[i]);
+                }
+            }
+        });
+        
+    }
+
+    race_date.change(function(){
+        if (race_date.val()) {
+            var date = race_date.find('option:selected').attr('data-time');
+            table_matchList_tbody.find('tr').hide().filter(":contains(" + date + ")").show();
+        } else {
+            table_matchList_tbody.find('tr').show();
+        }
+    });
+
+    match_id.blur(function(){
+        if(match_id.val()) {
+            table_matchList_tbody.find('tr').hide();
+            table_matchList_tbody.find('.m_id').filter(":contains(" + match_id.val() + ")").parents('tr').show();
+        }
+    });
+
+    function createMatchlist(list) {
+        var tr = $('<tr/>');
+        var td1 = $('<td/>').html(list.id).addClass('m_id').appendTo(tr);
+        var td2 = $('<td/>').html(getTime(list.starttime + 60*60*1000)).appendTo(tr);
+        var td3 = $('<td/>').html(list.detaildesc).appendTo(tr);
+        var td4 = $('<td/>').html(list.teamonedesc).appendTo(tr);
+        var td5 = $('<td/>').html(list.teamtwodesc).appendTo(tr);
+        if(list.status == 0) {
+            var td11 = $('<td/>').html('未开始').appendTo(tr);
+        } else if(list.status == 1) {
+            var td11 = $('<td/>').html('进行中').appendTo(tr);
+        }else {
+            var td11 = $('<td/>').html('已结束').appendTo(tr);
+        }
+        
+        var td6 = $('<td/>').html('<a href="#">编辑</a>').addClass('a_prize').attr('data-info', JSON.stringify(list)).appendTo(tr);
+        var td7 = $('<td/>').html('<a href="#">查看</a>').addClass('a_question').attr('data-info', JSON.stringify(list)).appendTo(tr);
+        var td8 = $('<td/>').html('<a href="#">筛选</a>').addClass('r_news').attr('data-info', JSON.stringify(list)).appendTo(tr);
+        var td9 = $('<td/>').html('<a href="#">编辑</a>').addClass('t_answer').attr('data-info', JSON.stringify(list)).appendTo(tr);
+        var td10 = $('<td/>').html('<a href="#">查看</a>').addClass('u_answer').attr('data-info', JSON.stringify(list)).appendTo(tr);
+        tr.appendTo(table_matchList_tbody);
+
+    }
+
+    close7.click(function(){
+        reply_comment4.hide();
+    });
+    close8.click(function(){
+        reply_comment5.hide();
+    });
+    close_news.click(function(){
+        reply_comment.hide();
+    });
+
+    // 查看比赛相关新闻
+    table_matchList_tbody.on('click','.r_news',function(){
+        reply_comment.show();
+    });
+    table_matchList_tbody.on('click','.a_prize',function(){
+        reply_comment2.show();
+    });
+    table_matchList_tbody.on('click','.a_question',function(){
+        reply_comment3.show();
+    });
+    table_matchList_tbody.on('click','.t_answer',function(){
+        reply_comment4.show();
+    });
+    table_matchList_tbody.on('click','.u_answer',function(){
+        reply_comment5.show();
+    });
+
+    function get_news(ids) {
+        $.ajax({
+            url: 'get_nwes?ids=' + ids,
+            success: function(res) {
+                var list = res.data;
+            }
+        });
+        
+    }
+
+    function createnewslist(list,type) {
+        var tr = $('<tr/>');
+        var td1 = $('<td/>').html(list.id).addClass('n_id').appendTo(tr);
+        if(type == "news") {
+            var td2 = $('<td/>').html('新闻').appendTo(tr);
+        }else {
+            var td2 = $('<td/>').html('视频').appendTo(tr);
+        }       
+        var td3 = $('<td/>').html(list.title).appendTo(tr);
+        var td6 = $('<td/>').html('<a href="#">置顶</a>').addClass('a_prize').attr('data-info', JSON.stringify(list)).appendTo(tr);
+        var td7 = $('<td/>').html('<a href="#">隐藏</a>').addClass('a_question').attr('data-info', JSON.stringify(list)).appendTo(tr);
+        tr.appendTo(table_matchList_tbody);
+
+    }
+    
 
     // var userinfo = $(this).find('option:selected').attr('data-userinfo');
 });

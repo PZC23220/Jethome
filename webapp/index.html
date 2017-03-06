@@ -21,6 +21,9 @@
             <li><a href="#newsUpload">新闻上传<span class="glyphicon glyphicon-chevron-right"></span> </a></li>
             <li><a href="#commentAutomation">评论自动化<span class="glyphicon glyphicon-chevron-right"></span> </a></li>
             <li><a href="#headlineOptimize">栏目优化<span class="glyphicon glyphicon-chevron-right"></span> </a></li>
+            <!-- <li><a href="#relatedNews">相关新闻设置<span class="glyphicon glyphicon-chevron-right"></span> </a></li> -->
+            <li><a href="#matchList">比赛列表<span class="glyphicon glyphicon-chevron-right"></span> </a></li>
+            <!-- <li><a href="#quizRelated">竞猜相关<span class="glyphicon glyphicon-chevron-right"></span> </a></li> -->
         </ul>
     </div>
     <!-- main  content-->
@@ -1137,8 +1140,8 @@
                 <=0;<br>
                     minus_weight: 默认值1.0，越低代表时间衰减速度越慢，值不能
                     <=0;<br>
-                        plus_init: 默认值0， 越高代表初始值越大，相比于其他栏目一旦有新新闻更容易出现在头条<br>
-                    position: 在客户端排序位置 ，只能为整数&nbsp;&nbsp;     status: 栏目开启状态  0-关闭  1-开启</p>
+                        plus_init: 默认值0， 越高代表初始值越大，相比于其他栏目一旦有新新闻更容易出现在头条
+                        <br> position: 在客户端排序位置 ，只能为整数&nbsp;&nbsp; status: 栏目开启状态 0-关闭 1-开启</p>
             <div class="table table-responsive" style="max-height: 70vh;">
                 <table class="table table-bordered table_headlineOptimize">
                     <thead>
@@ -1201,7 +1204,6 @@
                             <span class="input-group-addon">status</span>
                             <input type="number" class="form-control c_status" placeholder="Status">
                         </div>
-
                         <button type="button" class="btn btn-success update_status">修改栏目位置</button>
                         <button type="button" class="btn btn-danger close5">取消</button>
                     </div>
@@ -1269,6 +1271,328 @@
                 <button type="button" class="btn btn-success add_category">添加栏目</button>
             </div>
         </div>
+        <!-- 比赛列表 -->
+        <div class="match_list table_container" id="matchList">
+            <div class="news_opa">
+                <div class="input-group">
+                    <span class="input-group-addon">比赛ID</span>
+                    <input type="text" class="form-control match_id" placeholder="Match ID">
+                </div>
+                <div class="input-group">
+                    <span class="input-group-addon">比赛日期</span>
+                    <select class="form-control race_date">
+                        <option></option>
+                    </select>
+                </div>
+                <button type="button" class="btn btn-success search_comment">搜索</button>
+            </div>
+            <div class="table table-responsive" style="max-height: 70vh;">
+                <table class="table table-bordered table_matchList">
+                    <thead>
+                        <tr>
+                            <th>比赛ID</th>
+                            <th>比赛时间</th>
+                            <th>比赛性质</th>
+                            <th>1队</th>
+                            <th>2队</th>
+                            <th>竞猜状态</th>
+                            <th>竞猜奖品</th>
+                            <th>竞猜题目</th>
+                            <th>比赛新闻</th>
+                            <th>正确答案</th>
+                            <th>用户答案</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+                <!-- 发表回复 -->
+                <!-- 相关新闻推荐 -->
+                <div class="reply_comment">
+                    <div class="related_news" id="relatedNews">
+                        <div class="news_opa">
+                            <div class="input-group">
+                                <span class="input-group-addon">新闻ID</span>
+                                <input type="text" class="form-control news_id" placeholder="News ID">
+                            </div>
+                            <div class="input-group">
+                                <span class="input-group-addon">
+                                    <input type="checkbox" aria-label="置顶">
+                                </span>
+                                <input type="text" class="form-control" aria-label="置顶" value="置顶" disabled>
+                            </div>
+                            <div class="input-group">
+                                <span class="input-group-addon">当前选择比赛</span>
+                                <select class="form-control select_match">
+                                    <option>3月6日 韩国-以色列</option>
+                                    <option>3月6日 韩国-以色列</option>
+                                </select>
+                            </div>
+                            <button type="button" class="btn btn-success search_comment">添加</button>
+                        </div>
+                        <div class="table table-responsive" style="max-height: 70vh;">
+                            <table class="table table-bordered table_relatedNews">
+                                <thead>
+                                    <tr>
+                                        <th>新闻ID</th>
+                                        <th>类别</th>
+                                        <th>标题</th>
+                                        <th>置顶</th>
+                                        <th>隐藏</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                </tbody>
+                            </table>
+                            <div class="share_success">
+                                <div class="likes_success">
+                                    添加新闻成功
+                                </div>
+                            </div>
+                            <div class="modify_success">
+                                <div class="likes_success">
+                                    置顶成功！
+                                </div>
+                            </div>
+                            <div class="del_success">
+                                <div class="likes_success">
+                                    隐藏新闻成功！
+                                </div>
+                            </div>
+                            <div class="add_option">
+                                <button type="button" class="btn btn-danger close_news">关闭窗口</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- 竞猜奖品提供 -->
+                <div class="reply_comment2">
+                    <div class="reply_comment_container">
+                        <div class="input-group">
+                            <span class="input-group-addon">一等奖</span>
+                            <input type="text" class="form-control optimize_cid" placeholder="一等奖" disabled>
+                        </div>
+                        <div class="input-group">
+                            <span class="input-group-addon">二等奖</span>
+                            <input type="text" class="form-control channel" placeholder="二等奖" disabled>
+                        </div>
+                        <div class="input-group">
+                            <span class="input-group-addon">三等奖</span>
+                            <input type="text" class="form-control c_position" placeholder="三等奖">
+                        </div>
+                        <button type="button" class="btn btn-success update_status">设置</button>
+                        <button type="button" class="btn btn-danger close5">取消</button>
+                    </div>
+                </div>
+                <!-- 竞猜题目编写 -->
+                <div class="reply_comment3">
+                    <div class="reply_comment_container" style="height: 90vh; margin: 5vh auto; padding: 10px 30px;">
+                        <div class="q_content">
+                            <div class="input-group">
+                                <span class="input-group-addon">题目1</span>
+                                <input type="text" class="form-control category_cid" placeholder="题目1">
+                            </div>
+                            <div class="input-group">
+                                <span class="input-group-addon">a</span>
+                                <input type="text" class="form-control category_channel" placeholder="">
+                            </div>
+                            <div class="input-group">
+                                <span class="input-group-addon">b</span>
+                                <input type="text" class="form-control category_position" placeholder="">
+                            </div>
+                            <div class="input-group">
+                                <span class="input-group-addon">c</span>
+                                <input type="text" class="form-control category_status" placeholder="">
+                            </div>
+                        </div>
+                        <div class="q_content">
+                            <div class="input-group">
+                                <span class="input-group-addon">题目2</span>
+                                <input type="text" class="form-control category_cid" placeholder="题目2">
+                            </div>
+                            <div class="input-group">
+                                <span class="input-group-addon">a</span>
+                                <input type="text" class="form-control category_channel" placeholder="">
+                            </div>
+                            <div class="input-group">
+                                <span class="input-group-addon">b</span>
+                                <input type="text" class="form-control category_position" placeholder="">
+                            </div>
+                            <div class="input-group">
+                                <span class="input-group-addon">c</span>
+                                <input type="text" class="form-control category_status" placeholder="">
+                            </div>
+                        </div>
+                        <div class="q_content">
+                            <div class="input-group">
+                                <span class="input-group-addon">题目3</span>
+                                <input type="text" class="form-control category_cid" placeholder="题目3">
+                            </div>
+                            <div class="input-group">
+                                <span class="input-group-addon">a</span>
+                                <input type="text" class="form-control category_channel" placeholder="">
+                            </div>
+                            <div class="input-group">
+                                <span class="input-group-addon">b</span>
+                                <input type="text" class="form-control category_position" placeholder="">
+                            </div>
+                            <div class="input-group">
+                                <span class="input-group-addon">c</span>
+                                <input type="text" class="form-control category_status" placeholder="">
+                            </div>
+                        </div>
+                        <button type="button" class="btn btn-success add_category_sure">发布</button>
+                        <button type="button" class="btn btn-danger close6">下线竞猜</button>
+                        <button type="button" class="btn btn-danger close6">关闭窗口</button>
+                    </div>
+                </div>
+                <!-- 正确答案提供 -->
+                <div class="reply_comment4">
+                    <div class="reply_comment_container" style="height: 80vh;">
+                        <div class="q_content">
+                            <div class="input-group">
+                                <span class="input-group-addon">题目1</span>
+                                <input type="text" class="form-control category_cid" placeholder="题目1">
+                            </div>
+                            <div class="input-group">
+                                <span class="input-group-addon">
+                                    <input type="checkbox" aria-label="">
+                                </span>
+                                <input type="text" class="form-control" aria-label="" value="韩国" disabled="">
+                            </div>
+                            <div class="input-group">
+                                <span class="input-group-addon">
+                                    <input type="checkbox" aria-label="">
+                                </span>
+                                <input type="text" class="form-control" aria-label="" value="以色列" disabled="">
+                            </div>
+                        </div>
+                        <div class="q_content">
+                            <div class="input-group">
+                                <span class="input-group-addon">题目2</span>
+                                <input type="text" class="form-control category_cid" placeholder="题目2">
+                            </div>
+                            <div class="input-group">
+                                <span class="input-group-addon">
+                                    <input type="checkbox" aria-label="">
+                                </span>
+                                <input type="text" class="form-control" aria-label="" value="韩国" disabled="">
+                            </div>
+                            <div class="input-group">
+                                <span class="input-group-addon">
+                                    <input type="checkbox" aria-label="">
+                                </span>
+                                <input type="text" class="form-control" aria-label="" value="以色列" disabled="">
+                            </div>
+                        </div>
+                        <div class="q_content">
+                            <div class="input-group">
+                                <span class="input-group-addon">题目3</span>
+                                <input type="text" class="form-control category_cid" placeholder="题目3">
+                            </div>
+                            <div class="input-group">
+                                <span class="input-group-addon">
+                                <input type="checkbox" aria-label="">
+                            </span>
+                                <input type="text" class="form-control" aria-label="" value="韩国" disabled="">
+                            </div>
+                            <div class="input-group">
+                                <span class="input-group-addon">
+                                <input type="checkbox" aria-label="">
+                            </span>
+                                <input type="text" class="form-control" aria-label="" value="以色列" disabled="">
+                            </div>
+                        </div>
+                        <button type="button" class="btn btn-success add_category_sure">提交</button>
+                        <button type="button" class="btn btn-danger close7">取消</button>
+                    </div>
+                    
+                    <div class="share_success">
+                        <div class="likes_success">
+                            修改栏目权重成功！
+                        </div>
+                    </div>
+                    <div class="modify_success">
+                        <div class="likes_success">
+                            修改栏目位置成功！
+                        </div>
+                    </div>
+                    <div class="del_success">
+                        <div class="likes_success">
+                            添加栏目成功！
+                        </div>
+                    </div>
+                    <div class="tips_success">
+                        <div class="likes_success">
+                            输入内容不能为空！
+                        </div>
+                    </div>
+                </div>
+                <!-- 用户答案查看 -->
+                <div class="reply_comment5">
+                    <div class="related_news" id="relatedNews">
+                        <div class="news_opa">
+                            <div class="input-group">
+                                <span class="input-group-addon">用户ID</span>
+                                <input type="text" class="form-control b_user_id" placeholder="User ID">
+                            </div>
+                            <div class="input-group">
+                                <span class="input-group-addon">答对数</span>
+                                <select class="form-control race_date">
+                                    <option>1</option>
+                                    <option>2</option>
+                                    <option>3</option>
+                                    <option>4</option>
+                                    <option>5</option>
+                                </select>
+                            </div>
+                            <div class="input-group">
+                                <span class="input-group-addon">当前选择比赛</span>
+                                <select class="form-control select_match">
+                                    <option>3月6日 韩国-以色列</option>
+                                    <option>3月6日 韩国-以色列</option>
+                                </select>
+                            </div>
+                            <button type="button" class="btn btn-success search_comment">添加</button>
+                        </div>
+                        <div class="table table-responsive" style="max-height: 70vh;">
+                            <table class="table table-bordered table_relatedNews">
+                                <thead>
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>提交时间</th>
+                                        <th>用户ID</th>
+                                        <th>用户答案</th>
+                                        <th>答对数</th>
+                                        <th>答对数</th>
+                                        <th>奖项设置</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                </tbody>
+                            </table>
+                            <div class="share_success">
+                                <div class="likes_success">
+                                    添加新闻成功
+                                </div>
+                            </div>
+                            <div class="modify_success">
+                                <div class="likes_success">
+                                    置顶成功！
+                                </div>
+                            </div>
+                            <div class="del_success">
+                                <div class="likes_success">
+                                    隐藏新闻成功！
+                                </div>
+                            </div>
+                            <div class="add_option">
+                                <button type="button" class="btn btn-danger close8">关闭窗口</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
 </body>
 <script src="lib/jquery/jquery-1.12.0.js"></script>
 <script type="text/javascript" src="js/md5.js"></script>
