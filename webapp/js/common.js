@@ -2640,7 +2640,6 @@ $(function($) {
         tr.appendTo(table_matchList_tbody);
 
     }
-{"newsid":["200645"],"videoid":["1610661062","1610661061","1610661058"],"top":["1610661062"],"hidden":["1610661062","200645"]}
     close7.click(function(){
         reply_comment4.hide();
     });
@@ -2658,7 +2657,7 @@ $(function($) {
         console.log(info);
         current_selection_match.val(getTime(info.starttime+60*60*1000)+ '  ' + info.teamonedesc + '-' + info.teamtwodesc);
         if(info.newsids) {
-
+            table_relatedNews_tbody.empty();
             var newsid = JSON.parse(info.newsids);
             console.log(newsid);
             if(newsid.newsid) {
@@ -2712,9 +2711,6 @@ $(function($) {
     }
 
     function createnewslist(list,type) {
-        for(var i in list) {
-                    createnewslist(list[i],'video')
-                }
         var tr = $('<tr/>');
         var td1 = $('<td/>').html(list.id).addClass('n_id').appendTo(tr);
         if(type == "news") {
