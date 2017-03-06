@@ -1317,16 +1317,13 @@
                             </div>
                             <div class="input-group">
                                 <span class="input-group-addon">
-                                    <input type="checkbox" aria-label="置顶">
+                                    <input type="checkbox" aria-label="置顶" style="height: 30px !important;">
                                 </span>
                                 <input type="text" class="form-control" aria-label="置顶" value="置顶" disabled>
                             </div>
                             <div class="input-group">
                                 <span class="input-group-addon">当前选择比赛</span>
-                                <select class="form-control select_match">
-                                    <option>3月6日 韩国-以色列</option>
-                                    <option>3月6日 韩国-以色列</option>
-                                </select>
+                                <input type="text" disabled class="form-control current_selection_match">
                             </div>
                             <button type="button" class="btn btn-success search_comment">添加</button>
                         </div>
@@ -1503,6 +1500,42 @@
                                 <input type="text" class="form-control" aria-label="" value="以色列" disabled="">
                             </div>
                         </div>
+                        <div class="q_content">
+                            <div class="input-group">
+                                <span class="input-group-addon">题目4</span>
+                                <input type="text" class="form-control category_cid" placeholder="题目4">
+                            </div>
+                            <div class="input-group">
+                                <span class="input-group-addon">
+                                <input type="checkbox" aria-label="">
+                            </span>
+                                <input type="text" class="form-control" aria-label="" value="韩国" disabled="">
+                            </div>
+                            <div class="input-group">
+                                <span class="input-group-addon">
+                                <input type="checkbox" aria-label="">
+                            </span>
+                                <input type="text" class="form-control" aria-label="" value="以色列" disabled="">
+                            </div>
+                        </div>
+                        <div class="q_content">
+                            <div class="input-group">
+                                <span class="input-group-addon">题目5</span>
+                                <input type="text" class="form-control category_cid" placeholder="题目5">
+                            </div>
+                            <div class="input-group">
+                                <span class="input-group-addon">
+                                <input type="checkbox" aria-label="">
+                            </span>
+                                <input type="text" class="form-control" aria-label="" value="韩国" disabled="">
+                            </div>
+                            <div class="input-group">
+                                <span class="input-group-addon">
+                                <input type="checkbox" aria-label="">
+                            </span>
+                                <input type="text" class="form-control" aria-label="" value="以色列" disabled="">
+                            </div>
+                        </div>
                         <button type="button" class="btn btn-success add_category_sure">提交</button>
                         <button type="button" class="btn btn-danger close7">取消</button>
                     </div>
@@ -1548,15 +1581,12 @@
                             </div>
                             <div class="input-group">
                                 <span class="input-group-addon">当前选择比赛</span>
-                                <select class="form-control select_match">
-                                    <option>3月6日 韩国-以色列</option>
-                                    <option>3月6日 韩国-以色列</option>
-                                </select>
+                                <input type="text" disabled>
                             </div>
                             <button type="button" class="btn btn-success search_comment">添加</button>
                         </div>
                         <div class="table table-responsive" style="max-height: 70vh;">
-                            <table class="table table-bordered table_relatedNews">
+                            <table class="table table-bordered table_user_answer">
                                 <thead>
                                     <tr>
                                         <th>ID</th>

@@ -177,6 +177,8 @@ $(function($) {
     var reply_comment5 = $('.reply_comment5');
     var close7 = $('.close7');
     var close8 = $('.close8');
+    var table_relatedNews_tbody = table_relatedNews.find('tbody');
+    var current_selection_match = $('.current_selection_match');
 
     var server_host = "http://jethome.newsjet.io:9000";
     // var server_host = "http://localhost:9000";
@@ -2638,7 +2640,7 @@ $(function($) {
         tr.appendTo(table_matchList_tbody);
 
     }
-
+{"newsid":["200645"],"videoid":["1610661062","1610661061","1610661058"],"top":["1610661062"],"hidden":["1610661062","200645"]}
     close7.click(function(){
         reply_comment4.hide();
     });
@@ -2652,6 +2654,21 @@ $(function($) {
     // 查看比赛相关新闻
     table_matchList_tbody.on('click','.r_news',function(){
         reply_comment.show();
+        var info = JSON.parse($(this).attr('data-info'));
+        console.log(info);
+        current_selection_match.val(getTime(info.starttime+60*60*1000)+ '  ' + info.teamonedesc + '-' + info.teamtwodesc);
+        if(info.newsids) {
+
+            var newsid = JSON.parse(info.newsids);
+            console.log(newsid);
+            if(newsid.newsid) {
+                get_news(newsid.newsid);
+            }
+            if(newsid.videoid) {
+                get_videos(newsid.videoid);
+            }
+        }
+        
     });
     table_matchList_tbody.on('click','.a_prize',function(){
         reply_comment2.show();
@@ -2668,15 +2685,36 @@ $(function($) {
 
     function get_news(ids) {
         $.ajax({
-            url: 'get_nwes?ids=' + ids,
+            url: 'news_get?ids=' + ids,
             success: function(res) {
                 var list = res.data;
+                
+                for(var i in list) {
+                    createnewslist(list[i],'news')
+                }
+            }
+        });
+        
+    }
+
+    function get_videos(ids) {
+        $.ajax({
+            url: 'video_get?ids=' + ids,
+            success: function(res) {
+                var list = res.data;
+                console.log(list);
+                for(var i in list) {
+                    createnewslist(list[i],'video')
+                }
             }
         });
         
     }
 
     function createnewslist(list,type) {
+        for(var i in list) {
+                    createnewslist(list[i],'video')
+                }
         var tr = $('<tr/>');
         var td1 = $('<td/>').html(list.id).addClass('n_id').appendTo(tr);
         if(type == "news") {
@@ -2687,7 +2725,7 @@ $(function($) {
         var td3 = $('<td/>').html(list.title).appendTo(tr);
         var td6 = $('<td/>').html('<a href="#">置顶</a>').addClass('a_prize').attr('data-info', JSON.stringify(list)).appendTo(tr);
         var td7 = $('<td/>').html('<a href="#">隐藏</a>').addClass('a_question').attr('data-info', JSON.stringify(list)).appendTo(tr);
-        tr.appendTo(table_matchList_tbody);
+        tr.appendTo(table_relatedNews_tbody);
 
     }
     
