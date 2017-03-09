@@ -378,6 +378,12 @@ button {
 	margin-bottom: 12px;
 }
 
+.main_date {
+	display: block;
+	font-size: 1.4rem;
+	color: #8f9499;
+}
+
 .main_subTitle,.main_title {
 	font-family: "Hiragino Sans";
 	line-height: 1.2

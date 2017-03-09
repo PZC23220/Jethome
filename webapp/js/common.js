@@ -179,6 +179,7 @@ $(function($) {
     var close8 = $('.close8');
     var table_relatedNews_tbody = table_relatedNews.find('tbody');
     var current_selection_match = $('.current_selection_match');
+    var table_user_answer = $('.table_user_answer').find('tbody');
 
     var server_host = "http://jethome.newsjet.io:9000";
     // var server_host = "http://localhost:9000";
@@ -2632,13 +2633,11 @@ $(function($) {
             var td11 = $('<td/>').html('已结束').appendTo(tr);
         }
         
-        var td6 = $('<td/>').html('<a href="#">编辑</a>').addClass('a_prize').attr('data-info', JSON.stringify(list)).appendTo(tr);
         var td7 = $('<td/>').html('<a href="#">查看</a>').addClass('a_question').attr('data-info', JSON.stringify(list)).appendTo(tr);
         var td8 = $('<td/>').html('<a href="#">筛选</a>').addClass('r_news').attr('data-info', JSON.stringify(list)).appendTo(tr);
         var td9 = $('<td/>').html('<a href="#">编辑</a>').addClass('t_answer').attr('data-info', JSON.stringify(list)).appendTo(tr);
         var td10 = $('<td/>').html('<a href="#">查看</a>').addClass('u_answer').attr('data-info', JSON.stringify(list)).appendTo(tr);
         tr.appendTo(table_matchList_tbody);
-
     }
     close7.click(function(){
         reply_comment4.hide();
@@ -2673,12 +2672,127 @@ $(function($) {
         reply_comment2.show();
     });
     table_matchList_tbody.on('click','.a_question',function(){
+        var matchJson = JSON.parse($(this).attr('data-info'));
+        $(reply_comment3).attr("matchID", matchJson.id);
+        $(reply_comment3).find('.addQuestionsButton').attr('data-info', JSON.stringify(matchJson));
+        console.log("match id = " + matchJson.id);
+        $.ajax({
+            url: 'baseball_lottery?targettype=1&targetid=' + matchJson.id,
+            async: false,
+            success: function(res) {
+                console.log("res = " + JSON.stringify(res));
+                if (res.status == 200) {
+                    $(".offline").attr("data-info", JSON.stringify(res.data));
+                    console.log("question = " + res.data.question);
+                    $(reply_comment3).attr('data-info', JSON.parse(res.data.id));
+                    $(reply_comment3).attr('lottery-id', JSON.parse(res.data.id));
+                    var questions = JSON.parse(res.data.question);
+                    for (var i = 0; i < 5; i++) {
+                        if (!questions[i]) {
+                            break;
+                        }
+                        console.log(questions[i].question);
+                        console.log((questions[i].option[0].split(":"))[1]);
+                        $(reply_comment3).find('.question').eq(i).find('.content').val(questions[i].question);
+                        if (questions[i].option[0]) {
+                            $(reply_comment3).find('.question').eq(i).find('.choice1').val((questions[i].option[0].split(":"))[1]);
+                        }
+                        if (questions[i].option[1]) {
+                            $(reply_comment3).find('.question').eq(i).find('.choice2').val((questions[i].option[1].split(":"))[1]);
+                        }
+                        if (questions[i].option[2]) {
+                            $(reply_comment3).find('.question').eq(i).find('.choice3').val((questions[i].option[2].split(":"))[1]);
+                        }
+                    }
+                    var jsonarr = eval('(' + res.data.award + ')');
+                    console.log(jsonarr);
+                    $(reply_comment3).find('div#awardContainer .award1').val(jsonarr[0].award);
+                    $(reply_comment3).find('div#awardContainer .award2').val(jsonarr[1].award);
+                    $(reply_comment3).find('div#awardContainer .award3').val(jsonarr[2].award);
+                } else {
+                    $(reply_comment3).removeAttr('lottery-id');
+                    $(reply_comment3).find('.question').find('.content').val("");
+                    $(reply_comment3).find('.question').find('.choice1').val("");
+                    $(reply_comment3).find('.question').find('.choice2').val("");
+                    $(reply_comment3).find('.question').find('.choice3').val("");
+                }
+            }
+        });
         reply_comment3.show();
     });
     table_matchList_tbody.on('click','.t_answer',function(){
+        $.ajax({
+            url: 'baseball_lottery?targettype=1&targetid=' + JSON.parse($(this).attr("data-info")).id,
+            async: false,
+            success: function(res) {
+                console.log("res = " + JSON.stringify(res));
+                if (res.status == 200) {
+                    $(".submitAnswer").attr("data-info", JSON.stringify(res.data));
+                    console.log("question = " + res.data.question);
+                    $(reply_comment3).attr('data-info', JSON.parse(res.data.id));
+                    $(reply_comment3).attr('lottery-id', JSON.parse(res.data.id));
+                    var questions = JSON.parse(res.data.question);
+                    for (var i = 0; i < 5; i++) {
+                        if (!questions[i]) {
+                            break;
+                        }
+                        console.log(questions[i].question);
+                        $(reply_comment4).find('.q_content').eq(i).find('.content').val(questions[i].question);
+                        $(reply_comment4).find('.q_content').eq(i).find('.choice1').val(questions[i].option[0]);
+                        $(reply_comment4).find('.q_content').eq(i).find('.choice2').val(questions[i].option[1]);
+                        $(reply_comment4).find('.q_content').eq(i).find('.choice3').val(questions[i].option[2]);
+                    }
+                    var jsonarr = eval('(' + res.data.award + ')');
+                    console.log(jsonarr);
+                    $(reply_comment4).find('div#awardContainer .award1').val(jsonarr[0].award);
+                    $(reply_comment4).find('div#awardContainer .award2').val(jsonarr[1].award);
+                    $(reply_comment4).find('div#awardContainer .award3').val(jsonarr[2].award);
+                    console.log(res.data.answer);
+                    var answerArr = res.data.answer.split(",");
+                    for (var i = 0; i < answerArr.length; i++) {
+                        $("input[name='q" + (answerArr[i].split(':')[0]) + "']").eq(answerArr[i].split(':')[1] - 1).attr("checked", true);
+                    }
+                } else {
+                    $(reply_comment4).removeAttr('lottery-id');
+                    $(reply_comment4).find('.q_content').find('.content').val("");
+                    $(reply_comment4).find('.q_content').find('.choice1').val("");
+                    $(reply_comment4).find('.q_content').find('.choice2').val("");
+                    $(reply_comment4).find('.q_content').find('.choice3').val("");
+                }
+            }
+        });
         reply_comment4.show();
     });
+
+
+    function createUserAnswers(item) {
+        console.log("item = " + JSON.stringify(item));
+        var tr = $('<tr/>');
+        var td1 = $('<td/>').html(item.id).addClass('n_id').appendTo(tr);
+        var td3 = $('<td/>').html(getTime(item.updatetime)).appendTo(tr);
+        var td3 = $('<td/>').html(item.uid).appendTo(tr);
+        var td3 = $('<td/>').html(item.answer).appendTo(tr);
+        var td3 = $('<td/>').html(item.correctnum).appendTo(tr);
+        var td3 = $('<td/>').html(item.wrongnum).appendTo(tr);
+        tr.appendTo(table_user_answer);
+    }
+
     table_matchList_tbody.on('click','.u_answer',function(){
+        $.ajax({
+            url: "baseball_lotteryanswer?targettype=1&targetid=" + JSON.parse($(this).attr("data-info")).id,
+            success: function (res) {
+                console.log(res);
+                console.log(res.data.length);
+                table_user_answer.empty();
+                if (res.status == 200) {
+                    for (var i = 0; i < res.data.length; i++) {
+                        console.log((res.data)[i]);
+                        createUserAnswers((res.data)[i]);
+                    }
+                }
+            }
+        });
+
         reply_comment5.show();
     });
 
@@ -2724,8 +2838,122 @@ $(function($) {
         tr.appendTo(table_relatedNews_tbody);
 
     }
-    
 
+    $('.submitAnswer').click(function () {
+       var postData = JSON.parse($(this).attr("data-info"));
+       var answers = [];
+       for (var i = 1; i <= 5; i++) {
+           $("input[name='q" + i + "']").each(function (index) {
+                console.log(index);
+                console.log(this.checked);
+                if (this.checked == true) {
+                    answers.push(i + ":" + (index + 1));
+                    console.log(answers);
+                }
+           });
+       }
+       postData.answer = answers.toString();
+       console.log("post data = " + JSON.stringify(postData));
+       $.ajax({
+           url: '/baseball_lotteryupdate?targettype=1&targetid=' + postData.targetid,
+           type: 'POST',
+           data: JSON.stringify(postData),
+           success: function(res) {
+                console.log(res);
+                $.ajax({
+                    url: "baseball_lotteryanswercheck?targettype=1&targetid=" + postData.targetid,
+                    success: function(res) {
+                        console.log(res);
+                    }
+                });
+           }
+       });
+    });
+
+    $('.addQuestionsButton').click(function () {
+       var questionsJson = [];
+       var questions = $("#lotteryContainer .question");
+       console.log("questions#length = " + questions.length);
+       var matchID = JSON.parse($(this).attr("data-info")).id;
+       console.log("match id = " + matchID);
+       questions.each(function(index) {
+           console.log("question = " + $(this));
+           var content = $(this).find(".content").val();
+           console.log("content = " + content);
+           var choice1 = $(this).find(".choice1").val();
+           console.log("choice1 = " + choice1);
+           var choice2 = $(this).find(".choice2").val();
+           console.log("choice2 = " + choice2);
+           var choice3 = $(this).find(".choice3").val();
+           console.log("choice3 = " + choice3);
+           var options = ["1:" + choice1];
+           if (choice2 != "") {
+                options.push("2:" + choice2);
+           }
+           if (choice3 != "") {
+                options.push("3:" + choice3);
+           }
+           questionsJson.push({
+                "id": index + 1,
+                "question": content,
+                "option": options
+           });
+       });
+       console.log("question json = " + JSON.stringify(questionsJson));
+
+       var award = [];
+       award.push({
+            "id": 1,
+            "award": $("#lotteryContainer .award1").val()
+       });
+       award.push({
+            "id": 2,
+            "award": $("#lotteryContainer .award2").val()
+       });
+       award.push({
+            "id": 3,
+            "award": $("#lotteryContainer .award3").val()
+       });
+       console.log("award = " + JSON.stringify(award));
+
+       var postData = {};
+       postData.targettype = 1;
+       postData.targetid = matchID;
+       postData.question = questionsJson;
+       postData.active = 1;
+       postData.award = award;
+       postData.answer = "";
+
+       if (reply_comment3.attr("lottery-id")) {
+            postData.id = reply_comment3.attr("lottery-id");
+       }
+
+       console.log("reply_comment3 = " + reply_comment3.attr("matchid"));
+       console.log("post data = " + JSON.stringify(postData));
+
+       $.ajax({
+           url: '/baseball_lotteryupdate',
+           type: 'POST',
+           data: JSON.stringify(postData),
+           success: function(res) {
+                console.log(res);
+           }
+       });
+    });
+
+    $(".offline").click(function() {
+        var postData = JSON.parse($(".offline").attr("data-info"));
+        postData.active = 0;
+        console.log(postData);
+        $.ajax({
+           url: '/baseball_lotteryupdate',
+           type: 'POST',
+           data: JSON.stringify(postData),
+           success: function(res) {
+                console.log(res);
+           }
+        });
+    });
     // var userinfo = $(this).find('option:selected').attr('data-userinfo');
 });
 
