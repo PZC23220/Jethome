@@ -2530,6 +2530,10 @@ $(function($) {
     });
     close6.click(function() {
         reply_comment3.hide();
+        $('.content').empty();
+        $('.choice1').empty();
+        $('.choice2').empty();
+        $('.choice3').empty();
     });
 
     // 添加栏目页面显示
@@ -2603,6 +2607,7 @@ $(function($) {
 
     }
 
+    // 筛选比赛日期
     race_date.change(function() {
         if (race_date.val()) {
             var date = race_date.find('option:selected').attr('data-time');
@@ -2611,11 +2616,33 @@ $(function($) {
             table_matchList_tbody.find('tr').show();
         }
     });
-
+    // 搜索比赛ID
     match_id.blur(function() {
         if (match_id.val()) {
             table_matchList_tbody.find('tr').hide();
             table_matchList_tbody.find('.m_id').filter(":contains(" + match_id.val() + ")").parents('tr').show();
+        } else {
+            table_matchList_tbody.find('tr').show();
+        }
+    });
+
+    // 筛选答对数
+    $('.correct_num').change(function() {
+        if ($('.correct_num').val()) {
+            table_user_answer.find('tr').hide();
+            var date = $('.correct_num').find('option:selected').html();
+            table_user_answer.find('.c_num').filter(":contains(" + $('.correct_num').val() + ")").parents('tr').show();
+        } else {
+            table_user_answer.find('tr').show();
+        }
+    });
+    // 搜索用户ID
+    $('.b_user_id').blur(function() {
+        if ($('.b_user_id').val()) {
+            table_user_answer.find('tr').hide();
+            table_user_answer.find('.user_id').filter(":contains(" + $('.b_user_id').val() + ")").parents('tr').show();
+        }else {
+            table_user_answer.find('tr').show();
         }
     });
 
@@ -2642,6 +2669,10 @@ $(function($) {
     }
     close7.click(function() {
         reply_comment4.hide();
+        $('.content').empty();
+        $('.choice1').empty();
+        $('.choice2').empty();
+        $('.choice3').empty();
     });
     close8.click(function() {
         reply_comment5.hide();
@@ -2770,13 +2801,12 @@ $(function($) {
 
 
     function createUserAnswers(item) {
-        console.log("item = " + JSON.stringify(item));
         var tr = $('<tr/>');
         var td1 = $('<td/>').html(item.id).addClass('n_id').appendTo(tr);
         var td2 = $('<td/>').html(getTime(item.updatetime)).appendTo(tr);
-        var td3 = $('<td/>').html(item.uid).appendTo(tr);
+        var td3 = $('<td/>').html(item.uid).addClass('user_id').appendTo(tr);
         var td4 = $('<td/>').html(item.answer).appendTo(tr);
-        var td5 = $('<td/>').html(item.correctnum).appendTo(tr);
+        var td5 = $('<td/>').html(item.correctnum).addClass('c_num').appendTo(tr);
         var td6 = $('<td/>').html(item.wrongnum).appendTo(tr);
         var td7 = $('<td/>').html('<a href="#" class="first_prize">一等奖</a>    <a href="#" class="two_prize">二等奖</a>    <a href="#" class="three_prize">三等奖</a>').addClass('set_arward').attr('data-info', JSON.stringify(item)).appendTo(tr);
         tr.appendTo(table_user_answer);
@@ -2794,7 +2824,7 @@ $(function($) {
                 table_user_answer.empty();
                 if (res.status == 200) {
                     for (var i = 0; i < res.data.length; i++) {
-                        console.log((res.data)[i]);
+                        // console.log((res.data)[i]);
                         createUserAnswers((res.data)[i]);
                     }
                 }
@@ -3044,7 +3074,7 @@ $(function($) {
             "id": 3,
             "award": $("#lotteryContainer .award3").val()
         });
-        str += $("#lotteryContainer .award1").val() + '<br>・' + $("#lotteryContainer .award2").val() + '<br>・' + $("#lotteryContainer .award3").val();
+        str += $("#lotteryContainer .award1").val() + '(1人様)<br>・' + $("#lotteryContainer .award2").val() + '(2人様)<br>・' + $("#lotteryContainer .award3").val() + '(3人様)';
         console.log("award = " + JSON.stringify(award));
 
         var postData = {};
