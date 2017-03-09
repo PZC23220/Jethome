@@ -1312,19 +1312,23 @@
                         <div class="news_opa">
                             <div class="input-group">
                                 <span class="input-group-addon">新闻ID</span>
-                                <input type="text" class="form-control news_id" placeholder="News ID">
+                                <input type="text" class="form-control related_news_id" placeholder="News ID">
                             </div>
                             <div class="input-group">
-                                <span class="input-group-addon">
-                                    <input type="checkbox" aria-label="置顶" style="height: 30px !important;">
-                                </span>
-                                <input type="text" class="form-control" aria-label="置顶" value="置顶" disabled>
+                                <span class="input-group-addon">视频ID</span>
+                                <input type="text" class="form-control related_video_id" placeholder="Video ID">
                             </div>
                             <div class="input-group">
                                 <span class="input-group-addon">当前选择比赛</span>
                                 <input type="text" disabled class="form-control current_selection_match">
                             </div>
-                            <button type="button" class="btn btn-success search_comment">添加</button>
+                            <div class="input-group" style="margin-top: 10px;">
+                                <span class="input-group-addon">
+                                    <input type="checkbox" aria-label="置顶" style="height: 30px !important;" class="set_top">
+                                </span>
+                                <input type="text" class="form-control" aria-label="置顶" value="置顶" disabled>
+                            </div>
+                            <button type="button" class="btn btn-success add_related_news">添加</button>
                         </div>
                         <div class="table table-responsive" style="max-height: 70vh;">
                             <table class="table table-bordered table_relatedNews">
@@ -1362,7 +1366,7 @@
                     </div>
                 </div>
                 <!-- 竞猜奖品提供 -->
-                <div class="reply_comment2">
+                <!-- <div class="reply_comment2">
                     <div class="reply_comment_container">
                         <div class="input-group">
                             <span class="input-group-addon">一等奖</span>
@@ -1379,7 +1383,7 @@
                         <button type="button" class="btn btn-success update_status">设置</button>
                         <button type="button" class="btn btn-danger close5">取消</button>
                     </div>
-                </div>
+                </div> -->
                 <!-- 竞猜题目编写 -->
                 <div class="reply_comment3" id="lotteryContainer">
                     <div class="reply_comment_container" style="height: 90vh; margin: 5vh auto; padding: 10px 30px; overflow: auto;">
@@ -1476,7 +1480,7 @@
                         <div style="padding-top: 12px;" id="awardContainer">
                             <div class="input-group">
                                 <span class="input-group-addon">一等奖</span>
-                                <input type="text" class="form-control award1" placeholder="一等奖奖品" >
+                                <input type="text" class="form-control award1" placeholder="一等奖奖品">
                             </div>
                             <div class="input-group">
                                 <span class="input-group-addon">二等奖</span>
@@ -1487,9 +1491,19 @@
                                 <input type="text" class="form-control award3" placeholder="三等奖奖品">
                             </div>
                         </div>
-                        <button type="button" class="btn btn-success addQuestionsButton" onclick="javascript:addQuestions();">发布</button>
-                        <button type="button" class="btn btn-danger close6 offline">下线竞猜</button>
+                        <button type="button" class="btn btn-success addQuestionsButton">发布</button>
+                        <button type="button" class="btn btn-danger offline">下线竞猜</button>
                         <button type="button" class="btn btn-danger close6">关闭窗口</button>
+                    </div>
+                    <div class="share_success">
+                        <div class="likes_success">
+                            提交问题及奖品成功！
+                        </div>
+                    </div>
+                    <div class="modify_success">
+                        <div class="likes_success">
+                            下线竞猜成功！
+                        </div>
                     </div>
                 </div>
                 <!-- 正确答案提供 -->
@@ -1619,19 +1633,9 @@
                         <button type="button" class="btn btn-danger close7">取消</button>
                     </div>
                     
-                    <div class="share_success">
-                        <div class="likes_success">
-                            修改栏目权重成功！
-                        </div>
-                    </div>
-                    <div class="modify_success">
-                        <div class="likes_success">
-                            修改栏目位置成功！
-                        </div>
-                    </div>
                     <div class="del_success">
                         <div class="likes_success">
-                            添加栏目成功！
+                            提交答案成功
                         </div>
                     </div>
                     <div class="tips_success">
@@ -1660,9 +1664,9 @@
                             </div>
                             <div class="input-group">
                                 <span class="input-group-addon">当前选择比赛</span>
-                                <input type="text" disabled>
+                                <input type="text" disabled class="form-control current_selection_match">
                             </div>
-                            <button type="button" class="btn btn-success search_comment">添加</button>
+                            <button type="button" class="btn btn-success add_related_answer">添加</button>
                         </div>
                         <div class="table table-responsive" style="max-height: 70vh;">
                             <table class="table table-bordered table_user_answer">

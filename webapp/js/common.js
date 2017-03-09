@@ -172,7 +172,7 @@ $(function($) {
     var table_matchList_tbody = table_matchList.find('tbody');
     var close_news = $('.close_news');
     var race_date = $('.race_date');
-    var match_id =$('.match_id');
+    var match_id = $('.match_id');
     var reply_comment4 = $('.reply_comment4');
     var reply_comment5 = $('.reply_comment5');
     var close7 = $('.close7');
@@ -180,6 +180,7 @@ $(function($) {
     var table_relatedNews_tbody = table_relatedNews.find('tbody');
     var current_selection_match = $('.current_selection_match');
     var table_user_answer = $('.table_user_answer').find('tbody');
+    var add_related_news = $('.add_related_news');
 
     var server_host = "http://jethome.newsjet.io:9000";
     // var server_host = "http://localhost:9000";
@@ -242,12 +243,12 @@ $(function($) {
             case 9:
                 match_list.show();
                 break;
-            // case 10:
-            //     headline_optimize.show();
-            //     break;
-            // case 11:
-            //     headline_optimize.show();
-            //     break;
+                // case 10:
+                //     headline_optimize.show();
+                //     break;
+                // case 11:
+                //     headline_optimize.show();
+                //     break;
             default:
                 break;
         }
@@ -2586,7 +2587,7 @@ $(function($) {
     function baseball_matchlist() {
         // var option1 = appbtmbar_active.find('option');
         for (var k = 6; k < 24; k++) {
-            var option = $('<option/>').attr('data-time', '2017/3/' + k).html('3月'+ k +"日");
+            var option = $('<option/>').attr('data-time', '2017/3/' + k).html('3月' + k + "日");
             option.appendTo(race_date)
         }
         $.ajax({
@@ -2594,15 +2595,15 @@ $(function($) {
             success: function(res) {
                 console.log(res);
                 var list = res.data;
-                for(var i=0;i<list.length;i++) {
+                for (var i = 0; i < list.length; i++) {
                     createMatchlist(list[i]);
                 }
             }
         });
-        
+
     }
 
-    race_date.change(function(){
+    race_date.change(function() {
         if (race_date.val()) {
             var date = race_date.find('option:selected').attr('data-time');
             table_matchList_tbody.find('tr').hide().filter(":contains(" + date + ")").show();
@@ -2611,8 +2612,8 @@ $(function($) {
         }
     });
 
-    match_id.blur(function(){
-        if(match_id.val()) {
+    match_id.blur(function() {
+        if (match_id.val()) {
             table_matchList_tbody.find('tr').hide();
             table_matchList_tbody.find('.m_id').filter(":contains(" + match_id.val() + ")").parents('tr').show();
         }
@@ -2621,57 +2622,59 @@ $(function($) {
     function createMatchlist(list) {
         var tr = $('<tr/>');
         var td1 = $('<td/>').html(list.id).addClass('m_id').appendTo(tr);
-        var td2 = $('<td/>').html(getTime(list.starttime + 60*60*1000)).appendTo(tr);
+        var td2 = $('<td/>').html(getTime(list.starttime + 60 * 60 * 1000)).appendTo(tr);
         var td3 = $('<td/>').html(list.detaildesc).appendTo(tr);
         var td4 = $('<td/>').html(list.teamonedesc).appendTo(tr);
         var td5 = $('<td/>').html(list.teamtwodesc).appendTo(tr);
-        if(list.status == 0) {
+        if (list.status == 0) {
             var td11 = $('<td/>').html('未开始').appendTo(tr);
-        } else if(list.status == 1) {
+        } else if (list.status == 1) {
             var td11 = $('<td/>').html('进行中').appendTo(tr);
-        }else {
+        } else {
             var td11 = $('<td/>').html('已结束').appendTo(tr);
         }
-        
+
         var td7 = $('<td/>').html('<a href="#">查看</a>').addClass('a_question').attr('data-info', JSON.stringify(list)).appendTo(tr);
         var td8 = $('<td/>').html('<a href="#">筛选</a>').addClass('r_news').attr('data-info', JSON.stringify(list)).appendTo(tr);
         var td9 = $('<td/>').html('<a href="#">编辑</a>').addClass('t_answer').attr('data-info', JSON.stringify(list)).appendTo(tr);
         var td10 = $('<td/>').html('<a href="#">查看</a>').addClass('u_answer').attr('data-info', JSON.stringify(list)).appendTo(tr);
         tr.appendTo(table_matchList_tbody);
     }
-    close7.click(function(){
+    close7.click(function() {
         reply_comment4.hide();
     });
-    close8.click(function(){
+    close8.click(function() {
         reply_comment5.hide();
     });
-    close_news.click(function(){
+    close_news.click(function() {
         reply_comment.hide();
     });
 
     // 查看比赛相关新闻
-    table_matchList_tbody.on('click','.r_news',function(){
+    table_matchList_tbody.on('click', '.r_news', function() {
         reply_comment.show();
         var info = JSON.parse($(this).attr('data-info'));
+        add_related_news.attr('data-info', $(this).attr('data-info'));
         console.log(info);
-        current_selection_match.val(getTime(info.starttime+60*60*1000)+ '  ' + info.teamonedesc + '-' + info.teamtwodesc);
-        if(info.newsids) {
+        current_selection_match.val(getTime(info.starttime + 60 * 60 * 1000) + '  ' + info.teamonedesc + '-' + info.teamtwodesc);
+        if (info.newsids) {
             table_relatedNews_tbody.empty();
             var newsid = JSON.parse(info.newsids);
             console.log(newsid);
-            if(newsid.newsid) {
-                get_news(newsid.newsid,$(this).attr('data-info'));
+            if (newsid.newsid) {
+                get_news(newsid.newsid, $(this).attr('data-info'),newsid.top,newsid.hidden);
             }
-            if(newsid.videoid) {
-                get_videos(newsid.videoid,$(this).attr('data-info'));
+            if (newsid.videoid) {
+                get_videos(newsid.videoid, $(this).attr('data-info'),newsid.top,newsid.hidden);
             }
         }
-        
+
     });
-    table_matchList_tbody.on('click','.a_prize',function(){
+    table_matchList_tbody.on('click', '.a_prize', function() {
         reply_comment2.show();
     });
-    table_matchList_tbody.on('click','.a_question',function(){
+    // 获取已有问题
+    table_matchList_tbody.on('click', '.a_question', function() {
         var matchJson = JSON.parse($(this).attr('data-info'));
         $(reply_comment3).attr("matchID", matchJson.id);
         $(reply_comment3).find('.addQuestionsButton').attr('data-info', JSON.stringify(matchJson));
@@ -2720,7 +2723,8 @@ $(function($) {
         });
         reply_comment3.show();
     });
-    table_matchList_tbody.on('click','.t_answer',function(){
+    // 设置正确选项
+    table_matchList_tbody.on('click', '.t_answer', function() {
         $.ajax({
             url: 'baseball_lottery?targettype=1&targetid=' + JSON.parse($(this).attr("data-info")).id,
             async: false,
@@ -2774,14 +2778,17 @@ $(function($) {
         var td4 = $('<td/>').html(item.answer).appendTo(tr);
         var td5 = $('<td/>').html(item.correctnum).appendTo(tr);
         var td6 = $('<td/>').html(item.wrongnum).appendTo(tr);
-        var td7 = $('<td/>').html('<a href="#" class="first_prize">一等奖</a><a href="#" class="two_prize">二等奖</a><a href="#" class="three_prize">三等奖</a>').addClass('a_question').attr('data-info', JSON.stringify(list)).appendTo(tr);
+        var td7 = $('<td/>').html('<a href="#" class="first_prize">一等奖</a>    <a href="#" class="two_prize">二等奖</a>    <a href="#" class="three_prize">三等奖</a>').addClass('set_arward').attr('data-info', JSON.stringify(item)).appendTo(tr);
         tr.appendTo(table_user_answer);
     }
-
-    table_matchList_tbody.on('click','.u_answer',function(){
+    // 获取用户答案列表
+    table_matchList_tbody.on('click', '.u_answer', function() {
+        var info = JSON.parse($(this).attr('data-info'));
+        console.log(info);
+        current_selection_match.val(getTime(info.starttime + 60 * 60 * 1000) + '  ' + info.teamonedesc + '-' + info.teamtwodesc);
         $.ajax({
             url: "baseball_lotteryanswer?targettype=1&targetid=" + JSON.parse($(this).attr("data-info")).id,
-            success: function (res) {
+            success: function(res) {
                 console.log(res);
                 console.log(res.data.length);
                 table_user_answer.empty();
@@ -2796,52 +2803,109 @@ $(function($) {
 
         reply_comment5.show();
     });
-
-    function get_news(ids,info) {
+    // 获取新闻及视频
+    function get_news(ids, info,top,hidden) {
         $.ajax({
             url: 'news_get?ids=' + ids,
             success: function(res) {
                 var list = res.data;
-                
-                for(var i in list) {
-                    createnewslist(list[i],'news',info)
+
+                for (var i in list) {
+                    createnewslist(list[i], 'news', info,top,hidden);
                 }
             }
         });
-        
+
     }
 
-    function get_videos(ids,info) {
+    function get_videos(ids, info,top,hidden) {
         $.ajax({
             url: 'video_get?ids=' + ids,
             success: function(res) {
                 var list = res.data;
                 console.log(list);
-                for(var i in list) {
-                    createnewslist(list[i],'video',info)
+                add_related_news.attr('data-info', info);
+                for (var i in list) {
+                    createnewslist(list[i], 'video', info,top,hidden);
                 }
             }
         });
-        
+
     }
 
-    function createnewslist(list,type,info) {
+    function createnewslist(list, type, info,top,hidden) {
         var tr = $('<tr/>');
         var td1 = $('<td/>').html(list.id).addClass('n_id').appendTo(tr);
-        if(type == "news") {
+        if (type == "news") {
             var td2 = $('<td/>').html('新闻').appendTo(tr);
-        }else {
+        } else {
             var td2 = $('<td/>').html('视频').appendTo(tr);
-        }       
+        }
         var td3 = $('<td/>').html(list.title).appendTo(tr);
-        var td6 = $('<td/>').html('<a href="#" data-id="'+ list.id +'">置顶</a>').addClass('news_top').attr('data-info', info).appendTo(tr);
-        var td7 = $('<td/>').html('<a href="#" data-id="'+ list.id +'">隐藏</a>').addClass('news_hidden').attr('data-info', info).appendTo(tr);
+        // var td6 = $('<td/>').html('<a href="#" data-id="' + list.id + '">置顶</a>').addClass('news_top').attr('data-info', info).appendTo(tr);
+        if(list.id == top) {
+            var td6 = $('<td/>').html('置顶').appendTo(tr);
+        }else {
+            var td6 = $('<td/>').html('<a href="#" data-id="' + list.id + '">置顶</a>').addClass('news_top').attr('data-info', info).appendTo(tr);   
+        }
+        if(list.id == hidden) {
+            var td7 = $('<td/>').html('隐藏').appendTo(tr);
+        }else {
+            var td7 = $('<td/>').html('<a href="#" data-id="' + list.id + '">隐藏</a>').addClass('news_hidden').attr('data-info', info).appendTo(tr);   
+        }
         tr.appendTo(table_relatedNews_tbody);
 
     }
 
+    // 添加新闻
+    add_related_news.click(function() {
+        var related_news_id = $('.related_news_id').val();
+        var related_video_id = $('.related_video_id').val();
+        var data = JSON.parse($(this).attr('data-info'));
+        var newsids = JSON.parse(data.newsids);
+        if (related_news_id) {
+            newsids.newsid.push(related_news_id);
+        }
+        if (related_video_id) {
+            newsids.videoid.push(related_video_id);
+        }
+        if ($('.set_top').is(':checked')) {
+            var arr = [];
+            if (related_news_id) {
+                arr.push(related_news_id);
+            } else if (related_video_id) {
+                arr.push(related_video_id);
+            }
+            newsids.top = arr;
+        }
+        data.newsids = JSON.stringify(newsids);
+        console.log(data);
+        $.ajax({
+            url: 'baseball_matchUpdateDetail',
+            type: 'POST',
+            data: JSON.stringify(data),
+            success: function(res) {
+                console.log(res);
+                $('.related_news_id').val('');
+                $('.related_video_id').val('');
+                $('.set_top').attr('checked', false);
+                share_success.show();
+                table_relatedNews_tbody.empty();
+                if (newsids.newsid) {
+                    get_news(newsids.newsid, JSON.stringify(data));
+                }
+                if (newsids.videoid) {
+                    get_videos(newsid.videoid, JSON.stringify(data));
+                }
+                setTimeout(function() {
+                    share_success.hide();
+                }, 2000);
+
+            }
+        });
+    });
     // 置顶新闻
-    table_relatedNews_tbody.on('click','.news_top',function(){
+    table_relatedNews_tbody.on('click', '.news_top', function() {
         var data = JSON.parse($(this).attr('data-info'));
         var newsids = JSON.parse(data.newsids);
         var arr = [];
@@ -2853,15 +2917,26 @@ $(function($) {
             url: 'baseball_matchUpdateDetail',
             type: 'POST',
             data: JSON.stringify(data),
-            success : function(res) {
+            success: function(res) {
                 console.log(res);
+                modify_success.show();
+                table_relatedNews_tbody.empty();
+                if (newsids.newsid) {
+                    get_news(newsids.newsid, JSON.stringify(data));
+                }
+                if (newsids.videoid) {
+                    get_videos(newsid.videoid, JSON.stringify(data));
+                }
+                setTimeout(function() {
+                    modify_success.hide();
+                }, 2000);
             }
         });
-        
+
     });
 
     // 隐藏新闻
-    table_relatedNews_tbody.on('click','.news_hidden',function(){
+    table_relatedNews_tbody.on('click', '.news_hidden', function() {
         var data = JSON.parse($(this).attr('data-info'));
         var newsids = JSON.parse(data.newsids);
         var arr = [];
@@ -2873,126 +2948,150 @@ $(function($) {
             url: 'baseball_matchUpdateDetail',
             type: 'POST',
             data: JSON.stringify(data),
-            success : function(res) {
+            success: function(res) {
                 console.log(res);
+                del_success.show();
+                table_relatedNews_tbody.empty();
+                if (newsids.newsid) {
+                    get_news(newsids.newsid, JSON.stringify(data));
+                }
+                if (newsids.videoid) {
+                    get_videos(newsid.videoid, JSON.stringify(data));
+                }
+                setTimeout(function() {
+                    del_success.hide();
+                }, 2000);
             }
         });
-        
+
     });
     // 提交正确答案
-    $('.submitAnswer').click(function () {
-       var postData = JSON.parse($(this).attr("data-info"));
-       var answers = [];
-       for (var i = 1; i <= 5; i++) {
-           $("input[name='q" + i + "']").each(function (index) {
+    $('.submitAnswer').click(function() {
+        var postData = JSON.parse($(this).attr("data-info"));
+        var answers = [];
+        for (var i = 1; i <= 5; i++) {
+            $("input[name='q" + i + "']").each(function(index) {
                 console.log(index);
                 console.log(this.checked);
                 if (this.checked == true) {
                     answers.push(i + ":" + (index + 1));
                     console.log(answers);
                 }
-           });
-       }
-       postData.answer = answers.toString();
-       console.log("post data = " + JSON.stringify(postData));
-       $.ajax({
-           url: '/baseball_lotteryupdate?targettype=1&targetid=' + postData.targetid,
-           type: 'POST',
-           data: JSON.stringify(postData),
-           success: function(res) {
+            });
+        }
+        postData.answer = answers.toString();
+        console.log("post data = " + JSON.stringify(postData));
+        $.ajax({
+            url: '/baseball_lotteryupdate?targettype=1&targetid=' + postData.targetid,
+            type: 'POST',
+            data: JSON.stringify(postData),
+            success: function(res) {
                 console.log(res);
                 $.ajax({
                     url: "baseball_lotteryanswercheck?targettype=1&targetid=" + postData.targetid,
                     success: function(res) {
                         console.log(res);
+                        del_success.show();
+                        setTimeout(function(){
+                            del_success.hide();
+                        },2000);
                     }
                 });
-           }
-       });
+            }
+        });
     });
+    // 添加竞猜题目
+    $('.addQuestionsButton').click(function() {
+        var questionsJson = [];
+        var questions = $("#lotteryContainer .question");
+        console.log("questions#length = " + questions.length);
+        var matchID = JSON.parse($(this).attr("data-info")).id;
+        console.log("match id = " + matchID);
+        questions.each(function(index) {
+            var content = $(this).find(".content").val();
+            if(content) {
 
-    $('.addQuestionsButton').click(function () {
-       var questionsJson = [];
-       var questions = $("#lotteryContainer .question");
-       console.log("questions#length = " + questions.length);
-       var matchID = JSON.parse($(this).attr("data-info")).id;
-       console.log("match id = " + matchID);
-       questions.each(function(index) {
-           console.log("question = " + $(this));
-           var content = $(this).find(".content").val();
-           console.log("content = " + content);
-           var choice1 = $(this).find(".choice1").val();
-           console.log("choice1 = " + choice1);
-           var choice2 = $(this).find(".choice2").val();
-           console.log("choice2 = " + choice2);
-           var choice3 = $(this).find(".choice3").val();
-           console.log("choice3 = " + choice3);
-           var options = ["1:" + choice1];
-           if (choice2 != "") {
-                options.push("2:" + choice2);
-           }
-           if (choice3 != "") {
-                options.push("3:" + choice3);
-           }
-           questionsJson.push({
-                "id": index + 1,
-                "question": content,
-                "option": options
-           });
-       });
-       console.log("question json = " + JSON.stringify(questionsJson));
+                var choice1 = $(this).find(".choice1").val();
+                var choice2 = $(this).find(".choice2").val();
+                var choice3 = $(this).find(".choice3").val();
+                var options = ["1:" + choice1];
+                if (choice2 != "") {
+                    options.push("2:" + choice2);
+                }
+                if (choice3 != "") {
+                    options.push("3:" + choice3);
+                }
+                questionsJson.push({
+                    "id": index + 1,
+                    "question": content,
+                    "option": options
+                });
+            }
+        });
+        console.log("question json = " + JSON.stringify(questionsJson));
 
-       var award = [];
-       award.push({
+        var award = [];
+        var str = '<br>・';
+        award.push({
             "id": 1,
             "award": $("#lotteryContainer .award1").val()
-       });
-       award.push({
+        });
+        award.push({
             "id": 2,
             "award": $("#lotteryContainer .award2").val()
-       });
-       award.push({
+        });
+        award.push({
             "id": 3,
             "award": $("#lotteryContainer .award3").val()
-       });
-       console.log("award = " + JSON.stringify(award));
+        });
+        str += $("#lotteryContainer .award1").val() + '<br>・' + $("#lotteryContainer .award2").val() + '<br>・' + $("#lotteryContainer .award3").val();
+        console.log("award = " + JSON.stringify(award));
 
-       var postData = {};
-       postData.targettype = 1;
-       postData.targetid = matchID;
-       postData.question = questionsJson;
-       postData.active = 1;
-       postData.award = award;
-       postData.answer = "";
+        var postData = {};
+        postData.targettype = 1;
+        postData.targetid = matchID;
+        postData.question = questionsJson;
+        postData.active = 1;
+        postData.award = award;
+        postData.answer = "";
+        postData.detaildesc = str;
 
-       if (reply_comment3.attr("lottery-id")) {
+        if (reply_comment3.attr("lottery-id")) {
             postData.id = reply_comment3.attr("lottery-id");
-       }
+        }
+        console.log("post data = " + JSON.stringify(postData));
 
-       console.log("reply_comment3 = " + reply_comment3.attr("matchid"));
-       console.log("post data = " + JSON.stringify(postData));
-
-       $.ajax({
-           url: '/baseball_lotteryupdate',
-           type: 'POST',
-           data: JSON.stringify(postData),
-           success: function(res) {
+        $.ajax({
+            url: '/baseball_lotteryupdate',
+            type: 'POST',
+            data: JSON.stringify(postData),
+            success: function(res) {
                 console.log(res);
-           }
-       });
+                share_success.show();
+                setTimeout(function(){
+                    share_success.hide();
+                },2000);
+            }
+        });
     });
 
+    // 竞猜下线
     $(".offline").click(function() {
         var postData = JSON.parse($(".offline").attr("data-info"));
         postData.active = 0;
         console.log(postData);
         $.ajax({
-           url: '/baseball_lotteryupdate',
-           type: 'POST',
-           data: JSON.stringify(postData),
-           success: function(res) {
+            url: '/baseball_lotteryupdate',
+            type: 'POST',
+            data: JSON.stringify(postData),
+            success: function(res) {
                 console.log(res);
-           }
+                modify_success.show();
+                setTimeout(function(){
+                    alert(1111);
+                    modify_success.hide();
+                },2000);
+            }
         });
     });
     // var userinfo = $(this).find('option:selected').attr('data-userinfo');
