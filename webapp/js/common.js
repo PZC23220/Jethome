@@ -2769,11 +2769,12 @@ $(function($) {
         console.log("item = " + JSON.stringify(item));
         var tr = $('<tr/>');
         var td1 = $('<td/>').html(item.id).addClass('n_id').appendTo(tr);
-        var td3 = $('<td/>').html(getTime(item.updatetime)).appendTo(tr);
+        var td2 = $('<td/>').html(getTime(item.updatetime)).appendTo(tr);
         var td3 = $('<td/>').html(item.uid).appendTo(tr);
-        var td3 = $('<td/>').html(item.answer).appendTo(tr);
-        var td3 = $('<td/>').html(item.correctnum).appendTo(tr);
-        var td3 = $('<td/>').html(item.wrongnum).appendTo(tr);
+        var td4 = $('<td/>').html(item.answer).appendTo(tr);
+        var td5 = $('<td/>').html(item.correctnum).appendTo(tr);
+        var td6 = $('<td/>').html(item.wrongnum).appendTo(tr);
+        var td7 = $('<td/>').html('<a href="#" class="first_prize">一等奖</a><a href="#" class="two_prize">二等奖</a><a href="#" class="three_prize">三等奖</a>').addClass('a_question').attr('data-info', JSON.stringify(list)).appendTo(tr);
         tr.appendTo(table_user_answer);
     }
 
@@ -2878,7 +2879,7 @@ $(function($) {
         });
         
     });
-
+    // 提交正确答案
     $('.submitAnswer').click(function () {
        var postData = JSON.parse($(this).attr("data-info"));
        var answers = [];
