@@ -80,7 +80,7 @@ var server = http.createServer(function(request, response) {
             response.end();
         });
     } else if (params.pathname == '/people_push') {
-        var cmd = "cd /home/ec2-user/api/MobiScripts; java -jar build/libs/MobiScripts-1.0-SNAPSHOT-all.jar notification_surprise_news " + query.aid + " " + query.type;
+        var cmd = "cd /home/ec2-user/api/MobiScripts; java -jar build/libs/MobiScripts-1.0-SNAPSHOT-all.jar notification_surprise_news " + query.pushtype + " " + query.aid + " " + query.type;
         console.log(cmd);
         process.exec(cmd, function(error, stdout, stderr) {
             if (error) {

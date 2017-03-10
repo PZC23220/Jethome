@@ -2648,11 +2648,11 @@ $(function($) {
 
     function createMatchlist(list) {
         var tr = $('<tr/>');
-        var td1 = $('<td/>').html(list.id).addClass('m_id').appendTo(tr);
+        var td1 = $('<td/>').html('<a href="#">' + list.id + '</a>').addClass('m_id').appendTo(tr);
         var td2 = $('<td/>').html(getTime(list.starttime + 60 * 60 * 1000)).appendTo(tr);
         var td3 = $('<td/>').html(list.detaildesc).appendTo(tr);
-        var td4 = $('<td/>').html(list.teamonedesc).appendTo(tr);
-        var td5 = $('<td/>').html(list.teamtwodesc).appendTo(tr);
+        var td4 = $('<td/>').html('<a href="#">' + list.teamonedesc + '</a>').addClass('team_one').appendTo(tr);
+        var td5 = $('<td/>').html('<a href="#">' + list.teamtwodesc + '</a>').addClass('team_two').appendTo(tr);
         if (list.status == 0) {
             var td11 = $('<td/>').html('未开始').appendTo(tr);
         } else if (list.status == 1) {
@@ -2710,12 +2710,13 @@ $(function($) {
         $(reply_comment3).attr("matchID", matchJson.id);
         $(reply_comment3).find('.addQuestionsButton').attr('data-info', JSON.stringify(matchJson));
         console.log("match id = " + matchJson.id);
+        reply_comment3.show();
         $.ajax({
             url: 'baseball_lottery?targettype=1&targetid=' + matchJson.id,
-            async: false,
+            // async: false,
             success: function(res) {
-                console.log("res = " + JSON.stringify(res));
-                if (res.status == 200) {
+                console.log(res);
+                if (res.status == 200 && res.data) {
                     $(".offline").attr("data-info", JSON.stringify(res.data));
                     console.log("question = " + res.data.question);
                     $(reply_comment3).attr('data-info', JSON.parse(res.data.id));
@@ -2752,7 +2753,6 @@ $(function($) {
                 }
             }
         });
-        reply_comment3.show();
     });
     // 设置正确选项
     table_matchList_tbody.on('click', '.t_answer', function() {
@@ -2947,12 +2947,12 @@ $(function($) {
         var td3 = $('<td/>').html(list.title).appendTo(tr);
         // var td6 = $('<td/>').html('<a href="#" data-id="' + list.id + '">置顶</a>').addClass('news_top').attr('data-info', info).appendTo(tr);
         if (list.id == top) {
-            var td6 = $('<td/>').html('置顶').appendTo(tr);
+            var td6 = $('<td/>').html('<span>置顶</span>').appendTo(tr);
         } else {
             var td6 = $('<td/>').html('<a href="#" data-id="' + list.id + '">置顶</a>').addClass('news_top').attr('data-info', info).appendTo(tr);
         }
         if (list.id == hidden) {
-            var td7 = $('<td/>').html('隐藏').appendTo(tr);
+            var td7 = $('<td/>').html('<span>隐藏</span>').appendTo(tr);
         } else {
             var td7 = $('<td/>').html('<a href="#" data-id="' + list.id + '">隐藏</a>').addClass('news_hidden').attr('data-info', info).appendTo(tr);
         }
@@ -2989,16 +2989,17 @@ $(function($) {
             data: JSON.stringify(data),
             success: function(res) {
                 console.log(res);
+                add_related_news.attr('data-info',JSON.stringify(data));
                 $('.related_news_id').val('');
                 $('.related_video_id').val('');
                 $('.set_top').attr('checked', false);
                 share_success.show();
                 table_relatedNews_tbody.empty();
                 if (newsids.newsid) {
-                    get_news(newsids.newsid, JSON.stringify(data));
+                    get_news(newsids.newsid, JSON.stringify(data),arr);
                 }
                 if (newsids.videoid) {
-                    get_videos(newsid.videoid, JSON.stringify(data));
+                    get_videos(newsid.videoid, JSON.stringify(data),arr);
                 }
                 setTimeout(function() {
                     share_success.hide();
@@ -3025,10 +3026,10 @@ $(function($) {
                 modify_success.show();
                 table_relatedNews_tbody.empty();
                 if (newsids.newsid) {
-                    get_news(newsids.newsid, JSON.stringify(data));
+                    get_news(newsids.newsid, JSON.stringify(data),arr,newsids.hidden);
                 }
                 if (newsids.videoid) {
-                    get_videos(newsid.videoid, JSON.stringify(data));
+                    get_videos(newsid.videoid, JSON.stringify(data),arr,newsids.hidden);
                 }
                 setTimeout(function() {
                     modify_success.hide();
@@ -3056,10 +3057,10 @@ $(function($) {
                 del_success.show();
                 table_relatedNews_tbody.empty();
                 if (newsids.newsid) {
-                    get_news(newsids.newsid, JSON.stringify(data));
+                    get_news(newsids.newsid, JSON.stringify(data),newsids.top,hidden);
                 }
                 if (newsids.videoid) {
-                    get_videos(newsid.videoid, JSON.stringify(data));
+                    get_videos(newsid.videoid, JSON.stringify(data),newsids.top,hidden);
                 }
                 setTimeout(function() {
                     del_success.hide();
