@@ -2641,7 +2641,7 @@ $(function($) {
         if ($('.b_user_id').val()) {
             table_user_answer.find('tr').hide();
             table_user_answer.find('.user_id').filter(":contains(" + $('.b_user_id').val() + ")").parents('tr').show();
-        }else {
+        } else {
             table_user_answer.find('tr').show();
         }
     });
@@ -2693,10 +2693,10 @@ $(function($) {
             var newsid = JSON.parse(info.newsids);
             console.log(newsid);
             if (newsid.newsid) {
-                get_news(newsid.newsid, $(this).attr('data-info'),newsid.top,newsid.hidden);
+                get_news(newsid.newsid, $(this).attr('data-info'), newsid.top, newsid.hidden);
             }
             if (newsid.videoid) {
-                get_videos(newsid.videoid, $(this).attr('data-info'),newsid.top,newsid.hidden);
+                get_videos(newsid.videoid, $(this).attr('data-info'), newsid.top, newsid.hidden);
             }
         }
 
@@ -2809,15 +2809,15 @@ $(function($) {
         var td5 = $('<td/>').html(item.correctnum).addClass('c_num').appendTo(tr);
         var td6 = $('<td/>').html(item.wrongnum).appendTo(tr);
         var td7 = $('<td/>').addClass('set_arward').attr('data-info', JSON.stringify(item))
-        if(item.award) {
-            if(item.award == 1) {
-                td7.html('一等奖    <a href="#" class="two_prize">二等奖</a>    <a href="#" class="three_prize">三等奖</a>');
-            } else if(item.award == 2) {
-                td7.html('<a href="#" class="first_prize">一等奖</a>    二等奖    <a href="#" class="three_prize">三等奖</a>');
+        if (item.award) {
+            if (item.award == 1) {
+                td7.html('<span>一等奖</span>    <a href="#" class="two_prize">二等奖</a>    <a href="#" class="three_prize">三等奖</a>');
+            } else if (item.award == 2) {
+                td7.html('<a href="#" class="first_prize">一等奖</a>    <span>二等奖</span>    <a href="#" class="three_prize">三等奖</a>');
             } else {
-                td7.html('<a href="#" class="first_prize">一等奖</a>    <a href="#" class="two_prize">二等奖</a>    三等奖');
+                td7.html('<a href="#" class="first_prize">一等奖</a>    <a href="#" class="two_prize">二等奖</a>    <span>三等奖</span>');
             }
-        }else {
+        } else {
             td7.html('<a href="#" class="first_prize">一等奖</a>    <a href="#" class="two_prize">二等奖</a>    <a href="#" class="three_prize">三等奖</a>');
         }
         td7.appendTo(tr);
@@ -2825,27 +2825,55 @@ $(function($) {
     }
 
     // 设置奖项
-    table_user_answer.on('click','.first_prize',function(){
-        lotterycommitaward($(this).parents('td').attr('data-info'),1);
+    table_user_answer.on('click', '.first_prize', function() {
+        lotterycommitaward($(this).parents('td').attr('data-info'), 1);
     });
-    table_user_answer.on('click','.two_prize',function(){
-        lotterycommitaward($(this).parents('td').attr('data-info'),2);
+    table_user_answer.on('click', '.two_prize', function() {
+        lotterycommitaward($(this).parents('td').attr('data-info'), 2);
     });
-    table_user_answer.on('click','.three_prize',function(){
-        lotterycommitaward($(this).parents('td').attr('data-info'),3);
+    table_user_answer.on('click', '.three_prize', function() {
+        lotterycommitaward($(this).parents('td').attr('data-info'), 3);
+    });
+    // 添加获奖用户
+    $('.set_award_user').click(function(){
+        var info = JSON.parse($(this).attr('data-info'));
+        console.log(info);
+        var data = {
+            "uid": $('.set_award_user_id').find('option:selected').attr('data-userinfo'), //必填项
+            "did": "abc-abc", //必填项
+            "lotteryid": info.lotteryid, //必填项
+            "targetid": info.targetid, //必填项
+            "targettype": 1, //必填项
+            "answer": "1:1", //必填项
+        }
+        console.log(data);
+        $.ajax({
+            url: 'baseball_lotterycommit',
+            type: 'POST',
+            data: JSON.stringify(data),
+            success: function(res) {
+                console.log(res);
+                modify_success.show();
+                getuseranswerlist(info.targetid)
+                setTimeout(function(){
+                    modify_success.hide();
+                },2000);
+            }
+        });
+        
     });
 
-    function lotterycommitaward(info,num) {
+    function lotterycommitaward(info, num) {
         var data = JSON.parse(info);
         $.ajax({
-            url: 'baseball_lotterycommitaward?uid='+data.uid+ '&targettype=1&targetid=' + data.targetid+ '&lotteryid=' + data.lotteryid + '&award=' + num,
+            url: 'baseball_lotterycommitaward?uid=' + data.uid + '&targettype=1&targetid=' + data.targetid + '&lotteryid=' + data.lotteryid + '&award=' + num,
             success: function(res) {
                 console.log(res);
                 share_success.show();
                 getuseranswerlist(data.targetid)
-                setTimeout(function(){
+                setTimeout(function() {
                     share_success.hide();
-                },2000);
+                }, 2000);
             }
         });
     }
@@ -2858,13 +2886,17 @@ $(function($) {
         reply_comment5.show();
         getuseranswerlist(JSON.parse($(this).attr("data-info")).id);
     });
+
     function getuseranswerlist(id) {
+        table_user_answer.empty();
         $.ajax({
             url: "baseball_lotteryanswer?targettype=1&targetid=" + id,
             success: function(res) {
                 console.log(res);
-                console.log(res.data.length);
-                table_user_answer.empty();
+                $('.set_award_user').attr('data-info',JSON.stringify((res.data)[0]));
+                for (var j = 0; j < arr10.length; j++) {
+                    $('<option/>').val(arr10[j].nickname).html(arr10[j].nickname).attr('data-userinfo', arr10[j].id).appendTo($('.set_award_user_id'));
+                }
                 if (res.status == 200) {
                     for (var i = 0; i < res.data.length; i++) {
                         // console.log((res.data)[i]);
@@ -2875,21 +2907,21 @@ $(function($) {
         });
     }
     // 获取新闻及视频
-    function get_news(ids, info,top,hidden) {
+    function get_news(ids, info, top, hidden) {
         $.ajax({
             url: 'news_get?ids=' + ids,
             success: function(res) {
                 var list = res.data;
 
                 for (var i in list) {
-                    createnewslist(list[i], 'news', info,top,hidden);
+                    createnewslist(list[i], 'news', info, top, hidden);
                 }
             }
         });
 
     }
 
-    function get_videos(ids, info,top,hidden) {
+    function get_videos(ids, info, top, hidden) {
         $.ajax({
             url: 'video_get?ids=' + ids,
             success: function(res) {
@@ -2897,14 +2929,14 @@ $(function($) {
                 console.log(list);
                 add_related_news.attr('data-info', info);
                 for (var i in list) {
-                    createnewslist(list[i], 'video', info,top,hidden);
+                    createnewslist(list[i], 'video', info, top, hidden);
                 }
             }
         });
 
     }
 
-    function createnewslist(list, type, info,top,hidden) {
+    function createnewslist(list, type, info, top, hidden) {
         var tr = $('<tr/>');
         var td1 = $('<td/>').html(list.id).addClass('n_id').appendTo(tr);
         if (type == "news") {
@@ -2914,15 +2946,15 @@ $(function($) {
         }
         var td3 = $('<td/>').html(list.title).appendTo(tr);
         // var td6 = $('<td/>').html('<a href="#" data-id="' + list.id + '">置顶</a>').addClass('news_top').attr('data-info', info).appendTo(tr);
-        if(list.id == top) {
+        if (list.id == top) {
             var td6 = $('<td/>').html('置顶').appendTo(tr);
-        }else {
-            var td6 = $('<td/>').html('<a href="#" data-id="' + list.id + '">置顶</a>').addClass('news_top').attr('data-info', info).appendTo(tr);   
+        } else {
+            var td6 = $('<td/>').html('<a href="#" data-id="' + list.id + '">置顶</a>').addClass('news_top').attr('data-info', info).appendTo(tr);
         }
-        if(list.id == hidden) {
+        if (list.id == hidden) {
             var td7 = $('<td/>').html('隐藏').appendTo(tr);
-        }else {
-            var td7 = $('<td/>').html('<a href="#" data-id="' + list.id + '">隐藏</a>').addClass('news_hidden').attr('data-info', info).appendTo(tr);   
+        } else {
+            var td7 = $('<td/>').html('<a href="#" data-id="' + list.id + '">隐藏</a>').addClass('news_hidden').attr('data-info', info).appendTo(tr);
         }
         tr.appendTo(table_relatedNews_tbody);
 
@@ -3063,9 +3095,9 @@ $(function($) {
                     success: function(res) {
                         console.log(res);
                         del_success.show();
-                        setTimeout(function(){
+                        setTimeout(function() {
                             del_success.hide();
-                        },2000);
+                        }, 2000);
                     }
                 });
             }
@@ -3080,7 +3112,7 @@ $(function($) {
         console.log("match id = " + matchID);
         questions.each(function(index) {
             var content = $(this).find(".content").val();
-            if(content) {
+            if (content) {
 
                 var choice1 = $(this).find(".choice1").val();
                 var choice2 = $(this).find(".choice2").val();
@@ -3139,9 +3171,9 @@ $(function($) {
             success: function(res) {
                 console.log(res);
                 share_success.show();
-                setTimeout(function(){
+                setTimeout(function() {
                     share_success.hide();
-                },2000);
+                }, 2000);
             }
         });
     });
@@ -3158,10 +3190,10 @@ $(function($) {
             success: function(res) {
                 console.log(res);
                 modify_success.show();
-                setTimeout(function(){
+                setTimeout(function() {
                     alert(1111);
                     modify_success.hide();
-                },2000);
+                }, 2000);
             }
         });
     });
