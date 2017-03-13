@@ -1295,7 +1295,8 @@ $(function($) {
                 os.each(function(idx, ele) {
                     if (this.checked && $(this).val() == 'android') {
                         pushNews(aid, pushtype, 'android');
-                    } else if (this.checked && $(this).val() == 'ios') {
+                    } 
+                    if (this.checked && $(this).val() == 'ios') {
                         console.log(aid,pushtype)
                         pushNews(aid, pushtype, 'ios');
                     }
