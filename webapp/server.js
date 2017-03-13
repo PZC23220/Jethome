@@ -6,8 +6,8 @@ var MySQLUtil = require('./jetModules/MySQLUtil');
 var PORT = 9000;
 
 var mySQLUtil = new MySQLUtil();
-var connection = mySQLUtil.getConnectionProd();
-// var connection = mySQLUtil.getConnectionTest();
+// var connection = mySQLUtil.getConnectionProd();
+var connection = mySQLUtil.getConnectionTest();
 connection.connect();
 
 var server = http.createServer(function(request, response) {
@@ -80,6 +80,7 @@ var server = http.createServer(function(request, response) {
             response.end();
         });
     } else if (params.pathname == '/people_push') {
+        console.log(query.pushtype,query.aid,query.type);
         var cmd = "cd /home/ec2-user/api/MobiScripts; java -jar build/libs/MobiScripts-1.0-SNAPSHOT-all.jar notification_surprise_news " + query.pushtype + " " + query.aid + " " + query.type;
         console.log(cmd);
         process.exec(cmd, function(error, stdout, stderr) {

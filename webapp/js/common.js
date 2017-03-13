@@ -18,6 +18,7 @@ $(function($) {
     var search_video = $('.search_video');
     var news_id = $('.news_id');
     var news_title = $('.news_title');
+    var c = true;
     var comment_opa = $('.comment_opa');
     var newsid = $('.newsid');
     var del_flo = $('.del_flo');
@@ -1285,10 +1286,9 @@ $(function($) {
         surePush(vid,'video');
     });
 
-    var c = true;
     // 点击确认推送
     function surePush(aid,pushtype) {
-
+        console.log(aid,pushtype);
         sure_push.click(function() {
             if (c) {
                 c = false;
@@ -1296,6 +1296,7 @@ $(function($) {
                     if (this.checked && $(this).val() == 'android') {
                         pushNews(aid, pushtype, 'android');
                     } else if (this.checked && $(this).val() == 'ios') {
+                        console.log(aid,pushtype)
                         pushNews(aid, pushtype, 'ios');
                     }
                 });
@@ -1313,6 +1314,7 @@ $(function($) {
 
     // 人工推送
     function pushNews(aid, pushtype, type) {
+        console.log(aid,pushtype,type);
         $.ajax({
             url: server_host + '/people_push?aid=' + aid + '&type=' + type + '&pushtype=' + pushtype,
             async: 'false',
@@ -1328,6 +1330,7 @@ $(function($) {
                 setTimeout(function() {
                     push_sure.hide();
                     success_push.hide();
+                    window.location.reload();
                 }, 2000);
                 c = true;
             }
