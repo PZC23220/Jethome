@@ -1694,30 +1694,32 @@
                         </div>
                     </div>
                 </div>
-                <!-- <div class="reply_comment6">
+                <div class="reply_comment6">
                     <div class="reply_comment_container">
                         <div class="input-group">
-                            <span class="input-group-addon">CID</span>
-                            <input type="text" class="form-control optimize_cid" placeholder="CID" disabled>
+                            <span class="input-group-addon">用户ID</span>
+                            <select class="form-control comment_user_id wbc_user_id" style="height: 40px;">
+                                <!-- <option>不限</option>
+                                <option>0</option> -->
+                            </select>
                         </div>
                         <div class="input-group">
-                            <span class="input-group-addon">CHANNEL</span>
-                            <input type="text" class="form-control channel" placeholder="CHANNEL" disabled>
+                            <span class="input-group-addon">球员</span>
+                            <select class="form-control wbc_player" style="height: 40px;">
+                                <option></option>
+                            </select>
                         </div>
-                        <div class="input-group">
-                            <span class="input-group-addon">plus_weight</span>
-                            <input type="number" class="form-control plus_weight" placeholder="Plus Weight" step="0.01">
+                        <!-- <div class="input-group">
+                            <span class="input-group-addon">赞同数</span>
+                            <input type="text" class="form-control wbc_comment_likes" placeholder="Comment Likes" value="0">
+                        </div> -->
+                        <div class="input-group" style="width: 100%;">
+                            <span class="input-group-addon">评论内容</span>
+                            <input type="text" class="form-control wbc_comment_content" placeholder="Comment Content">
                         </div>
-                        <div class="input-group">
-                            <span class="input-group-addon">minus_weight</span>
-                            <input type="number" class="form-control minus_weight" placeholder="Minus Weight" step="0.01">
-                        </div>
-                        <div class="input-group">
-                            <span class="input-group-addon">plus_init</span>
-                            <input type="number" class="form-control plus_init" placeholder="Plus Init" step="0.01">
-                        </div>
-                        <button type="button" class="btn btn-success update_optimize">修改栏目权重</button>
-                        <button type="button" class="btn btn-danger close4">取消</button>
+                        <p>当前编辑评论为<span class="wbc_comment_id"></span></p>
+                        <button type="button" class="btn btn-success submit_wbc_comment">提交评论</button>
+                        <button type="button" class="btn btn-danger close9">取消</button>
                     </div>
                      <div class="del_success">
                         <div class="likes_success">
@@ -1729,9 +1731,9 @@
                             输入内容不能为空！
                         </div>
                     </div>
-                </div> -->
+                </div>
             </div>
-            <!-- <p style="font-size: 18px;font-weight: 600;color: #f00;">点击比赛ID可以添加比赛评论、国家名称可以添加球队评论！</p> -->-
+            <p style="font-size: 18px;font-weight: 600;color: #f00;">点击比赛ID可以添加比赛评论、国家名称可以添加球队评论！</p>
         </div>
     </div>
 </body>

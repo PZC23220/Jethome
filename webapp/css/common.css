@@ -523,6 +523,7 @@ list_container_right {
 .reply_comment3,
 .reply_comment4,
 .reply_comment5,
+.reply_comment6,
 .del_success,
 .modify_success,
 .tips_success {
@@ -559,7 +560,8 @@ list_container_right {
 .reply_comment2 .reply_comment_container, 
 .reply_comment3 .reply_comment_container,
 .reply_comment4 .reply_comment_container,
-.reply_comment5 .reply_comment_container {
+.reply_comment5 .reply_comment_container,
+.reply_comment6 .reply_comment_container {
     position: absolute;
     font-size: 16px;
     font-weight: 600;
@@ -588,7 +590,8 @@ list_container_right {
 .reply_comment2 .reply_comment_container .input-group,
 .reply_comment3 .reply_comment_container .input-group,
 .reply_comment4 .reply_comment_container .input-group,
-.reply_comment5 .reply_comment_container .input-group {
+.reply_comment5 .reply_comment_container .input-group,
+.reply_comment6 .reply_comment_container .input-group {
     width: 45%;
     min-width : 400px;
     margin-bottom: 20px;
@@ -600,7 +603,8 @@ list_container_right {
 .reply_comment2 .reply_comment_container .input-group input,
 .reply_comment3 .reply_comment_container .input-group input,
 .reply_comment4 .reply_comment_container .input-group input,
-.reply_comment5 .reply_comment_container .input-group input {
+.reply_comment5 .reply_comment_container .input-group input,
+.reply_comment6 .reply_comment_container .input-group input {
     float: left;
 }
 
@@ -609,7 +613,8 @@ list_container_right {
 .reply_comment2 .reply_comment_container .input-group input,
 .reply_comment3 .reply_comment_container .input-group input,
 .reply_comment4 .reply_comment_container .input-group input,
-.reply_comment5 .reply_comment_container .input-group input {
+.reply_comment5 .reply_comment_container .input-group input,
+.reply_comment6 .reply_comment_container .input-group input {
     height: 40px;
     line-height: 40px;
 }
@@ -622,7 +627,8 @@ list_container_right {
 .reply_comment2 .reply_comment_container button,
 .reply_comment3 .reply_comment_container button,
 .reply_comment4 .reply_comment_container button,
-.reply_comment5 .reply_comment_container button {
+.reply_comment5 .reply_comment_container button,
+.reply_comment6 .reply_comment_container button {
     width: 10vw;
     height: 5vh;
     margin-right: 30px;

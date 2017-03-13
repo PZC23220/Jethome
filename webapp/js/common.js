@@ -182,6 +182,14 @@ $(function($) {
     var current_selection_match = $('.current_selection_match');
     var table_user_answer = $('.table_user_answer').find('tbody');
     var add_related_news = $('.add_related_news');
+    var reply_comment6 = $('.reply_comment6');
+    var close9 = $('.close9');
+    var submit_wbc_comment = $('.submit_wbc_comment');
+    var wbc_user_id = $('.wbc_user_id');
+    var wbc_comment_content = $('.wbc_comment_content');
+    var wbc_comment_likes = $('.wbc_comment_likes');
+    var submit_wbc_comment = $('.submit_wbc_comment');
+    var wbc_player = $('.wbc_player');
 
     var server_host = "http://jethome.newsjet.io:9000";
     // var server_host = "http://localhost:9000";
@@ -2652,11 +2660,11 @@ $(function($) {
 
     function createMatchlist(list) {
         var tr = $('<tr/>');
-        var td1 = $('<td/>').html('<a href="#">' + list.id + '</a>').addClass('m_id').appendTo(tr);
+        var td1 = $('<td/>').html('<a href="#">' + list.id + '</a>').addClass('m_id').attr('data-id', list.id).appendTo(tr);
         var td2 = $('<td/>').html(getTime(list.starttime + 60 * 60 * 1000)).appendTo(tr);
         var td3 = $('<td/>').html(list.detaildesc).appendTo(tr);
-        var td4 = $('<td/>').html('<a href="#">' + list.teamonedesc + '</a>').addClass('team_one').appendTo(tr);
-        var td5 = $('<td/>').html('<a href="#">' + list.teamtwodesc + '</a>').addClass('team_two').appendTo(tr);
+        var td4 = $('<td/>').html('<a href="#">' + list.teamonedesc + '</a>').addClass('team_one').attr({'data-info': JSON.stringify(list.teamOnePlayers),'data-id': list.teamoneid}).appendTo(tr);
+        var td5 = $('<td/>').html('<a href="#">' + list.teamtwodesc + '</a>').addClass('team_two').attr({'data-info': JSON.stringify(list.teamTwoPlayers),'data-id': list.teamoneid}).appendTo(tr);
         if (list.status == 0) {
             var td11 = $('<td/>').html('未开始').appendTo(tr);
         } else if (list.status == 1) {
@@ -3196,12 +3204,98 @@ $(function($) {
                 console.log(res);
                 modify_success.show();
                 setTimeout(function() {
-                    alert(1111);
+                    // alert(1111);
                     modify_success.hide();
                 }, 2000);
             }
         });
     });
+
+    // 比赛评论
+    table_matchList_tbody.on('click','.m_id',function(){
+        reply_comment6.show();
+        wbc_player.attr('disabled','disabled');
+        submit_wbc_comment.attr({'data-id': $(this).attr('data-id'),'data-type': 1});
+    });
+
+    // 球队球员评论
+    table_matchList_tbody.on('click','.team_one,.team_two',function(){
+        reply_comment6.show();
+        wbc_player.removeAttr('disabled');
+        var players = JSON.parse($(this).attr('data-info'));
+        for(var i in players) {
+            $('<option/>').html(players[i].name).attr('data-id',players[i].id).appendTo(wbc_player);
+        }
+        // baseball_team($(this).attr('data-id'));
+        submit_wbc_comment.attr({'data-id': $(this).attr('data-id'),'data-type': 2});
+    });
+
+    // function baseball_team(id) {
+    //     $.ajax({
+    //         url: 'baseball_team?id=' + id,
+    //         success: function(res) {
+    //             console.log(res);
+    //             for(var i=0;i<)
+    //         }
+    //     });
+        
+    // }
+
+    // 提交评论
+    submit_wbc_comment.click(function(){
+        if(wbc_comment_content.val()) {
+            if(wbc_player.find('option:selected').html() != '') {
+                baseball_postsave(wbc_user_id.find('option:selected').attr('data-userinfo'),3,wbc_player.find('option:selected').attr('data-id'),wbc_comment_content.val());
+            }else {
+
+                baseball_postsave(wbc_user_id.find('option:selected').attr('data-userinfo'),$(this).attr('data-type'),$(this).attr('data-id'),wbc_comment_content.val());
+            }
+            // console.log(wbc_comment_likes.val());
+        } else {
+            tips_success.show();
+            setTimeout(function(){
+                tips_success.hide();
+            },2000);
+        }
+
+    });
+
+    close9.click(function(){
+        reply_comment6.hide();
+    });
+
+
+    function baseball_postsave(userInfo,targettype,targetid,content) {
+        var data = {
+            "uid": JSON.parse(userInfo).id, // 必填项.
+            "did": "abcd", // 必填项.
+            "nickname": JSON.parse(userInfo).nickname, // 必填项.
+            "portrait": JSON.parse(userInfo).portrait, // 必填项. user portrait
+            "targettype": targettype, // 必填项. 1:match;2:team;3:player
+            "targetid": targetid, // 必填项. match id/team id/player id
+            "content": content, // 必填项. post content
+            "floor": 0, // 必填项. 当前版本填写0
+            "reference": 0, // 必填项. 当前版本填写0
+            // "likes": likes,
+            "updatetime": new Date(), // 必填项. 当前创建的时间戳
+            "active": 1 // 必填项. 1:active;
+        }
+        console.log(data);
+        $.ajax({
+            url: 'baseball_postsave',
+            type: 'POST',
+            data: JSON.stringify(data),
+            success: function(res) {
+                console.log(res);
+                del_success.show();
+                setTimeout(function(){
+                    del_success.hide();
+                    reply_comment6.hide();
+                },2000);
+            }
+        });
+        
+    }
     // var userinfo = $(this).find('option:selected').attr('data-userinfo');
 });
 
