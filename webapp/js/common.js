@@ -1273,7 +1273,7 @@ $(function($) {
         console.log(aid);
         push_sure.show();
         push_sure.find('p span').html(aid);
-        surePush(aid);
+        surePush(aid,'news');
     });
 
     // 推送视频
@@ -1282,21 +1282,21 @@ $(function($) {
         console.log(vid);
         push_sure.show();
         push_sure.find('p span').html(vid);
-        surePush(vid);
+        surePush(vid,'video');
     });
 
     var c = true;
     // 点击确认推送
-    function surePush(aid) {
+    function surePush(aid,pushtype) {
 
         sure_push.click(function() {
             if (c) {
                 c = false;
                 os.each(function(idx, ele) {
                     if (this.checked && $(this).val() == 'android') {
-                        pushNews(aid, 'android');
+                        pushNews(aid, pushtype, 'android');
                     } else if (this.checked && $(this).val() == 'ios') {
-                        pushNews(aid, 'ios');
+                        pushNews(aid, pushtype, 'ios');
                     }
                 });
             }
@@ -1312,9 +1312,9 @@ $(function($) {
     });
 
     // 人工推送
-    function pushNews(aid, type) {
+    function pushNews(aid, pushtype, type) {
         $.ajax({
-            url: server_host + '/people_push?aid=' + aid + '&type=' + type,
+            url: server_host + '/people_push?aid=' + aid + '&type=' + type + '&pushtype=' + pushtype,
             async: 'false',
             beforeSend: function() {
                 loading.show();
