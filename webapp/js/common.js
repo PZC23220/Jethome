@@ -190,6 +190,7 @@ $(function($) {
     var wbc_comment_likes = $('.wbc_comment_likes');
     var submit_wbc_comment = $('.submit_wbc_comment');
     var wbc_player = $('.wbc_player');
+    var wbc_comment_id = $('.wbc_comment_id');
 
     var server_host = "http://jethome.newsjet.io:9000";
     // var server_host = "http://localhost:9000";
@@ -3213,6 +3214,7 @@ $(function($) {
 
     // 比赛评论
     table_matchList_tbody.on('click','.m_id',function(){
+        wbc_comment_id.html('  ' + $(this).siblings('.team_one').html() + '--' + $(this).siblings('.team_two').html());
         reply_comment6.show();
         wbc_player.attr('disabled','disabled');
         submit_wbc_comment.attr({'data-id': $(this).attr('data-id'),'data-type': 1});
@@ -3220,6 +3222,7 @@ $(function($) {
 
     // 球队球员评论
     table_matchList_tbody.on('click','.team_one,.team_two',function(){
+        wbc_comment_id.html('   '+$(this).html());
         reply_comment6.show();
         wbc_player.removeAttr('disabled');
         var players = JSON.parse($(this).attr('data-info'));
@@ -3289,6 +3292,8 @@ $(function($) {
                 console.log(res);
                 del_success.show();
                 setTimeout(function(){
+                    wbc_user_id.val('');
+                    wbc_comment_content.val('');
                     del_success.hide();
                     reply_comment6.hide();
                 },2000);
