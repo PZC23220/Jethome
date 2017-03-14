@@ -1280,7 +1280,7 @@ $(function($) {
     // 推送新闻
     table_comment_tbody.on('click', '.people_push', function() {
         var aid = $(this).parents('tr').find('.newsid').html();
-        console.log(aid);
+        // console.log(aid);
         push_sure.show();
         push_sure.find('p span').html(aid);
         surePush(aid,'news');
@@ -1289,7 +1289,7 @@ $(function($) {
     // 推送视频
     table_video_tbody.on('click', '.people_push', function() {
         var vid = $(this).parents('tr').find('.videoid').html();
-        console.log(vid);
+        // console.log(vid);
         push_sure.show();
         push_sure.find('p span').html(vid);
         surePush(vid,'video');
@@ -1305,8 +1305,8 @@ $(function($) {
                     if (this.checked && $(this).val() == 'android') {
                         pushNews(aid, pushtype, 'android');
                     } 
-                    if (this.checked && $(this).val() == 'ios') {
-                        console.log(aid,pushtype)
+                    else if (this.checked && $(this).val() == 'ios') {
+                        // console.log(aid,pushtype);
                         pushNews(aid, pushtype, 'ios');
                     }
                 });
@@ -2854,7 +2854,7 @@ $(function($) {
         var data = {
             "uid": $('.set_award_user_id').find('option:selected').attr('data-userinfo'), //必填项
             "did": "abc-abc", //必填项
-            "lotteryid": info.lotteryid, //必填项
+            // "lotteryid": info.lotteryid, //必填项
             "targetid": info.targetid, //必填项
             "targettype": 1, //必填项
             "answer": "1:1", //必填项
