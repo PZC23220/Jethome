@@ -586,6 +586,18 @@ $(function($) {
         }
     });
 
+    news_title.blur(function(){
+        if($(this).val() == '') {
+            window.location.reload();
+        }
+    });
+
+    video_title.blur(function(){
+        if($(this).val() == '') {
+            window.location.reload();
+        }
+    });
+
     comment_container.on('click', '.newsid', function() {
         var nid = $(this).html();
         news_content.show();
