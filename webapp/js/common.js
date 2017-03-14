@@ -287,20 +287,105 @@ $(function($) {
         }
         if (tit) {
             // table_comment_tbody.find('tr').hide().filter(":contains(" + tit + ")").show();
-            // 
             $.ajax({
-                url: 'news_select?wt=json&fl=title,aid,site,score,source,url,ctime,category_id:cid,desc&sort=score%20desc&q=title:'+ tit +'&fq=ctime:%5B'+ (new Date() - 2*24*60*60*1000)/1000 +'%20TO%20*%5D&rows=100',
-                // type: 'POST',
-                // data: JSON.stringify(data),
+                url: 'news_select?wt=json&fl=title,aid,site,score,source,commentCount,ctime,category_id:cid,desc&sort=score%20desc&q=title:' + tit + '&fq=ctime:%5B' + parseInt((new Date() - 2 * 24 * 60 * 60 * 1000) / 1000) + '%20TO%20*%5D&rows=100',
                 success: function(res) {
                     console.log(res);
-                    // var list = res.#document.result;
-                    // for(var i=0;i<list.length;i++) {
+                    table_comment_tbody.empty();
+                    var lists = res.response.docs;
+                    for (var i = 0; i < lists.length; i++) {
+                        var list = lists[i];
+                        var tr = $('<tr/>');
+                        var td1 = $('<td/>').html(1).appendTo(tr);
+                        var td2 = $('<td/>').html(list.aid).addClass('newsid').appendTo(tr);
+                        var td3 = $('<td/>').html(list.title).addClass('newstitle').appendTo(tr);
+                        var td4 = $('<td/>').html(list.commentCount).addClass('commentCount').appendTo(tr);
+                        var td5 = $('<td/>').html('0').addClass('pComments').attr('data-id', list.id).appendTo(tr);
+                        var td6 = $('<td/>').addClass('comment').attr('data-newsInfo', JSON.stringify(list));
+                        var a = $('<a/>').attr('href', '#').html('评论').appendTo(td6);
+                        td6.appendTo(tr);
+                        var td7 = $('<td class="system_push"><input type="checkbox" value="noon" class="noon_push">午间<input type="checkbox" value="night" class="night_push">晚间</td>').appendTo(tr);
+                        var td8 = $('<td class="people_push"><a href="#">立即推送</a></td>').appendTo(tr);
+                        switch (list.category_id) {
+                            case 'all':
+                                var td9 = $('<td class="c_id"><a href="#">' + list.category_id + '</a></td>').attr({ 'data-id': list.id, 'data-cid': list.category_id }).appendTo(tr);
+                                break;
+                            case 'top':
+                                var td9 = $('<td class="c_id"><a href="#">トップ</a></td>').attr({ 'data-id': list.id, 'data-cid': list.category_id }).appendTo(tr);
+                                break;
+                            case 'ent':
+                                var td9 = $('<td class="c_id"><a href="#">エンタメ</a></td>').attr({ 'data-id': list.id, 'data-cid': list.category_id }).appendTo(tr);
+                                break;
+                            case 'spo':
+                                var td9 = $('<td class="c_id"><a href="#">スポーツ</a></td>').attr({ 'data-id': list.id, 'data-cid': list.category_id }).appendTo(tr);
+                                break;
+                            case 'cn':
+                                var td9 = $('<td class="c_id"><a href="#">中国</a></td>').attr({ 'data-id': list.id, 'data-cid': list.category_id }).appendTo(tr);
+                                break;
+                            case 'kr':
+                                var td9 = $('<td class="c_id"><a href="#">韓国</a></td>').attr({ 'data-id': list.id, 'data-cid': list.category_id }).appendTo(tr);
+                                break;
+                            case 'base':
+                                var td9 = $('<td class="c_id"><a href="#">野球</a></td>').attr({ 'data-id': list.id, 'data-cid': list.category_id }).appendTo(tr);
+                                break;
+                            case 'int':
+                                var td9 = $('<td class="c_id"><a href="#">国際</a></td>').attr({ 'data-id': list.id, 'data-cid': list.category_id }).appendTo(tr);
+                                break;
+                            case 'pol':
+                                var td9 = $('<td class="c_id"><a href="#">政治</a></td>').attr({ 'data-id': list.id, 'data-cid': list.category_id }).appendTo(tr);
+                                break;
+                            case 'bus':
+                                var td9 = $('<td class="c_id"><a href="#">経済</a></td>').attr({ 'data-id': list.id, 'data-cid': list.category_id }).appendTo(tr);
+                                break;
+                            case 'tech':
+                                var td9 = $('<td class="c_id"><a href="#">テクノロジー</a></td>').attr({ 'data-id': list.id, 'data-cid': list.category_id }).appendTo(tr);
+                                break;
+                            case 'socc':
+                                var td9 = $('<td class="c_id"><a href="#">サッカー</a></td>').attr({ 'data-id': list.id, 'data-cid': list.category_id }).appendTo(tr);
+                                break;
+                            case 'soci':
+                                var td9 = $('<td class="c_id"><a href="#">社会</a></td>').attr({ 'data-id': list.id, 'data-cid': list.category_id }).appendTo(tr);
+                                break;
+                            case 'girl':
+                                var td9 = $('<td class="c_id"><a href="#">女性</a></td>').attr({ 'data-id': list.id, 'data-cid': list.category_id }).appendTo(tr);
+                                break;
+                            case 'tra':
+                                var td9 = $('<td class="c_id"><a href="#">旅行</a></td>').attr({ 'data-id': list.id, 'data-cid': list.category_id }).appendTo(tr);
+                                break;
+                            case 'cnet':
+                                var td9 = $('<td class="c_id"><a href="#">チャイナネット</a></td>').attr({ 'data-id': list.id, 'data-cid': list.category_id }).appendTo(tr);
+                                break;
+                            case 'video':
+                                var td9 = $('<td class="c_id"><a href="#">動画</a></td>').attr({ 'data-id': list.id, 'data-cid': list.category_id }).appendTo(tr);
+                                break;
+                            case 'pic':
+                                var td9 = $('<td class="c_id"><a href="#">写真</a></td>').attr({ 'data-id': list.id, 'data-cid': list.category_id }).appendTo(tr);
+                                break;
+                            case 'anime':
+                                var td9 = $('<td class="c_id"><a href="#">アニメ</a></td>').attr({ 'data-id': list.id, 'data-cid': list.category_id }).appendTo(tr);
+                                break;
+                            case 'game':
+                                var td9 = $('<td class="c_id"><a href="#">ゲーム</a></td>').attr({ 'data-id': list.id, 'data-cid': list.category_id }).appendTo(tr);
+                                break;
+                            case 'food':
+                                var td9 = $('<td class="c_id"><a href="#">グルメ</a></td>').attr({ 'data-id': list.id, 'data-cid': list.category_id }).appendTo(tr);
+                                break;
+                            case 'cul':
+                                var td9 = $('<td class="c_id"><a href="#">文化</a></td>').attr({ 'data-id': list.id, 'data-cid': list.category_id }).appendTo(tr);
+                                break;
+                            case 'wea':
+                                var td9 = $('<td class="c_id"><a href="#">災害</a></td>').attr({ 'data-id': list.id, 'data-cid': list.category_id }).appendTo(tr);
+                                break;
+                            default:
+                                var td9 = $('<td class="c_id"><a href="#">' + list.category_id + '</a></td>').attr({ 'data-id': list.id, 'data-cid': list.category_id }).appendTo(tr);
+                                break;
 
-                    // }
+                        }
+                        tr.appendTo(table_comment_tbody);
+                    }
                 }
             });
-            
+
         }
     }
 
@@ -327,15 +412,26 @@ $(function($) {
         if (tit) {
             // table_video_tbody.find('tr').hide().filter(":contains(" + tit + ")").show();
             $.ajax({
-                url: 'news_select?wt=json&fl=title,aid,site,score,source,url,ctime,category_id:cid,desc&sort=score%20desc&q=title:'+ tit +'&fq=ctime:%5B'+ (new Date() - 2*24*60*60*1000)/1000 +'%20TO%20*%5D&rows=100',
-                // type: 'POST',
-                // data: JSON.stringify(data),
+                url: 'video_select?wt=json&fl=title,vid,commentCount,category_id:cid,desc&sort=score%20desc&q=title:' + tit+'&rows=100',
                 success: function(res) {
                     console.log(res);
-                    // var list = res.#document.result;
-                    // for(var i=0;i<list.length;i++) {
-
-                    // }
+                    table_video_tbody.empty();
+                    var lists = res.response.docs;
+                    for (var i = 0; i < lists.length; i++) {
+                        var list = lists[i];
+                        var tr = $('<tr/>');
+                        var td1 = $('<td/>').html(1).appendTo(tr);
+                        var td2 = $('<td/>').html(list.vid).addClass('videoid').attr('data-id', list.videoId).appendTo(tr);
+                        var td3 = $('<td/>').html(list.title).addClass('videotitle').appendTo(tr);
+                        var td4 = $('<td/>').html(list.commentCount).addClass('commentCount').appendTo(tr);
+                        var td5 = $('<td/>').html('0').addClass('pComments').attr('data-id', list.id).appendTo(tr);
+                        var td6 = $('<td/>').addClass('comment').attr('data-newsInfo', JSON.stringify(list));
+                        var a = $('<a/>').attr('href', '#').html('评论').appendTo(td6);
+                        td6.appendTo(tr);
+                        var td7 = $('<td class="system_push"><input type="checkbox" value="noon" class="noon_push2">午间<input type="checkbox" value="night" class="night_push2">晚间</td>').appendTo(tr);
+                        var td8 = $('<td class="people_push"><a href="#">立即推送</a></td>').appendTo(tr);
+                        tr.appendTo(table_video_tbody);
+                    }
                 }
             });
         }
@@ -1310,7 +1406,7 @@ $(function($) {
         // console.log(aid);
         push_sure.show();
         push_sure.find('p span').html(aid);
-        surePush(aid,'news');
+        surePush(aid, 'news');
     });
 
     // 推送视频
@@ -1319,20 +1415,19 @@ $(function($) {
         // console.log(vid);
         push_sure.show();
         push_sure.find('p span').html(vid);
-        surePush(vid,'video');
+        surePush(vid, 'video');
     });
 
     // 点击确认推送
-    function surePush(aid,pushtype) {
-        console.log(aid,pushtype);
+    function surePush(aid, pushtype) {
+        console.log(aid, pushtype);
         sure_push.click(function() {
             if (c) {
                 c = false;
                 os.each(function(idx, ele) {
                     if (this.checked && $(this).val() == 'android') {
                         pushNews(aid, pushtype, 'android');
-                    } 
-                    else if (this.checked && $(this).val() == 'ios') {
+                    } else if (this.checked && $(this).val() == 'ios') {
                         // console.log(aid,pushtype);
                         pushNews(aid, pushtype, 'ios');
                     }
@@ -1351,7 +1446,7 @@ $(function($) {
 
     // 人工推送
     function pushNews(aid, pushtype, type) {
-        console.log(aid,pushtype,type);
+        console.log(aid, pushtype, type);
         $.ajax({
             url: server_host + '/people_push?aid=' + aid + '&type=' + type + '&pushtype=' + pushtype,
             async: 'false',
@@ -2691,8 +2786,8 @@ $(function($) {
         var td1 = $('<td/>').html('<a href="#">' + list.id + '</a>').addClass('m_id').attr('data-id', list.id).appendTo(tr);
         var td2 = $('<td/>').html(getTime(list.starttime + 60 * 60 * 1000)).appendTo(tr);
         var td3 = $('<td/>').html(list.detaildesc).appendTo(tr);
-        var td4 = $('<td/>').html('<a href="#">' + list.teamonedesc + '</a>').addClass('team_one').attr({'data-info': JSON.stringify(list.teamOnePlayers),'data-id': list.teamoneid}).appendTo(tr);
-        var td5 = $('<td/>').html('<a href="#">' + list.teamtwodesc + '</a>').addClass('team_two').attr({'data-info': JSON.stringify(list.teamTwoPlayers),'data-id': list.teamoneid}).appendTo(tr);
+        var td4 = $('<td/>').html('<a href="#">' + list.teamonedesc + '</a>').addClass('team_one').attr({ 'data-info': JSON.stringify(list.teamOnePlayers), 'data-id': list.teamoneid }).appendTo(tr);
+        var td5 = $('<td/>').html('<a href="#">' + list.teamtwodesc + '</a>').addClass('team_two').attr({ 'data-info': JSON.stringify(list.teamTwoPlayers), 'data-id': list.teamoneid }).appendTo(tr);
         if (list.status == 0) {
             var td11 = $('<td/>').html('未开始').appendTo(tr);
         } else if (list.status == 1) {
@@ -2875,7 +2970,7 @@ $(function($) {
         lotterycommitaward($(this).parents('td').attr('data-info'), 3);
     });
     // 添加获奖用户
-    $('.set_award_user').click(function(){
+    $('.set_award_user').click(function() {
         var info = JSON.parse($(this).attr('data-info'));
         console.log(info);
         var data = {
@@ -2895,12 +2990,12 @@ $(function($) {
                 console.log(res);
                 modify_success.show();
                 getuseranswerlist(info.targetid)
-                setTimeout(function(){
+                setTimeout(function() {
                     modify_success.hide();
-                },2000);
+                }, 2000);
             }
         });
-        
+
     });
 
     function lotterycommitaward(info, num) {
@@ -2933,7 +3028,7 @@ $(function($) {
             url: "baseball_lotteryanswer?targettype=1&targetid=" + id,
             success: function(res) {
                 console.log(res);
-                $('.set_award_user').attr('data-info',JSON.stringify((res.data)[0]));
+                $('.set_award_user').attr('data-info', JSON.stringify((res.data)[0]));
                 for (var j = 0; j < arr10.length; j++) {
                     $('<option/>').val(arr10[j].nickname).html(arr10[j].nickname).attr('data-userinfo', arr10[j].id).appendTo($('.set_award_user_id'));
                 }
@@ -3029,17 +3124,17 @@ $(function($) {
             data: JSON.stringify(data),
             success: function(res) {
                 console.log(res);
-                add_related_news.attr('data-info',JSON.stringify(data));
+                add_related_news.attr('data-info', JSON.stringify(data));
                 $('.related_news_id').val('');
                 $('.related_video_id').val('');
                 $('.set_top').attr('checked', false);
                 share_success.show();
                 table_relatedNews_tbody.empty();
                 if (newsids.newsid) {
-                    get_news(newsids.newsid, JSON.stringify(data),arr);
+                    get_news(newsids.newsid, JSON.stringify(data), arr);
                 }
                 if (newsids.videoid) {
-                    get_videos(newsid.videoid, JSON.stringify(data),arr);
+                    get_videos(newsid.videoid, JSON.stringify(data), arr);
                 }
                 setTimeout(function() {
                     share_success.hide();
@@ -3066,10 +3161,10 @@ $(function($) {
                 modify_success.show();
                 table_relatedNews_tbody.empty();
                 if (newsids.newsid) {
-                    get_news(newsids.newsid, JSON.stringify(data),arr,newsids.hidden);
+                    get_news(newsids.newsid, JSON.stringify(data), arr, newsids.hidden);
                 }
                 if (newsids.videoid) {
-                    get_videos(newsid.videoid, JSON.stringify(data),arr,newsids.hidden);
+                    get_videos(newsid.videoid, JSON.stringify(data), arr, newsids.hidden);
                 }
                 setTimeout(function() {
                     modify_success.hide();
@@ -3097,10 +3192,10 @@ $(function($) {
                 del_success.show();
                 table_relatedNews_tbody.empty();
                 if (newsids.newsid) {
-                    get_news(newsids.newsid, JSON.stringify(data),newsids.top,hidden);
+                    get_news(newsids.newsid, JSON.stringify(data), newsids.top, hidden);
                 }
                 if (newsids.videoid) {
-                    get_videos(newsid.videoid, JSON.stringify(data),newsids.top,hidden);
+                    get_videos(newsid.videoid, JSON.stringify(data), newsids.top, hidden);
                 }
                 setTimeout(function() {
                     del_success.hide();
@@ -3240,24 +3335,24 @@ $(function($) {
     });
 
     // 比赛评论
-    table_matchList_tbody.on('click','.m_id',function(){
+    table_matchList_tbody.on('click', '.m_id', function() {
         wbc_comment_id.html('  ' + $(this).siblings('.team_one').html() + '--' + $(this).siblings('.team_two').html());
         reply_comment6.show();
-        wbc_player.attr('disabled','disabled');
-        submit_wbc_comment.attr({'data-id': $(this).attr('data-id'),'data-type': 1});
+        wbc_player.attr('disabled', 'disabled');
+        submit_wbc_comment.attr({ 'data-id': $(this).attr('data-id'), 'data-type': 1 });
     });
 
     // 球队球员评论
-    table_matchList_tbody.on('click','.team_one,.team_two',function(){
-        wbc_comment_id.html('   '+$(this).html());
+    table_matchList_tbody.on('click', '.team_one,.team_two', function() {
+        wbc_comment_id.html('   ' + $(this).html());
         reply_comment6.show();
         wbc_player.removeAttr('disabled');
         var players = JSON.parse($(this).attr('data-info'));
-        for(var i in players) {
-            $('<option/>').html(players[i].name).attr('data-id',players[i].id).appendTo(wbc_player);
+        for (var i in players) {
+            $('<option/>').html(players[i].name).attr('data-id', players[i].id).appendTo(wbc_player);
         }
         // baseball_team($(this).attr('data-id'));
-        submit_wbc_comment.attr({'data-id': $(this).attr('data-id'),'data-type': 2});
+        submit_wbc_comment.attr({ 'data-id': $(this).attr('data-id'), 'data-type': 2 });
     });
 
     // function baseball_team(id) {
@@ -3268,34 +3363,34 @@ $(function($) {
     //             for(var i=0;i<)
     //         }
     //     });
-        
+
     // }
 
     // 提交评论
-    submit_wbc_comment.click(function(){
-        if(wbc_comment_content.val()) {
-            if(wbc_player.find('option:selected').html() != '') {
-                baseball_postsave(wbc_user_id.find('option:selected').attr('data-userinfo'),3,wbc_player.find('option:selected').attr('data-id'),wbc_comment_content.val());
-            }else {
+    submit_wbc_comment.click(function() {
+        if (wbc_comment_content.val()) {
+            if (wbc_player.find('option:selected').html() != '') {
+                baseball_postsave(wbc_user_id.find('option:selected').attr('data-userinfo'), 3, wbc_player.find('option:selected').attr('data-id'), wbc_comment_content.val());
+            } else {
 
-                baseball_postsave(wbc_user_id.find('option:selected').attr('data-userinfo'),$(this).attr('data-type'),$(this).attr('data-id'),wbc_comment_content.val());
+                baseball_postsave(wbc_user_id.find('option:selected').attr('data-userinfo'), $(this).attr('data-type'), $(this).attr('data-id'), wbc_comment_content.val());
             }
             // console.log(wbc_comment_likes.val());
         } else {
             tips_success.show();
-            setTimeout(function(){
+            setTimeout(function() {
                 tips_success.hide();
-            },2000);
+            }, 2000);
         }
 
     });
 
-    close9.click(function(){
+    close9.click(function() {
         reply_comment6.hide();
     });
 
 
-    function baseball_postsave(userInfo,targettype,targetid,content) {
+    function baseball_postsave(userInfo, targettype, targetid, content) {
         var data = {
             "uid": JSON.parse(userInfo).id, // 必填项.
             "did": "abcd", // 必填项.
@@ -3318,15 +3413,15 @@ $(function($) {
             success: function(res) {
                 console.log(res);
                 del_success.show();
-                setTimeout(function(){
+                setTimeout(function() {
                     wbc_user_id.val('');
                     wbc_comment_content.val('');
                     del_success.hide();
                     reply_comment6.hide();
-                },2000);
+                }, 2000);
             }
         });
-        
+
     }
     // var userinfo = $(this).find('option:selected').attr('data-userinfo');
 });
