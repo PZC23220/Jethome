@@ -1,4 +1,5 @@
 ;
+var c = true;
 $(function($) {
     // 获取标签
     var table_comment = $('.table_comment');
@@ -18,7 +19,6 @@ $(function($) {
     var search_video = $('.search_video');
     var news_id = $('.news_id');
     var news_title = $('.news_title');
-    var c = true;
     var comment_opa = $('.comment_opa');
     var newsid = $('.newsid');
     var del_flo = $('.del_flo');
@@ -286,7 +286,21 @@ $(function($) {
             table_comment_tbody.find('tr').show();
         }
         if (tit) {
-            table_comment_tbody.find('tr').hide().filter(":contains(" + tit + ")").show();
+            // table_comment_tbody.find('tr').hide().filter(":contains(" + tit + ")").show();
+            // 
+            $.ajax({
+                url: 'news_select?wt=json&fl=title,aid,site,score,source,url,ctime,category_id:cid,desc&sort=score%20desc&q=title:'+ tit +'&fq=ctime:%5B'+ (new Date() - 2*24*60*60*1000)/1000 +'%20TO%20*%5D&rows=100',
+                // type: 'POST',
+                // data: JSON.stringify(data),
+                success: function(res) {
+                    console.log(res);
+                    // var list = res.#document.result;
+                    // for(var i=0;i<list.length;i++) {
+
+                    // }
+                }
+            });
+            
         }
     }
 
@@ -311,9 +325,22 @@ $(function($) {
             table_video_tbody.find('tr').show();
         }
         if (tit) {
-            table_video_tbody.find('tr').hide().filter(":contains(" + tit + ")").show();
+            // table_video_tbody.find('tr').hide().filter(":contains(" + tit + ")").show();
+            $.ajax({
+                url: 'news_select?wt=json&fl=title,aid,site,score,source,url,ctime,category_id:cid,desc&sort=score%20desc&q=title:'+ tit +'&fq=ctime:%5B'+ (new Date() - 2*24*60*60*1000)/1000 +'%20TO%20*%5D&rows=100',
+                // type: 'POST',
+                // data: JSON.stringify(data),
+                success: function(res) {
+                    console.log(res);
+                    // var list = res.#document.result;
+                    // for(var i=0;i<list.length;i++) {
+
+                    // }
+                }
+            });
         }
     }
+
 
     // 搜索视频
     function getSinglevideo(videoid) {
@@ -2854,7 +2881,7 @@ $(function($) {
         var data = {
             "uid": $('.set_award_user_id').find('option:selected').attr('data-userinfo'), //必填项
             "did": "abc-abc", //必填项
-            // "lotteryid": info.lotteryid, //必填项
+            "lotteryid": info.lotteryid, //必填项
             "targetid": info.targetid, //必填项
             "targettype": 1, //必填项
             "answer": "1:1", //必填项
