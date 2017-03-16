@@ -3359,6 +3359,7 @@ $(function($) {
         wbc_comment_id.html('   ' + $(this).html());
         reply_comment6.show();
         wbc_player.removeAttr('disabled');
+        wbc_player.empty();
         var players = JSON.parse($(this).attr('data-info'));
         for (var i in players) {
             $('<option/>').html(players[i].name).attr('data-id', players[i].id).appendTo(wbc_player);
