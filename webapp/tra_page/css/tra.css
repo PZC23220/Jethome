@@ -130,10 +130,13 @@ section.ad {
     /*padding-bottom: 10px !important;*/
 }
 
+section.ad a {
+    overflow: hidden !important;
+}
+
 section.ad div {
-    width: inherit !important;
-    background: inherit !important;
     border: none !important;
+    padding: 0 !important;
 }
 
 section.ad .advsc-item-image {
