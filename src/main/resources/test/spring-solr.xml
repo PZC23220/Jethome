@@ -5,9 +5,8 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.0.xsd">
 
-    <bean id="solrClient" class="org.apache.solr.client.solrj.impl.CloudSolrClient">
-        <constructor-arg value="newsjet01:2181,newsjet02:2181,newsjet03:2181/solrcloud"/>
-        <property name="defaultCollection" value="tnewsjet"/>
+    <bean id="solrClient" class="org.apache.solr.client.solrj.impl.HttpSolrClient">
+        <constructor-arg value="http://newsjet07:8983/solr/"/>
     </bean>
 
 </beans>
