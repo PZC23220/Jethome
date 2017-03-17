@@ -34,7 +34,6 @@ import java.util.stream.Collectors;
 public class TopicNewsController extends AbstractNewsjetController {
 
     private ExecutorService executor;
-
     @Resource
     private NewsSpecialTopicMapper newsSpecialTopicMapper;
     @Resource
