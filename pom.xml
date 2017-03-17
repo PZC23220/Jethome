@@ -74,7 +74,7 @@
                 <configuration>
                     <archive>
                         <manifest>
-                            <mainClass>com.newsjet.main.TrackApiServer</mainClass>
+                            <mainClass>com.newsjet.main.Main</mainClass>
                         </manifest>
                     </archive>
                     <descriptorRefs>
