@@ -75,6 +75,7 @@ public class TopicNewsController extends AbstractNewsjetController {
                     List<String> aids = newsSpecialTopicInfoMapper.selectAllNewsID();
                     List<NewsSpecialTopicInfo> topicInfos = solrDocuments.stream()
                             .filter(d -> !aids.contains(Objects.toString(d.getFieldValue("aid"))))
+                            .filter(d -> !aids.contains(Objects.toString(d.getFieldValue("vid"))))
                             .map(d -> {
                                 NewsSpecialTopicInfo newsSpecialTopicInfo = new NewsSpecialTopicInfo();
                                 newsSpecialTopicInfo.setTopicId(topicID);
