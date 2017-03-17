@@ -127,7 +127,7 @@ section.ad {
     margin: 0 12px 12px !important;
     border: 2px solid #EBEBEB !important;
     border-radius: 4px !important;
-    padding-bottom: 10px !important;
+    /*padding-bottom: 10px !important;*/
 }
 
 section.ad div {
@@ -207,6 +207,24 @@ section.ad .ad_source img {
 .relation_news div:nth-child(n+2) a {
 	display: block;
 	width: 100%;
+    padding: 0 !important;
+    overflow: hidden;
+}
+
+.relation_news div:nth-child(n+2) a div {
+    float: left !important;
+    margin: 0 !important;
+
+}
+
+.relation_news div:nth-child(n+2) a div:first-child {
+    float: right !important;
+    width: 23% !important;
+    height: 80px !important;
+}
+
+.relation_news div:nth-child(n+2) a div:last-child {
+    width: 76% !important;
 }
 
 .relation_news div:last-child {
@@ -219,6 +237,10 @@ section.ad .ad_source img {
     height: 60px;
     float: right;
     border-radius: 2px;
+}
+
+.rel_news {
+    width: 100% !important;
 }
 
 .relation_news div:nth-child(n+2) p {
@@ -237,6 +259,7 @@ section.ad .ad_source img {
 .relation_news .rel_ad {
     max-height: 90px !important;
     height: 90px !important;
+    width: 100% !important;
 }
 
 .relation_news .rel_ad span {
