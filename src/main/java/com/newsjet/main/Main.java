@@ -13,9 +13,9 @@ import org.slf4j.LoggerFactory;
  * @author Shell
  * @since 1.0 2016-06-20
  */
-public class TrackApiServer {
+public class Main {
 
-	private static Logger logger = LoggerFactory.getLogger(TrackApiServer.class);
+	private static Logger logger = LoggerFactory.getLogger(Main.class);
 	
 	public static void main(String[] args) {
 		Integer inetPort = 9999;
