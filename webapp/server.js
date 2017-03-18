@@ -6,8 +6,8 @@ var MySQLUtil = require('./jetModules/MySQLUtil');
 var PORT = 9000;
 
 var mySQLUtil = new MySQLUtil();
-var connection = mySQLUtil.getConnectionProd();
-// var connection = mySQLUtil.getConnectionTest();
+// var connection = mySQLUtil.getConnectionProd();
+var connection = mySQLUtil.getConnectionTest();
 connection.connect();
 
 var server = http.createServer(function(request, response) {
@@ -334,6 +334,104 @@ var server = http.createServer(function(request, response) {
                 response.write(JSON.stringify(result));
                 response.end();
             });
+        });
+    } else if (params.pathname == '/news_special_topic') {
+        var sql = "SELECT * FROM news_special_topic";
+        connection.query(sql, function(err, rows, fields) {
+            //处理你的结果
+            if (err) {
+                console.log(err);
+                return;
+            }
+            response.write(JSON.stringify(rows));
+            response.end();
+        });
+    } else if (params.pathname == '/news_special_topic_active') {
+        var sql = "UPDATE news_special_topic set active = 0 WHERE id = " + query.id;
+        connection.query(sql, function(err, rows, fields) {
+            //处理你的结果
+            if (err) {
+                console.log(err);
+                return;
+            }
+            response.write(JSON.stringify(rows));
+            response.end();
+        });
+    } else if (params.pathname == '/set_news_special_topic') {
+        // if(reqObj.id) {
+        // } 
+        var jsonData = "";
+        request.on('data', function(chunk) {
+            jsonData += chunk;
+        });
+        request.on('end', function() {
+            var reqObj = JSON.parse(jsonData);
+            console.log(reqObj);
+            var resObj = {
+                title: reqObj.title,
+                subtitle: reqObj.subtitle,
+                cid: reqObj.cid,
+                topic_time: reqObj.topic_time,
+                imgs: reqObj.imgs,
+                bg_img: reqObj.bg_img,
+                pos: reqObj.pos,
+                keyword_inclusion: reqObj.keyword_inclusion,
+                keyword_exclusion: reqObj.keyword_exclusion,
+                detail_desc: reqObj.detail_desc
+            };
+            if (reqObj.id) {
+                resObj.id = reqObj.id;
+                var sql = "UPDATE news_special_topic SET title = ?,subtitle = ?,cid = ?,topic_time = ?,imgs = ?,bg_img = ?,pos = ?,keyword_inclusion = ?,keyword_exclusion = ?,detail_desc = ? WHERE id = ?";
+            } else {
+                var sql = "INSERT INTO news_special_topic(title,subtitle,cid,topic_time,imgs,bg_img,pos,keyword_inclusion,keyword_exclusion,detail_desc) VALUES(?,?,?,?,?,?,?,?,?,?)";
+            }
+            var arr = []
+            for(var i in resObj) {
+                arr.push(resObj[i]);
+            }
+            // console.log(arr);
+            connection.query(sql, arr, function(err, result) {
+                if (err) {
+                    console.log(err, result);
+                    return;
+                }
+
+                response.write(JSON.stringify(result));
+                response.end();
+            });
+        });
+    }  else if (params.pathname == '/news_special_topic_info') {
+        var sql = "SELECT * FROM news_special_topic_info WHERE topic_id = " + query.id;
+        connection.query(sql, function(err, rows, fields) {
+            //处理你的结果
+            if (err) {
+                console.log(err);
+                return;
+            }
+            response.write(JSON.stringify(rows));
+            response.end();
+        });
+    } else if (params.pathname == '/news_special_topic_info_active') {
+        var sql = "UPDATE news_special_topic_info set active = 0 WHERE id = " + query.id;
+        connection.query(sql, function(err, rows, fields) {
+            //处理你的结果
+            if (err) {
+                console.log(err);
+                return;
+            }
+            response.write(JSON.stringify(rows));
+            response.end();
+        });
+    } else if (params.pathname == '/news_special_topic_info_top') {
+        var sql = "UPDATE news_special_topic_info set stick_at_top = 1 WHERE id = " + query.id;
+        connection.query(sql, function(err, rows, fields) {
+            //处理你的结果
+            if (err) {
+                console.log(err);
+                return;
+            }
+            response.write(JSON.stringify(rows));
+            response.end();
         });
     } ;
 }).listen(PORT, function() {

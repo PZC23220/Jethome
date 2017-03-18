@@ -191,9 +191,13 @@ $(function($) {
     var submit_wbc_comment = $('.submit_wbc_comment');
     var wbc_player = $('.wbc_player');
     var wbc_comment_id = $('.wbc_comment_id');
+    var special_configuration = $('.special_configuration');
+    var table_special_configuration = $('.table_special_configuration tbody');
+    var table_special_relatedNews = $('.table_special_relatedNews tbody');
+    var special_create = $('.special_create');
 
-    var server_host = "http://jethome.newsjet.io:9000";
-    // var server_host = "http://localhost:9000";
+    // var server_host = "http://jethome.newsjet.io:9000";
+    var server_host = "http://localhost:9000";
     // 
 
     var arr10 = getUserimg();
@@ -253,9 +257,9 @@ $(function($) {
             case 9:
                 match_list.show();
                 break;
-                // case 10:
-                //     headline_optimize.show();
-                //     break;
+            case 10:
+                special_configuration.show();
+                break;
                 // case 11:
                 //     headline_optimize.show();
                 //     break;
@@ -412,7 +416,7 @@ $(function($) {
         if (tit) {
             // table_video_tbody.find('tr').hide().filter(":contains(" + tit + ")").show();
             $.ajax({
-                url: 'video_select?wt=json&fl=title,vid,commentCount,category_id:cid,desc&sort=score%20desc&q=title:' + tit+'&rows=100',
+                url: 'video_select?wt=json&fl=title,vid,commentCount,category_id:cid,desc&sort=score%20desc&q=title:' + tit + '&rows=100',
                 success: function(res) {
                     console.log(res);
                     table_video_tbody.empty();
@@ -586,14 +590,14 @@ $(function($) {
         }
     });
 
-    news_title.blur(function(){
-        if($(this).val() == '') {
+    news_title.blur(function() {
+        if ($(this).val() == '') {
             window.location.reload();
         }
     });
 
-    video_title.blur(function(){
-        if($(this).val() == '') {
+    video_title.blur(function() {
+        if ($(this).val() == '') {
             window.location.reload();
         }
     });
@@ -3436,6 +3440,313 @@ $(function($) {
         });
 
     }
+    // 创建专题
+    special_create.click(function() {
+        reply_comment.show();
+        $('.special_publish').removeAttr('data-id');
+    });
+    // 配置专题
+    table_special_configuration.on('click', '.special_config', function() {
+        reply_comment.show();
+        var info = JSON.parse($(this).attr('data-info'));
+        $('.special_title').val(info.title);
+        $('.special_subtitle').val(info.subtitle);
+        $('.special_description').html(info.detail_desc);
+        $('.special_bg_img').val(info.bg_img);
+        $('.special_thumbnail1').val(info.imgs.split(',')[0]);
+        $('.special_thumbnail2').val(info.imgs.split(',')[1]);
+        $('.special_thumbnail3').val(info.imgs.split(',')[2]);
+        $('.special_keyword').val(info.keyword_inclusion);
+        $('.exclude_words').val(info.keyword_exclusion);
+        $('.special_start_time').val(new Date(info.topic_time).Format("yyyy-MM-ddThh:mm:ss"));
+        $('.special_publish').attr('data-id',info.id);
+        var option1 = $('.special_channel').find('option');
+        option1.each(function(idx, ele) {
+            if ($(this).attr('data-id') == info.cid) {
+                $(this).attr('selected', true);
+            }
+        });
+        var option2 = $('.special_position').find('option');
+        option2.each(function(idx, ele) {
+            if ($(this).html() == info.pos) {
+                $(this).attr('selected', true);
+            }
+        });
+
+    });
+
+    // 点击修改/创建专题
+    $('.special_publish').on('click', function() {
+        if($('.special_title').val() && $('.special_bg_img').val() && $('.special_thumbnail1').val() && $('.special_thumbnail2').val() && $('.special_thumbnail3').val() && $('.special_start_time').val() && $('.special_keyword').val()) {
+
+            var data = {
+                title: $('.special_title').val(),
+                subtitle: $('.special_subtitle').val(),
+                detail_desc: $('.special_description').html(),
+                cid: $('.special_channel').find('option:selected').attr('data-id'),
+                imgs: $('.special_thumbnail1').val() + ','+ $('.special_thumbnail2').val() + ',' + $('.special_thumbnail3').val(),
+                bg_img: $('.special_bg_img').val(),
+                pos: $('.special_position').find('option:selected').html(),
+                keyword_inclusion: $('.special_keyword').val(),
+                keyword_exclusion: $('.exclude_words').val(),
+                topic_time: new Date($('.special_start_time').val()).Format("yyyy/MM/dd hh:mm:ss")
+            }
+            console.log(data.topic_time);
+            if($(this).attr('data-id')) {
+                data.id = $(this).attr('data-id');
+            }
+            console.log(data);
+            $.ajax({
+                url: server_host + '/set_news_special_topic',
+                type: 'POST',
+                data: JSON.stringify(data),
+                success: function(res) {
+                    console.log(res);
+                    modify_success.show();
+                    setTimeout(function(){
+                        reply_comment.find('input').val('');
+                        reply_comment.find('textarea').html('');
+                        news_special_topic();
+                        modify_success.hide();
+                        reply_comment.hide();
+                    },2000);
+                }
+            });
+            
+
+        } else {
+            tips_success.show();
+            setTimeout(function(){
+                tips_success.hide();
+            },2000);
+        }
+    });
+    news_special_topic();
+    // 获取专题列表
+    function news_special_topic() {
+        $.ajax({
+            url: server_host + '/news_special_topic',
+            success: function(res) {
+                table_special_configuration.empty();
+                var jsonobj = JSON.parse(res);
+                console.log(jsonobj);
+                for (var i = 0; i < jsonobj.length; i++) {
+                    createSpecial(jsonobj[i]);
+                }
+            }
+        });
+
+    }
+
+    function createSpecial(list) {
+        var tr = $('<tr/>');
+        var td1 = $('<td/>').html(list.id).addClass('s_id').appendTo(tr);
+        var td4 = $('<td/>').html(getTime(list.topic_time)).appendTo(tr);
+        var td5 = $('<td/>').html(list.title).addClass('s_title').appendTo(tr);
+        switch (list.cid) {
+            case 'top':
+                var td9 = $('<td class="c_id">トップ</td>').attr({ 'data-id': list.id, 'data-cid': list.category_id }).appendTo(tr);
+                break;
+            case 'topic':
+                var td9 = $('<td class="c_id">話題</td>').attr({ 'data-id': list.id, 'data-cid': list.category_id }).appendTo(tr);
+                break;
+            case 'ent':
+                var td9 = $('<td class="c_id">エンタメ</td>').attr({ 'data-id': list.id, 'data-cid': list.category_id }).appendTo(tr);
+                break;
+            case 'spo':
+                var td9 = $('<td class="c_id">スポーツ</td>').attr({ 'data-id': list.id, 'data-cid': list.category_id }).appendTo(tr);
+                break;
+            case 'cn':
+                var td9 = $('<td class="c_id">中国</td>').attr({ 'data-id': list.id, 'data-cid': list.category_id }).appendTo(tr);
+                break;
+            case 'kr':
+                var td9 = $('<td class="c_id">韓国</td>').attr({ 'data-id': list.id, 'data-cid': list.category_id }).appendTo(tr);
+                break;
+            case 'base':
+                var td9 = $('<td class="c_id">野球</td>').attr({ 'data-id': list.id, 'data-cid': list.category_id }).appendTo(tr);
+                break;
+            case 'int':
+                var td9 = $('<td class="c_id">国際</td>').attr({ 'data-id': list.id, 'data-cid': list.category_id }).appendTo(tr);
+                break;
+            case 'pol':
+                var td9 = $('<td class="c_id">政治</td>').attr({ 'data-id': list.id, 'data-cid': list.category_id }).appendTo(tr);
+                break;
+            case 'bus':
+                var td9 = $('<td class="c_id">経済</td>').attr({ 'data-id': list.id, 'data-cid': list.category_id }).appendTo(tr);
+                break;
+            case 'tech':
+                var td9 = $('<td class="c_id">テクノロジー</td>').attr({ 'data-id': list.id, 'data-cid': list.category_id }).appendTo(tr);
+                break;
+            case 'socc':
+                var td9 = $('<td class="c_id">サッカー</td>').attr({ 'data-id': list.id, 'data-cid': list.category_id }).appendTo(tr);
+                break;
+            case 'soci':
+                var td9 = $('<td class="c_id">社会</td>').attr({ 'data-id': list.id, 'data-cid': list.category_id }).appendTo(tr);
+                break;
+            case 'girl':
+                var td9 = $('<td class="c_id">女性</td>').attr({ 'data-id': list.id, 'data-cid': list.category_id }).appendTo(tr);
+                break;
+            case 'tra':
+                var td9 = $('<td class="c_id">旅行</td>').attr({ 'data-id': list.id, 'data-cid': list.category_id }).appendTo(tr);
+                break;
+            case 'cnet':
+                var td9 = $('<td class="c_id">チャイナネット</td>').attr({ 'data-id': list.id, 'data-cid': list.category_id }).appendTo(tr);
+                break;
+            case 'video':
+                var td9 = $('<td class="c_id">動画</td>').attr({ 'data-id': list.id, 'data-cid': list.category_id }).appendTo(tr);
+                break;
+            case 'pic':
+                var td9 = $('<td class="c_id">写真</td>').attr({ 'data-id': list.id, 'data-cid': list.category_id }).appendTo(tr);
+                break;
+            case 'anime':
+                var td9 = $('<td class="c_id">アニメ</td>').attr({ 'data-id': list.id, 'data-cid': list.category_id }).appendTo(tr);
+                break;
+            case 'game':
+                var td9 = $('<td class="c_id">ゲーム</td>').attr({ 'data-id': list.id, 'data-cid': list.category_id }).appendTo(tr);
+                break;
+            case 'food':
+                var td9 = $('<td class="c_id">グルメ</td>').attr({ 'data-id': list.id, 'data-cid': list.category_id }).appendTo(tr);
+                break;
+            case 'cul':
+                var td9 = $('<td class="c_id">文化</td>').attr({ 'data-id': list.id, 'data-cid': list.category_id }).appendTo(tr);
+                break;
+            case 'wea':
+                var td9 = $('<td class="c_id">災害</td>').attr({ 'data-id': list.id, 'data-cid': list.category_id }).appendTo(tr);
+                break;
+            default:
+                var td9 = $('<td class="c_id">' + list.category_id + '</a></td>').attr({ 'data-id': list.id, 'data-cid': list.category_id }).appendTo(tr);
+                break;
+
+        }
+        if (list.active == 1) {
+            var td6 = $('<td/>').html('正在运行').appendTo(tr);
+        } else {
+            var td6 = $('<td/>').html('已下线').appendTo(tr);
+        }
+        var td2 = $('<td/>').html('<a href="#">编辑</a>').addClass('special_config').attr('data-info', JSON.stringify(list)).appendTo(tr);
+        var td3 = $('<td/>').html('<a href="#">查看</a>').addClass('special_newslist').attr('data-info', JSON.stringify(list)).appendTo(tr);
+        if (list.active == 1) {
+            var td7 = $('<td/>').html('<a href="#">下线</a>').addClass('special_active').attr('data-id', list.id).appendTo(tr);
+        } else {
+            var td7 = $('<td/>').html('<span>---</span>').appendTo(tr);
+        }
+        tr.appendTo(table_special_configuration);
+
+    }
+
+    //下线专题
+    table_special_configuration.on('click', '.special_active', function() {
+        $.ajax({
+            url: server_host + '/news_special_topic_active?id=' + $(this).attr('data-id'),
+            success: function(res) {
+                share_success.show();
+                setTimeout(function() {
+                    news_special_topic();
+                    share_success.hide();
+                }, 2000);
+            }
+        });
+    });
+
+    //获取指定新闻专题的新闻列表
+    table_special_configuration.on('click', '.special_newslist', function() {
+        $('.special_current_news').html(JSON.parse($(this).attr('data-info')).title);
+        news_special_topic_info(JSON.parse($(this).attr('data-info')).id);
+        reply_comment2.show();
+    });
+    // 获取专题列表
+    function news_special_topic_info(id) {
+        $.ajax({
+            url: server_host + '/news_special_topic_info?id=' + id,
+            success: function(res) {
+                table_special_relatedNews.empty();
+                var jsonobj = JSON.parse(res);
+                console.log(jsonobj);
+                for (var i = 0; i < jsonobj.length; i++) {
+                    createSpecialNews(jsonobj[i], id);
+                }
+            }
+        });
+
+    }
+
+    function createSpecialNews(list, t_id) {
+        var tr = $('<tr/>');
+        var td1 = $('<td/>').html(list.news_id).appendTo(tr);
+        switch (list.news_type) {
+            case 1:
+                var td9 = $('<td/>').html('新闻').appendTo(tr);
+                break;
+            case 2:
+                var td9 = $('<td/>').html('视频').appendTo(tr);
+                break;
+            default:
+                var td9 = $('<td/>').html(list.news_type).appendTo(tr);
+                break;
+        }
+        var td4 = $('<td/>').html(getTime(list.news_time)).appendTo(tr);
+        var td5 = $('<td/>').html(list.news_title).appendTo(tr);
+        if (list.active == 1) {
+            var td7 = $('<td/>').html('<a href="#">下线</a>').attr({ 'data-id': list.id, 'data-topid': t_id }).addClass('news_special_topic_info_active').appendTo(tr);
+        } else {
+            var td7 = $('<td/>').html('<span>---</span>').appendTo(tr);
+        }
+
+        if (list.stick_at_top == 1) {
+            var td6 = $('<td/>').html('<span>已置顶</span>').appendTo(tr);
+        } else {
+            var td6 = $('<td/>').html('<a href="#">置顶</a>').addClass('special_news_top').attr({ 'data-id': list.id, 'data-topid': t_id }).appendTo(tr);
+        }
+        tr.appendTo(table_special_relatedNews);
+
+    }
+
+    // 置顶新闻
+    table_special_relatedNews.on('click', '.special_news_top', function() {
+        var tid = $(this).attr('data-topid');
+        $.ajax({
+            url: server_host + '/news_special_topic_info_top?id=' + $(this).attr('data-id'),
+            success: function(res) {
+                console.log(res);
+                modify_success.show();
+                setTimeout(function() {
+                    news_special_topic_info(tid);
+                    modify_success.hide();
+                }, 2000);
+            }
+        });
+    });
+    // 下线新闻
+    table_special_relatedNews.on('click', '.news_special_topic_info_active', function() {
+        var tid = $(this).attr('data-topid');
+        $.ajax({
+            url: server_host + '/news_special_topic_info_active?id=' + $(this).attr('data-id'),
+            success: function(res) {
+                console.log(res);
+                del_success.show();
+                setTimeout(function() {
+                    news_special_topic_info(tid);
+                    del_success.hide();
+                }, 2000);
+            }
+        });
+    });
+
+    // 专题搜索
+    $('.special_search').click(function(){
+        table_special_configuration.find('tr').hide();
+        if($('.special_id').val() != '') {
+            console.log(table_special_configuration.find('.s_id').filter(":contains(" + $('.special_id').val() + ")"))
+            table_special_configuration.find('.s_id').filter(":contains(" + $('.special_id').val() + ")").parent().show();
+        } else if($('.special_keyword_search').val() != '') {
+
+            table_special_configuration.find('.s_title').filter(":contains(" + $('.special_keyword_search').val() + ")").parent().show();
+        } else {
+            table_special_configuration.find('tr').show()
+        }
+    });
+
+
     // var userinfo = $(this).find('option:selected').attr('data-userinfo');
 });
 

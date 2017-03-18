@@ -955,6 +955,16 @@ list_container_right {
     background: #fff;
 }
 
+.reply_comment_container {
+    overflow: auto;
+}
+
+.reply_comment_container i {
+    color: #f00;
+    font-size: 20px;
+    font-weight: 600;
+}
+
 
 td span {
     font-weight: 600;

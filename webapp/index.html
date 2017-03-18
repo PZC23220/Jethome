@@ -3,6 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
+    <!-- <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" /> -->
     <title>新闻评论列表页</title>
     <link rel="stylesheet" type="text/css" href="lib/bootstrap/dist/css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="css/common.css">
@@ -22,9 +23,8 @@
             <li><a href="#newsUpload">新闻上传<span class="glyphicon glyphicon-chevron-right"></span> </a></li>
             <li><a href="#commentAutomation">评论自动化<span class="glyphicon glyphicon-chevron-right"></span> </a></li>
             <li><a href="#headlineOptimize">栏目优化<span class="glyphicon glyphicon-chevron-right"></span> </a></li>
-            <!-- <li><a href="#relatedNews">相关新闻设置<span class="glyphicon glyphicon-chevron-right"></span> </a></li> -->
             <li><a href="#matchList">比赛列表<span class="glyphicon glyphicon-chevron-right"></span> </a></li>
-            <!-- <li><a href="#quizRelated">竞猜相关<span class="glyphicon glyphicon-chevron-right"></span> </a></li> -->
+            <li><a href="#specialConfiguration">专题配置页<span class="glyphicon glyphicon-chevron-right"></span> </a></li>
         </ul>
     </div>
     <!-- main  content-->
@@ -1308,7 +1308,6 @@
                     <tbody>
                     </tbody>
                 </table>
-                <!-- 发表回复 -->
                 <!-- 相关新闻推荐 -->
                 <div class="reply_comment">
                     <div class="related_news" id="relatedNews">
@@ -1737,6 +1736,189 @@
                 </div>
             </div>
             <p style="font-size: 18px;font-weight: 600;color: #f00;">点击比赛ID可以添加比赛评论、国家名称可以添加球员/球队评论！</p>
+        </div>
+        <!-- 专题配置页 -->
+        <div class="special_configuration table_container" id="specialConfiguration">
+            <div class="news_opa">
+                <div class="input-group">
+                    <span class="input-group-addon">专题ID</span>
+                    <input type="text" class="form-control special_id" placeholder="Special ID">
+                </div>
+                <div class="input-group">
+                    <span class="input-group-addon">关键词</span>
+                    <input type="text" class="form-control special_keyword_search" placeholder="Special Keyword">
+                </div>
+                <button type="button" class="btn btn-success special_search">搜索</button>
+            </div>
+            <div class="table table-responsive">
+                <table class="table table-bordered table_special_configuration">
+                    <thead>
+                        <tr>
+                            <th>专题ID</th>
+                            <th>配置时间</th>
+                            <th>专题名</th>
+                            <th>频道</th>
+                            <th>专题状态</th>
+                            <th>专题配置</th>
+                            <th>新闻列表</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+                <!-- 专题新闻列表 -->
+                <div class="reply_comment2">
+                    <div class="related_news" id="relatedNews">
+                    <p style="font-size: 24px;font-weight: 600;text-align: left;margin-bottom: 20px;">当前专题：<span class="special_current_news"></span></p>
+                        <div class="table table-responsive" style="max-height: 70vh;">
+                            <table class="table table-bordered table_special_relatedNews">
+                                <thead>
+                                    <tr>
+                                        <th>新闻ID</th>
+                                        <th>类别</th>
+                                        <th>发布时间</th>
+                                        <th>新闻标题</th>
+                                        <th>移除</th>
+                                        <th>置顶</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                </tbody>
+                            </table>
+                            <div class="modify_success">
+                                <div class="likes_success">
+                                    置顶成功！
+                                </div>
+                            </div>
+                            <div class="del_success">
+                                <div class="likes_success">
+                                    移除成功！
+                                </div>
+                            </div>
+                        </div>
+                        <div class="add_option">
+                            <button type="button" class="btn btn-danger close5">关闭窗口</button>
+                        </div>
+                    </div>
+                </div>
+                <!-- 专题创建/配置 -->
+                <div class="reply_comment">
+                    <div class="reply_comment_container" style="height: 90vh; margin: 5vh auto;">
+                        <div class="input-group" style="width: 60%;">
+                            <span class="input-group-addon">专题标题<i>*</i></span>
+                            <input type="text" placeholder="Special Title" class="form-control special_title">
+                        </div>
+                        <div class="input-group" style="width: 60%;">
+                            <span class="input-group-addon">专题副标题</span>
+                            <input type="text" placeholder="Special Subtitle" class="form-control special_subtitle">
+                        </div>
+                        <!-- <div class="input-group">
+                            <span class="input-group-addon">专题说明</span>
+                            <input type="text" placeholder="Special Description" class="form-control special_description">
+                        </div> -->
+                        <div class="input-group" style="float: left;">
+                            <span class="input-group-addon">新闻频道<i>*</i></span>
+                            <select class="form-control special_channel category">
+                                <option data-id="top">トップ</option>
+                                <option data-id="ent">エンタメ</option>
+                                <option data-id="spo">スポーツ</option>
+                                <option data-id="cn">中国</option>
+                                <option data-id="kr">韓国</option>
+                                <option data-id="base">野球</option>
+                                <option data-id="int">国際</option>
+                                <option data-id="pol">政治</option>
+                                <option data-id="bus">経済</option>
+                                <option data-id="tech">テクノロジー</option>
+                                <option data-id="socc">サッカー</option>
+                                <option data-id="soci">社会</option>
+                                <option data-id="girl">女性</option>
+                                <option data-id="tra">旅行</option>
+                                <option data-id="cnet">チャイナネット</option>
+                                <option data-id="test">test</option>
+                                <option data-id="video">動画</option>
+                                <option data-id="cul">文化</option>
+                                <option data-id="topic">話題</option>
+                                <option data-id="food">グルメ</option>
+                                <option data-id="pet">ペット</option>
+                                <option data-id="pic">写真</option>
+                                <option data-id="game">ゲーム</option>
+                                <option data-id="anime">アニメ</option>
+                                <option data-id="wea">災害</option>
+                                <option data-id="local">地元</option>
+                            </select>
+                        </div>
+                        <div class="input-group" style="float: left;width: 40%;margin-left: 5%;">
+                            <span class="input-group-addon">专题位置<i>*</i></span>
+                            <select class="form-control special_position">
+                                <option value="">0</option>
+                                <option value="">1</option>
+                                <option value="">2</option>
+                                <option value="">3</option>
+                                <option value="">4</option>
+                                <option value="">5</option>
+                                <option value="">6</option>
+                                <option value="">7</option>
+                                <option value="">8</option>
+                                <option value="">9</option>
+                                <option value="">10</option>
+                            </select>
+                        </div>
+                        <div style="text-align: left;overflow: hidden;margin-bottom: 20px;width: 100%;">
+                            <span style="float: left;margin-right: 20px;">专题说明</span> 
+                            <textarea class="special_description" style="width: 70%;height: 80px;float: left;"></textarea>
+                        </div>
+                        <div class="input-group">
+                            <span class="input-group-addon">背景图<i>*</i></span>
+                            <input type="url" class="form-control special_bg_img" placeholder="Special Background Image">
+                        </div>
+                        <div class="input-group">
+                            <span class="input-group-addon">缩略图1<i>*</i></span>
+                            <input type="url" class="form-control special_thumbnail1" placeholder="Special thumbnail 1">
+                        </div>
+                        <div class="input-group">
+                            <span class="input-group-addon">缩略图2<i>*</i></span>
+                            <input type="url" class="form-control special_thumbnail2" placeholder="Special thumbnail 2">
+                        </div>
+                        <div class="input-group">
+                            <span class="input-group-addon">缩略图3<i>*</i></span>
+                            <input type="url" class="form-control special_thumbnail3" placeholder="Special thumbnail 3">
+                        </div>
+                        <div class="input-group">
+                            <span class="input-group-addon">关键词<i>*</i></span>
+                            <input type="text" class="form-control special_keyword" placeholder="Special Keyword" value="">
+                        </div>
+                        <div class="input-group">
+                            <span class="input-group-addon">排除词</span>
+                            <input type="text" placeholder="Exclude Words" class="form-control exclude_words">
+                        </div>
+                        <div class="input-group">
+                            <span class="input-group-addon">发生时间<i>*</i></span>
+                            <input type="datetime-local" placeholder="Start Time" class="special_start_time">
+                        </div>
+                        <button type="button" class="btn btn-success special_publish" style="margin: 0;">发布</button>
+                        <button type="button" class="btn btn-danger close4" style="margin: 0;">取消</button>
+                    </div>
+                    <div class="modify_success">
+                        <div class="likes_success">
+                            专题创建配置成功！
+                        </div>
+                    </div>
+                    <div class="tips_success">
+                        <div class="likes_success">
+                            *对应输入内容不能为空！
+                        </div>
+                    </div>
+                </div>
+                <div class="share_success">
+                    <div class="likes_success">
+                        下线成功!
+                    </div>
+                </div>
+            </div>
+            <div class="add_option">
+                <button type="button" class="btn btn-success special_create">创建专题</button>
+            </div>
         </div>
     </div>
     <script async src="http://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>

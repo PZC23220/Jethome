@@ -1,0 +1,23 @@
+{
+  "name": "jethome",
+  "version": "1.0.0",
+  "description": "newsjet后台运营配置页面",
+  "main": "gulpfile.js",
+  "dependencies": {
+    "express": "^4.14.0",
+    "gulp": "^3.9.1",
+    "mysql": "^2.12.0"
+  },
+  "devDependencies": {
+    "browser-sync": "^2.18.8"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "keywords": [
+    "newsjet后台运营配置页面"
+  ],
+  "author": "zhicui",
+  "license": "ISC"
+}
