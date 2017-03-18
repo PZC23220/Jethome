@@ -3503,6 +3503,13 @@ $(function($) {
                 success: function(res) {
                     console.log(res);
                     modify_success.show();
+                    $.ajax({
+                        url: 'news_topic',
+                        success: function(res){
+                            console.log(res);
+                        }
+                    });
+                    
                     setTimeout(function(){
                         reply_comment.find('input').val('');
                         reply_comment.find('textarea').html('');
