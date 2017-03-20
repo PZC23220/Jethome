@@ -196,8 +196,8 @@ $(function($) {
     var table_special_relatedNews = $('.table_special_relatedNews tbody');
     var special_create = $('.special_create');
 
-    // var server_host = "http://jethome.newsjet.io:9000";
-    var server_host = "http://localhost:9000";
+    var server_host = "http://jethome.newsjet.io:9000";
+    // var server_host = "http://localhost:9000";
     // 
 
     var arr10 = getUserimg();
