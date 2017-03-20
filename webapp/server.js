@@ -6,8 +6,8 @@ var MySQLUtil = require('./jetModules/MySQLUtil');
 var PORT = 9000;
 
 var mySQLUtil = new MySQLUtil();
-var connection = mySQLUtil.getConnectionProd();
-// var connection = mySQLUtil.getConnectionTest();
+// var connection = mySQLUtil.getConnectionProd();
+var connection = mySQLUtil.getConnectionTest();
 connection.connect();
 
 var server = http.createServer(function(request, response) {
@@ -35,7 +35,7 @@ var server = http.createServer(function(request, response) {
         });
         // connection.end();
     } else if (params.pathname == '/get_username') {
-        connection.query("select * from user where id BETWEEN 1100 and 1170 OR BETWEEN 2020 and 2068", function(err, rows, fields) {
+        connection.query("select * from user where id BETWEEN 1100 and 1170 OR id BETWEEN 2020 and 2068", function(err, rows, fields) {
             //处理你的结果
             if (err) {
                 console.log(err);
