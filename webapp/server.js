@@ -35,7 +35,7 @@ var server = http.createServer(function(request, response) {
         });
         // connection.end();
     } else if (params.pathname == '/get_username') {
-        connection.query("select * from user where id BETWEEN 1100 and 1170", function(err, rows, fields) {
+        connection.query("select * from user where id BETWEEN 1100 and 1170 OR BETWEEN 2020 and 2068", function(err, rows, fields) {
             //处理你的结果
             if (err) {
                 console.log(err);
@@ -369,10 +369,8 @@ var server = http.createServer(function(request, response) {
             console.log(reqObj);
             var resObj = {
                 title: reqObj.title,
-                subtitle: reqObj.subtitle,
                 cid: reqObj.cid,
                 topic_time: reqObj.topic_time,
-                imgs: reqObj.imgs,
                 bg_img: reqObj.bg_img,
                 pos: reqObj.pos,
                 keyword_inclusion: reqObj.keyword_inclusion,
@@ -381,9 +379,9 @@ var server = http.createServer(function(request, response) {
             };
             if (reqObj.id) {
                 resObj.id = reqObj.id;
-                var sql = "UPDATE news_special_topic SET title = ?,subtitle = ?,cid = ?,topic_time = ?,imgs = ?,bg_img = ?,pos = ?,keyword_inclusion = ?,keyword_exclusion = ?,detail_desc = ? WHERE id = ?";
+                var sql = "UPDATE news_special_topic SET title = ?,cid = ?,topic_time = ?,bg_img = ?,pos = ?,keyword_inclusion = ?,keyword_exclusion = ?,detail_desc = ? WHERE id = ?";
             } else {
-                var sql = "INSERT INTO news_special_topic(title,subtitle,cid,topic_time,imgs,bg_img,pos,keyword_inclusion,keyword_exclusion,detail_desc) VALUES(?,?,?,?,?,?,?,?,?,?)";
+                var sql = "INSERT INTO news_special_topic(title,cid,topic_time,bg_img,pos,keyword_inclusion,keyword_exclusion,detail_desc) VALUES(?,?,?,?,?,?,?,?,?,?)";
             }
             var arr = []
             for(var i in resObj) {

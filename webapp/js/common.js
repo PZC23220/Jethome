@@ -3453,9 +3453,9 @@ $(function($) {
         $('.special_subtitle').val(info.subtitle);
         $('.special_description').html(info.detail_desc);
         $('.special_bg_img').val(info.bg_img);
-        $('.special_thumbnail1').val(info.imgs.split(',')[0]);
-        $('.special_thumbnail2').val(info.imgs.split(',')[1]);
-        $('.special_thumbnail3').val(info.imgs.split(',')[2]);
+        // $('.special_thumbnail1').val(info.imgs.split(',')[0]);
+        // $('.special_thumbnail2').val(info.imgs.split(',')[1]);
+        // $('.special_thumbnail3').val(info.imgs.split(',')[2]);
         $('.special_keyword').val(info.keyword_inclusion);
         $('.exclude_words').val(info.keyword_exclusion);
         $('.special_start_time').val(new Date(info.topic_time).Format("yyyy-MM-ddThh:mm:ss"));
@@ -3477,7 +3477,7 @@ $(function($) {
 
     // 点击修改/创建专题
     $('.special_publish').on('click', function() {
-        if($('.special_title').val() && $('.special_bg_img').val() && $('.special_thumbnail1').val() && $('.special_thumbnail2').val() && $('.special_thumbnail3').val() && $('.special_start_time').val() && $('.special_keyword').val()) {
+        if($('.special_title').val() && $('.special_bg_img').val() && $('.special_start_time').val() && $('.special_keyword').val()) {
 
             var data = {
                 title: $('.special_title').val(),
