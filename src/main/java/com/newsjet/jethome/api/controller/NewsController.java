@@ -31,7 +31,7 @@ public class NewsController extends AbstractNewsjetController {
     }
 
     @Resource
-    private SolrClient solrClient;
+    private SolrClient newsSolrClient;
 
     public ApiResponse fixCID(ApiRequest request) {
         try {
@@ -52,8 +52,8 @@ public class NewsController extends AbstractNewsjetController {
                 operation.put("set", cid);
 
                 solrInputDocument.addField("cid", operation);
-                solrClient.add(solrInputDocument);
-                solrClient.commit();
+                newsSolrClient.add(solrInputDocument);
+                newsSolrClient.commit();
             }
 
             return ApiResponse.ok();
@@ -70,7 +70,7 @@ public class NewsController extends AbstractNewsjetController {
         params.add(CommonParams.FQ, "repeated:false");
         params.add(CommonParams.FQ, String.format("aid:%s", aid));
 
-        SolrDocumentList results = solrClient.query(params).getResults();
+        SolrDocumentList results = newsSolrClient.query(params).getResults();
 
         getLogger().info("Result.size = [{}]. ", results.size());
 
