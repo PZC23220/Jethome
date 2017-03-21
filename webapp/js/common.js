@@ -195,6 +195,8 @@ $(function($) {
     var table_special_configuration = $('.table_special_configuration tbody');
     var table_special_relatedNews = $('.table_special_relatedNews tbody');
     var special_create = $('.special_create');
+    var table_tab_configuration = $('.table_tab_configuration tbody');
+    var tab_configuration = $('.tab_configuration');
 
     var server_host = "http://jethome.newsjet.io:9000";
     // var server_host = "http://localhost:9000";
@@ -260,9 +262,9 @@ $(function($) {
             case 10:
                 special_configuration.show();
                 break;
-                // case 11:
-                //     headline_optimize.show();
-                //     break;
+            case 11:
+                tab_configuration.show();
+                break;
             default:
                 break;
         }

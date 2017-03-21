@@ -15,9 +15,9 @@
     <div class="nav_left">
         <ul class="nav nav-list nav_left_list">
             <li class="active"><a href="#commentContainer">新闻列表<span class="glyphicon glyphicon-chevron-right"></span> </a></li>
-            <li class=""><a href="#videoContainer">视频列表<span class="glyphicon glyphicon-chevron-right"></span> </a></li>
-            <li class=""><a href="#pushLog">推送日志<span class="glyphicon glyphicon-chevron-right"></span> </a></li>
-            <li class=""><a href="#activetyComment">活动评论<span class="glyphicon glyphicon-chevron-right"></span> </a></li>
+            <li><a href="#videoContainer">视频列表<span class="glyphicon glyphicon-chevron-right"></span> </a></li>
+            <li><a href="#pushLog">推送日志<span class="glyphicon glyphicon-chevron-right"></span> </a></li>
+            <li><a href="#activetyComment">活动评论<span class="glyphicon glyphicon-chevron-right"></span> </a></li>
             <li><a href="#switchActivitySplash">闪屏配置页<span class="glyphicon glyphicon-chevron-right"></span> </a></li>
             <li><a href="#switchActivityAppbottombar">App活动配置页<span class="glyphicon glyphicon-chevron-right"></span> </a></li>
             <li><a href="#newsUpload">新闻上传<span class="glyphicon glyphicon-chevron-right"></span> </a></li>
@@ -25,6 +25,7 @@
             <li><a href="#headlineOptimize">栏目优化<span class="glyphicon glyphicon-chevron-right"></span> </a></li>
             <li><a href="#matchList">比赛列表<span class="glyphicon glyphicon-chevron-right"></span> </a></li>
             <li><a href="#specialConfiguration">专题配置页<span class="glyphicon glyphicon-chevron-right"></span> </a></li>
+            <li><a href="#tabConfiguration">Tab配置页<span class="glyphicon glyphicon-chevron-right"></span> </a></li>
         </ul>
     </div>
     <!-- main  content-->
@@ -1770,7 +1771,7 @@
                 <!-- 专题新闻列表 -->
                 <div class="reply_comment2">
                     <div class="related_news" id="relatedNews">
-                    <p style="font-size: 24px;font-weight: 600;text-align: left;margin-bottom: 20px;">当前专题：<span class="special_current_news"></span></p>
+                        <p style="font-size: 24px;font-weight: 600;text-align: left;margin-bottom: 20px;">当前专题：<span class="special_current_news"></span></p>
                         <div class="table table-responsive" style="max-height: 70vh;">
                             <table class="table table-bordered table_special_relatedNews">
                                 <thead>
@@ -1865,7 +1866,7 @@
                             </select>
                         </div>
                         <div style="text-align: left;overflow: hidden;margin-bottom: 20px;width: 100%;">
-                            <span style="float: left;margin-right: 20px;">专题说明</span> 
+                            <span style="float: left;margin-right: 20px;">专题说明</span>
                             <textarea class="special_description" style="width: 70%;height: 80px;float: left;"></textarea>
                         </div>
                         <div class="input-group">
@@ -1896,6 +1897,141 @@
                         <div class="input-group">
                             <span class="input-group-addon">发生时间<i>*</i></span>
                             <input type="datetime-local" placeholder="Start Time" class="special_start_time">
+                        </div>
+                        <button type="button" class="btn btn-success special_publish" style="margin: 0;">发布</button>
+                        <button type="button" class="btn btn-danger close4" style="margin: 0;">取消</button>
+                    </div>
+                    <div class="modify_success">
+                        <div class="likes_success">
+                            专题创建配置成功！
+                        </div>
+                    </div>
+                    <div class="tips_success">
+                        <div class="likes_success">
+                            *对应输入内容不能为空！
+                        </div>
+                    </div>
+                </div>
+                <div class="share_success">
+                    <div class="likes_success">
+                        下线成功!
+                    </div>
+                </div>
+            </div>
+            <div class="add_option">
+                <button type="button" class="btn btn-success special_create">创建专题</button>
+            </div>
+        </div>
+        <!-- Tab配置页 -->
+        <div class="tab_configuration table_container" id="tabConfiguration">
+            <div class="news_opa">
+                <div class="input-group">
+                    <span class="input-group-addon">Tab位置</span>
+                    <select class="form-control special_position">
+                        <option value="">1</option>
+                        <option value="">2</option>
+                        <option value="">3</option>
+                        <option value="">4</option>
+                    </select>
+                </div>
+                <div class="input-group">
+                    <span class="input-group-addon">使用状态</span>
+                    <select class="form-control special_position">
+                        <option value="">使用中</option>
+                        <option value="">已停用</option>
+                    </select>
+                </div>
+                <div class="input-group">
+                    <span class="input-group-addon">是否有红点</span>
+                    <select class="form-control special_position">
+                        <option value="">是</option>
+                        <option value="">否</option>
+                    </select>
+                </div>
+                <button type="button" class="btn btn-success special_search">搜索</button>
+            </div>
+            <div class="table table-responsive">
+                <table class="table table-bordered table_tab_configuration">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Tab位置</th>
+                            <th>配置时间</th>
+                            <th>Tab名称</th>
+                            <th>跳转链接</th>
+                            <th>是否有红点</th>
+                            <th>状态</th>
+                            <th>编辑</th>
+                            <th>停用</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+                <!-- 专题创建/配置 -->
+                <div class="reply_comment">
+                    <div class="reply_comment_container" style="height: 90vh; margin: 5vh auto;">
+                        <div class="input-group" style="float: left;width: 40%;margin-left: 5%;">
+                            <span class="input-group-addon">Tab位置<i>*</i</span>
+                            <select class="form-control tab_position">
+                                <option value="">1</option>
+                                <option value="">2</option>
+                                <option value="">3</option>
+                                <option value="">4</option>
+                            </select>
+                        </div>
+                        <div class="input-group">
+                            <span class="input-group-addon">Tab名称（日文）<i>*</i></span>
+                            <input type="url" class="form-control tab_name" placeholder="Tab Name">
+                        </div>
+                        <div class="input-group">
+                            <span class="input-group-addon">Tab文字色值（常规态）</span>
+                            <input type="url" class="form-control tab_name" placeholder="Tab Name">（可不填，若不填则使用默认色值）
+                        </div>
+                        <div class="input-group">
+                            <span class="input-group-addon">Tab文字色值（选中态）</span>
+                            <input type="url" class="form-control tab_name" placeholder="Tab Name">（可不填，若不填则使用默认色值）
+                        </div>
+                        <div class="input-group">
+                            <span class="input-group-addon">logo链接（2X常规态）<i>*</i></span>
+                            <input type="url" class="form-control tab_name" placeholder="Tab Name">
+                        </div>
+                        <div class="input-group">
+                            <span class="input-group-addon">logo链接（2X选中态）<i>*</i></span>
+                            <input type="url" class="form-control tab_name" placeholder="Tab Name">
+                        </div>
+                        <div class="input-group">
+                            <span class="input-group-addon">logo链接（3X常规态）<i>*</i></span>
+                            <input type="url" class="form-control tab_name" placeholder="Tab Name">
+                        </div>
+                        <div class="input-group">
+                            <span class="input-group-addon">logo链接（3X选中态）<i>*</i></span>
+                            <input type="url" class="form-control tab_name" placeholder="Tab Name">
+                        </div>
+                        <div class="input-group">
+                            <span class="input-group-addon">跳转链接<i>*</i></span>
+                            <input type="url" class="form-control tab_name" placeholder="Tab Name">
+                            <span class="glyphicon glyphicon-question-sign"></span>
+                        </div>
+                        <div class="input-group" style="float: left;width: 40%;margin-left: 5%;">
+                            <span class="input-group-addon">Tab位置<i>*</i</span>
+                            <select class="form-control tab_position">
+                                <option value="">否</option>
+                                <option value="">是</option>
+                            </select>
+                            （默认为“否”，不添加红点则下面内容可以不用填写）
+                        </div>
+                        <div class="input-group">
+                            <span class="input-group-addon">红点色值<i>*</i></span>
+                            <input type="url" class="form-control tab_name" placeholder="Tab Name">（可不填，若不填则使用默认色值）
+                        </div>
+                        <div class="input-group" style="float: left;width: 40%;margin-left: 5%;">
+                            <span class="input-group-addon">红点规则<i>*</i</span>
+                            <select class="form-control tab_position">
+                                <option value="1">只展现一次</option>
+                                <option value="2">一天一次</option>
+                                <option value="3">每次都显示</option>
+                            </select>
                         </div>
                         <button type="button" class="btn btn-success special_publish" style="margin: 0;">发布</button>
                         <button type="button" class="btn btn-danger close4" style="margin: 0;">取消</button>
