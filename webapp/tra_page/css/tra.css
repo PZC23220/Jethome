@@ -76,6 +76,10 @@ article * {
     max-width: 100%;
 }
 
+.main__title,.main__subTitle {
+    text-align: center !important;
+}
+
 
 /*分享*/
 
@@ -405,11 +409,16 @@ section.ad .ad_source img {
 
 .news_list .news_summary a p:last-child {
     color: #999;
-    font-weight: 500
+    font-weight: 500;
 }
 
 .news_list .news_summary a p:last-child span:first-child {
     float: left;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
 }
 
 .news_list .news_summary a p:last-child span:first-child img {
@@ -529,4 +538,5 @@ section.ad .ad_source img {
     border-radius: 2px;
     float: right;
 }
+
 

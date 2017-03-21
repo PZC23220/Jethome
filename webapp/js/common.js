@@ -3755,6 +3755,7 @@ $(function($) {
         }
     });
 
+    switch_appbottom_tab();
     // Tab配置页
     function switch_appbottom_tab() {
         $.ajax({
@@ -3764,7 +3765,7 @@ $(function($) {
                 var jsonobj = JSON.parse(res);
                 console.log(jsonobj);
                 for (var i = 0; i < jsonobj.length; i++) {
-                    createSpecialNews(jsonobj[i], id);
+                    createTabConfig(jsonobj[i]);
                 }
             }
         });
@@ -3775,6 +3776,7 @@ $(function($) {
         var tr = $('<tr/>');
         var td1 = $('<td/>').html(list.id).appendTo(tr);
         var td2 = $('<td/>').html(list.position).appendTo(tr);
+        var td8 = $('<td/>').html(getTime(list.updatetime)).appendTo(tr);
         var td3 = $('<td/>').html(list.badge_text).appendTo(tr);
         var td4 = $('<td/>').html(list.btn_uri).appendTo(tr);
         if (list.badge_argb_hl == 0) {
@@ -3787,8 +3789,12 @@ $(function($) {
         } else {
             var td6 = $('<td/>').html('已停用').appendTo(tr);
         }
-        var td7 = $('<td/>').html('<a href="#">编辑</a>').addClass('tab_config_updata').appendTo(tr);
-        var td8 = $('<td/>').html(list.news_title).appendTo(tr);
+        var td7 = $('<td/>').html('<a href="#">编辑</a>').addClass('tab_config_updata').attr('data-info',JSON.stringify(list)).appendTo(tr);
+        if (list.active == 1) {
+            var td7 = $('<td/>').html('<a href="#">停用</a>').addClass('tab_config_updata').attr({'data-id': list.id,'data-value': 0}).appendTo(tr);
+        } else {
+            var td7 = $('<td/>').html('<a href="#">启用</a>').addClass('tab_config_updata').attr({'data-id': list.id,'data-value': 1}).appendTo(tr);
+        }
 
         
         tr.appendTo(table_tab_configuration);

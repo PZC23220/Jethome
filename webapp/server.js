@@ -484,7 +484,7 @@ var server = http.createServer(function(request, response) {
             });
         });
     } else if (params.pathname == '/switch_appbottom_tab_active') {
-        var sql = "UPDATE switch_appbottom_tab set active = 0 WHERE id = " + query.id;
+        var sql = "UPDATE switch_appbottom_tab set active = "+ query.value +" WHERE id = " + query.id;
         connection.query(sql, function(err, rows, fields) {
             //处理你的结果
             if (err) {
