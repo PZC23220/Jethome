@@ -198,8 +198,8 @@ $(function($) {
     var table_tab_configuration = $('.table_tab_configuration tbody');
     var tab_configuration = $('.tab_configuration');
 
-    // var server_host = "http://jethome.newsjet.io:9000";
-    var server_host = "http://localhost:9000";
+    var server_host = "http://jethome.newsjet.io:9000";
+    // var server_host = "http://localhost:9000";
     // 
 
     var arr10 = getUserimg();
