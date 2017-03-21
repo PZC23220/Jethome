@@ -4,6 +4,7 @@ import com.newsjet.jethome.dao.entity.NewsSpecialTopic;
 import org.apache.ibatis.annotations.*;
 import org.apache.ibatis.type.JdbcType;
 
+import java.util.Date;
 import java.util.List;
 
 public interface NewsSpecialTopicMapper {

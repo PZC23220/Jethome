@@ -57,6 +57,9 @@ public class TopicNewsController extends AbstractNewsjetController {
             Objects.requireNonNull(title, "Parameter 'title' cannot be null or empty. ");
             getLogger().info("Initialization request for news topic [{}]. ", title);
 
+            Long topicTime = request.getParamAsLong("topic_time", 1);
+            Objects.requireNonNull(topicTime, "Parameter 'topic_time' cannot be null or empty. ");
+
             executor.execute(() -> {
                 try {
                     NewsSpecialTopic specialTopic = newsSpecialTopicMapper.selectByTitle(title);
@@ -117,7 +120,7 @@ public class TopicNewsController extends AbstractNewsjetController {
         }
     }
 
-    private List<SolrDocument> searchApplicableDocuments(List<String> keywordInclusion, List<String> keywordExclusion)
+    private List<SolrDocument> searchApplicableDocuments(Long topicTime, List<String> keywordInclusion, List<String> keywordExclusion)
             throws IOException, SolrServerException {
         ModifiableSolrParams params = new ModifiableSolrParams();
         params.add(CommonParams.QT, "select");
@@ -126,7 +129,7 @@ public class TopicNewsController extends AbstractNewsjetController {
         params.add(CommonParams.DF, "content");
         params.add(CommonParams.DF, "textContent");
         params.add(CommonParams.FL, "aid,vid,cid,ctime,publishTime,title");
-        params.add(CommonParams.FQ, "ctime:[0 TO *]");
+        params.add(CommonParams.FQ, String.format("ctime:[%s TO *]", topicTime));
         params.add(CommonParams.SORT, "ctime desc");
 
         if (!keywordInclusion.isEmpty())
