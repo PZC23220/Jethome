@@ -431,7 +431,70 @@ var server = http.createServer(function(request, response) {
             response.write(JSON.stringify(rows));
             response.end();
         });
-    } ;
+    } else if (params.pathname == '/switch_appbottom_tab') {
+        var sql = "SELECT * FROM switch_appbottom_tab";
+        connection.query(sql, function(err, rows, fields) {
+            //处理你的结果
+            if (err) {
+                console.log(err);
+                return;
+            }
+            response.write(JSON.stringify(rows));
+            response.end();
+        });
+    } else if (params.pathname == '/set_switch_appbottom_tab') {
+        // if(reqObj.id) {
+        // } 
+        var jsonData = "";
+        request.on('data', function(chunk) {
+            jsonData += chunk;
+        });
+        request.on('end', function() {
+            var reqObj = JSON.parse(jsonData);
+            console.log(reqObj);
+            var resObj = {
+                title: reqObj.title,
+                cid: reqObj.cid,
+                topic_time: reqObj.topic_time,
+                bg_img: reqObj.bg_img,
+                pos: reqObj.pos,
+                keyword_inclusion: reqObj.keyword_inclusion,
+                keyword_exclusion: reqObj.keyword_exclusion,
+                detail_desc: reqObj.detail_desc
+            };
+            if (reqObj.id) {
+                resObj.id = reqObj.id;
+                var sql = "UPDATE switch_appbottom_tab SET title = ?,cid = ?,topic_time = ?,bg_img = ?,pos = ?,keyword_inclusion = ?,keyword_exclusion = ?,detail_desc = ? WHERE id = ?";
+            } else {
+                var sql = "INSERT INTO switch_appbottom_tab(title,cid,topic_time,bg_img,pos,keyword_inclusion,keyword_exclusion,detail_desc) VALUES(?,?,?,?,?,?,?,?,?,?)";
+            }
+            var arr = []
+            for(var i in resObj) {
+                arr.push(resObj[i]);
+            }
+            // console.log(arr);
+            connection.query(sql, arr, function(err, result) {
+                if (err) {
+                    console.log(err, result);
+                    return;
+                }
+
+                response.write(JSON.stringify(result));
+                response.end();
+            });
+        });
+    } else if (params.pathname == '/switch_appbottom_tab_active') {
+        var sql = "UPDATE switch_appbottom_tab set active = 0 WHERE id = " + query.id;
+        connection.query(sql, function(err, rows, fields) {
+            //处理你的结果
+            if (err) {
+                console.log(err);
+                return;
+            }
+            response.write(JSON.stringify(rows));
+            response.end();
+        });
+    };
 }).listen(PORT, function() {
     console.log('服务器创建成功，请打开http://localhost:' + PORT);
 });

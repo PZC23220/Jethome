@@ -198,8 +198,8 @@ $(function($) {
     var table_tab_configuration = $('.table_tab_configuration tbody');
     var tab_configuration = $('.tab_configuration');
 
-    var server_host = "http://jethome.newsjet.io:9000";
-    // var server_host = "http://localhost:9000";
+    // var server_host = "http://jethome.newsjet.io:9000";
+    var server_host = "http://localhost:9000";
     // 
 
     var arr10 = getUserimg();
@@ -3754,6 +3754,46 @@ $(function($) {
             table_special_configuration.find('tr').show()
         }
     });
+
+    // Tab配置页
+    function switch_appbottom_tab() {
+        $.ajax({
+            url: server_host + '/switch_appbottom_tab',
+            success: function(res) {
+                table_tab_configuration.empty();
+                var jsonobj = JSON.parse(res);
+                console.log(jsonobj);
+                for (var i = 0; i < jsonobj.length; i++) {
+                    createSpecialNews(jsonobj[i], id);
+                }
+            }
+        });
+
+    }
+
+    function createTabConfig(list, t_id) {
+        var tr = $('<tr/>');
+        var td1 = $('<td/>').html(list.id).appendTo(tr);
+        var td2 = $('<td/>').html(list.position).appendTo(tr);
+        var td3 = $('<td/>').html(list.badge_text).appendTo(tr);
+        var td4 = $('<td/>').html(list.btn_uri).appendTo(tr);
+        if (list.badge_argb_hl == 0) {
+            var td5 = $('<td/>').html('否').appendTo(tr);
+        } else {
+            var td5 = $('<td/>').html('是').appendTo(tr);
+        }
+        if (list.active == 1) {
+            var td6 = $('<td/>').html('使用中').appendTo(tr);
+        } else {
+            var td6 = $('<td/>').html('已停用').appendTo(tr);
+        }
+        var td7 = $('<td/>').html('<a href="#">编辑</a>').addClass('tab_config_updata').appendTo(tr);
+        var td8 = $('<td/>').html(list.news_title).appendTo(tr);
+
+        
+        tr.appendTo(table_tab_configuration);
+
+    }
 
 
     // var userinfo = $(this).find('option:selected').attr('data-userinfo');
