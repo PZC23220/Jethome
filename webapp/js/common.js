@@ -198,8 +198,8 @@ $(function($) {
     var table_tab_configuration = $('.table_tab_configuration tbody');
     var tab_configuration = $('.tab_configuration');
 
-    var server_host = "http://jethome.newsjet.io:9000";
-    // var server_host = "http://localhost:9000";
+    // var server_host = "http://jethome.newsjet.io:9000";
+    var server_host = "http://localhost:9000";
     // 
 
     var arr10 = getUserimg();
@@ -3444,6 +3444,12 @@ $(function($) {
     }
     // 创建专题
     special_create.click(function() {
+        $('.special_title').val('');
+        $('.special_description').val('');
+        $('.special_bg_img').val('');
+        $('.special_keyword').val('');
+        $('.exclude_words').val('');
+        $('.special_start_time').val('');
         reply_comment.show();
         $('.special_publish').removeAttr('data-id');
     });
@@ -3453,15 +3459,12 @@ $(function($) {
         var info = JSON.parse($(this).attr('data-info'));
         $('.special_title').val(info.title);
         $('.special_subtitle').val(info.subtitle);
-        $('.special_description').html(info.detail_desc);
+        $('.special_description').val(info.detail_desc);
         $('.special_bg_img').val(info.bg_img);
-        // $('.special_thumbnail1').val(info.imgs.split(',')[0]);
-        // $('.special_thumbnail2').val(info.imgs.split(',')[1]);
-        // $('.special_thumbnail3').val(info.imgs.split(',')[2]);
         $('.special_keyword').val(info.keyword_inclusion);
         $('.exclude_words').val(info.keyword_exclusion);
         $('.special_start_time').val(new Date(info.topic_time).Format("yyyy-MM-ddThh:mm:ss"));
-        $('.special_publish').attr('data-id',info.id);
+        $('.special_publish').attr('data-id', info.id);
         var option1 = $('.special_channel').find('option');
         option1.each(function(idx, ele) {
             if ($(this).attr('data-id') == info.cid) {
@@ -3479,14 +3482,13 @@ $(function($) {
 
     // 点击修改/创建专题
     $('.special_publish').on('click', function() {
-        if($('.special_title').val() && $('.special_bg_img').val() && $('.special_start_time').val() && $('.special_keyword').val()) {
+        if ($('.special_title').val() && $('.special_bg_img').val() && $('.special_start_time').val() && $('.special_keyword').val()) {
 
             var data = {
                 title: $('.special_title').val(),
-                subtitle: $('.special_subtitle').val(),
-                detail_desc: $('.special_description').html(),
+                // subtitle: $('.special_subtitle').val(),
+                detail_desc: $('.special_description').val(),
                 cid: $('.special_channel').find('option:selected').attr('data-id'),
-                imgs: $('.special_thumbnail1').val() + ','+ $('.special_thumbnail2').val() + ',' + $('.special_thumbnail3').val(),
                 bg_img: $('.special_bg_img').val(),
                 pos: $('.special_position').find('option:selected').html(),
                 keyword_inclusion: $('.special_keyword').val(),
@@ -3494,7 +3496,7 @@ $(function($) {
                 topic_time: new Date($('.special_start_time').val()).Format("yyyy/MM/dd hh:mm:ss")
             }
             console.log(data.topic_time);
-            if($(this).attr('data-id')) {
+            if ($(this).attr('data-id')) {
                 data.id = $(this).attr('data-id');
             }
             console.log(data);
@@ -3506,28 +3508,28 @@ $(function($) {
                     console.log(res);
                     modify_success.show();
                     $.ajax({
-                        url: 'news_topic',
-                        success: function(res){
+                        url: 'news_topic?title=' + data.title + '&topic_time=' + Date.parse(data.topic_time)/1000,
+                        success: function(res) {
                             console.log(res);
                         }
                     });
-                    
-                    setTimeout(function(){
+
+                    setTimeout(function() {
                         reply_comment.find('input').val('');
                         reply_comment.find('textarea').html('');
                         news_special_topic();
                         modify_success.hide();
                         reply_comment.hide();
-                    },2000);
+                    }, 2000);
                 }
             });
-            
+
 
         } else {
             tips_success.show();
-            setTimeout(function(){
+            setTimeout(function() {
                 tips_success.hide();
-            },2000);
+            }, 2000);
         }
     });
     news_special_topic();
@@ -3742,12 +3744,12 @@ $(function($) {
     });
 
     // 专题搜索
-    $('.special_search').click(function(){
+    $('.special_search').click(function() {
         table_special_configuration.find('tr').hide();
-        if($('.special_id').val() != '') {
+        if ($('.special_id').val() != '') {
             console.log(table_special_configuration.find('.s_id').filter(":contains(" + $('.special_id').val() + ")"))
             table_special_configuration.find('.s_id').filter(":contains(" + $('.special_id').val() + ")").parent().show();
-        } else if($('.special_keyword_search').val() != '') {
+        } else if ($('.special_keyword_search').val() != '') {
 
             table_special_configuration.find('.s_title').filter(":contains(" + $('.special_keyword_search').val() + ")").parent().show();
         } else {
@@ -3777,9 +3779,9 @@ $(function($) {
         var td1 = $('<td/>').html(list.id).appendTo(tr);
         var td2 = $('<td/>').html(list.position).appendTo(tr);
         var td8 = $('<td/>').html(getTime(list.updatetime)).appendTo(tr);
-        var td3 = $('<td/>').html(list.badge_text).appendTo(tr);
+        var td3 = $('<td/>').html(list.btn_text).appendTo(tr);
         var td4 = $('<td/>').html(list.btn_uri).appendTo(tr);
-        if (list.badge_argb_hl == 0) {
+        if (list.badge_showtype == 0) {
             var td5 = $('<td/>').html('否').appendTo(tr);
         } else {
             var td5 = $('<td/>').html('是').appendTo(tr);
@@ -3789,17 +3791,128 @@ $(function($) {
         } else {
             var td6 = $('<td/>').html('已停用').appendTo(tr);
         }
-        var td7 = $('<td/>').html('<a href="#">编辑</a>').addClass('tab_config_updata').attr('data-info',JSON.stringify(list)).appendTo(tr);
+        var td7 = $('<td/>').html('<a href="#">编辑</a>').addClass('tab_config_updata').attr('data-info', JSON.stringify(list)).appendTo(tr);
         if (list.active == 1) {
-            var td7 = $('<td/>').html('<a href="#">停用</a>').addClass('tab_config_updata').attr({'data-id': list.id,'data-value': 0}).appendTo(tr);
+            var td9 = $('<td/>').html('<a href="#">停用</a>').addClass('tab_config_active').attr({ 'data-id': list.id, 'data-value': 0 }).appendTo(tr);
         } else {
-            var td7 = $('<td/>').html('<a href="#">启用</a>').addClass('tab_config_updata').attr({'data-id': list.id,'data-value': 1}).appendTo(tr);
+            var td9 = $('<td/>').html('<a href="#">启用</a>').addClass('tab_config_active').attr({ 'data-id': list.id, 'data-value': 1 }).appendTo(tr);
         }
 
-        
+
         tr.appendTo(table_tab_configuration);
 
     }
+
+    // 创建Tab
+    $('.tab_create').click(function() {
+        $('.tab_name').val('');
+        $('.btn_text_argb').val('');
+        $('.btn_text_argb_hl').val('');
+        $('.btn_image2x').val('');
+        $('.btn_image2x_hl').val('');
+        $('.btn_image3x').val('');
+        $('.btn_image3x_hl').val('');
+        $('.tab_uri').val('');
+        $('.badge_argb').val('');
+        $('.tab_updata').removeAttr('data-id');
+        reply_comment.show();
+    });
+
+    // 启用停用
+    table_tab_configuration.on('click', '.tab_config_active', function() {
+        $.ajax({
+            url: server_host + '/switch_appbottom_tab_active?id=' + $(this).attr('data-id') + '&value=' + $(this).attr('data-value'),
+            success: function(res) {
+                console.log(res);
+                share_success.show();
+                setTimeout(function() {
+                    switch_appbottom_tab();
+                    share_success.hide();
+                }, 2000);
+            }
+        });
+
+    });
+
+    // 编辑tab配置
+    table_tab_configuration.on('click', '.tab_config_updata', function() {
+        var info = JSON.parse($(this).attr('data-info'));
+        var option = $('.tab_position').find('option');
+        option.each(function() {
+            if ($(this).html() == info.position) {
+                $(this).attr('selected', true);
+            }
+        });
+        var option1 = $('.tab_badge').find('option');
+        if (info.badge_showtype == 0) {
+            option1.eq(0).attr('selected', true);
+        } else {
+            option1.eq(1).attr('selected', true);
+            option1.eq(1).val(info.badge_showtype);
+        }
+
+        $('.tab_name').val(info.btn_text);
+        $('.btn_text_argb').val(info.btn_text_argb);
+        $('.btn_text_argb_hl').val(info.btn_text_argb_hl);
+        $('.btn_image2x').val(info.btn_image2x);
+        $('.btn_image2x_hl').val(info.btn_image2x_hl);
+        $('.btn_image3x').val(info.btn_image3x);
+        $('.btn_image3x_hl').val(info.btn_image3x_hl);
+        $('.tab_uri').val(info.btn_uri);
+        $('.badge_argb').val(info.badge_argb);
+        $('.tab_updata').attr('data-id',info.id);
+
+        reply_comment.show();
+    });
+
+    // 提交配置
+    $('.tab_updata').click(function() {
+        if($('.tab_name').val() && $('.btn_image2x').val() && $('.btn_image2x_hl').val() && $('.btn_image3x').val() && $('.btn_image3x_hl').val() && $('.tab_uri').val()) {
+
+            var data = {
+                btn_text: $('.tab_name').val(),
+                position: $('.tab_position').find('option:selected').html(),
+                btn_text_argb: $('.btn_text_argb').val(),
+                btn_text_argb_hl: $('.btn_text_argb_hl').val(),
+                btn_image2x: $('.btn_image2x').val(),
+                btn_image2x_hl: $('.btn_image2x_hl').val(),
+                btn_image3x: $('.btn_image3x').val(),
+                btn_image3x_hl: $('.btn_image3x_hl').val(),
+                btn_uri: $('.tab_uri').val(),
+                badge_argb: $('.badge_argb').val()
+                // badge_showtype: $('.tab_badge').find('option:selected').val()
+            }
+            if($('.tab_badge').find('option:selected').index() == 0) {
+                data.badge_showtype = 0;
+            } else {
+                var num = $('.tab_badge').find('option:selected').val()
+                data.badge_showtype = ++num;
+            }
+            if($(this).attr('data-id')) {
+                data.id = $(this).attr('data-id');
+            }
+            console.log(data);
+            $.ajax({
+                url: server_host + '/set_switch_appbottom_tab',
+                type: 'POST',
+                data: JSON.stringify(data),
+                success: function(res) {
+                    console.log(res);
+                    share_success.show();
+                    setTimeout(function() {
+                        switch_appbottom_tab();
+                        reply_comment.hide();
+                        share_success.hide();
+                    }, 2000);
+                }
+            });
+        } else {
+            tips_success.show();
+            setTimeout(function(){
+                tips_success.hide();
+            },2000);
+        }
+    });
 
 
     // var userinfo = $(this).find('option:selected').attr('data-userinfo');

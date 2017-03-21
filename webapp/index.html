@@ -1948,7 +1948,7 @@
                         <option value="">否</option>
                     </select>
                 </div>
-                <button type="button" class="btn btn-success special_search">搜索</button>
+                <!-- <button type="button" class="btn btn-success special_search">搜索</button> -->
             </div>
             <div class="table table-responsive">
                 <table class="table table-bordered table_tab_configuration">
@@ -1971,8 +1971,8 @@
                 <!-- 专题创建/配置 -->
                 <div class="reply_comment">
                     <div class="reply_comment_container" style="height: 90vh; margin: 5vh auto;">
-                        <div class="input-group" style="float: left;width: 40%;margin-left: 5%;">
-                            <span class="input-group-addon">Tab位置<i>*</i</span>
+                        <div class="input-group">
+                            <span class="input-group-addon">Tab位置<i>*</i></span>
                             <select class="form-control tab_position">
                                 <option value="">1</option>
                                 <option value="">2</option>
@@ -1982,63 +1982,56 @@
                         </div>
                         <div class="input-group">
                             <span class="input-group-addon">Tab名称（日文）<i>*</i></span>
-                            <input type="url" class="form-control tab_name" placeholder="Tab Name">
+                            <input type="text" class="form-control tab_name" placeholder="Tab Name">
                         </div>
+                        <p style="text-align: left;">（色值类可不填，若不填则使用默认色值）</p>
                         <div class="input-group">
                             <span class="input-group-addon">Tab文字色值（常规态）</span>
-                            <input type="url" class="form-control tab_name" placeholder="Tab Name">（可不填，若不填则使用默认色值）
+                            <input type="text" class="form-control btn_text_argb" placeholder="Tab Color">
                         </div>
                         <div class="input-group">
                             <span class="input-group-addon">Tab文字色值（选中态）</span>
-                            <input type="url" class="form-control tab_name" placeholder="Tab Name">（可不填，若不填则使用默认色值）
+                            <input type="text" class="form-control btn_text_argb_hl" placeholder="Tab Color LightHight">
                         </div>
                         <div class="input-group">
                             <span class="input-group-addon">logo链接（2X常规态）<i>*</i></span>
-                            <input type="url" class="form-control tab_name" placeholder="Tab Name">
+                            <input type="text" class="form-control btn_image2x" placeholder="Tab Logo url">
                         </div>
                         <div class="input-group">
                             <span class="input-group-addon">logo链接（2X选中态）<i>*</i></span>
-                            <input type="url" class="form-control tab_name" placeholder="Tab Name">
+                            <input type="text" class="form-control btn_image2x_hl" placeholder="Tab Logo url">
                         </div>
                         <div class="input-group">
                             <span class="input-group-addon">logo链接（3X常规态）<i>*</i></span>
-                            <input type="url" class="form-control tab_name" placeholder="Tab Name">
+                            <input type="text" class="form-control btn_image3x" placeholder="Tab Logo url">
                         </div>
                         <div class="input-group">
                             <span class="input-group-addon">logo链接（3X选中态）<i>*</i></span>
-                            <input type="url" class="form-control tab_name" placeholder="Tab Name">
+                            <input type="text" class="form-control btn_image3x_hl" placeholder="Tab Logo url">
                         </div>
+                            <span class="glyphicon glyphicon-question-sign" style="float: left;"></span>
                         <div class="input-group">
                             <span class="input-group-addon">跳转链接<i>*</i></span>
-                            <input type="url" class="form-control tab_name" placeholder="Tab Name">
-                            <span class="glyphicon glyphicon-question-sign"></span>
-                        </div>
-                        <div class="input-group" style="float: left;width: 40%;margin-left: 5%;">
-                            <span class="input-group-addon">Tab位置<i>*</i</span>
-                            <select class="form-control tab_position">
-                                <option value="">否</option>
-                                <option value="">是</option>
-                            </select>
-                            （默认为“否”，不添加红点则下面内容可以不用填写）
+                            <input type="text" class="form-control tab_uri" placeholder="Tab uri">
                         </div>
                         <div class="input-group">
-                            <span class="input-group-addon">红点色值<i>*</i></span>
-                            <input type="url" class="form-control tab_name" placeholder="Tab Name">（可不填，若不填则使用默认色值）
-                        </div>
-                        <div class="input-group" style="float: left;width: 40%;margin-left: 5%;">
-                            <span class="input-group-addon">红点规则<i>*</i</span>
-                            <select class="form-control tab_position">
-                                <option value="1">只展现一次</option>
-                                <option value="2">一天一次</option>
-                                <option value="3">每次都显示</option>
+                            <span class="input-group-addon">是否显示红点<i>*</i></span>
+                            <select class="form-control tab_badge">
+                                <option value="0">否</option>
+                                <option value="">是</option>
                             </select>
                         </div>
-                        <button type="button" class="btn btn-success special_publish" style="margin: 0;">发布</button>
+                            <p style="text-align: left;">（红点显示默认为“否”，不添加红点则下面内容可以不用填写）</p>
+                        <div class="input-group">
+                            <span class="input-group-addon">红点色值</span>
+                            <input type="url" class="form-control badge_argb" placeholder="Badge Color">
+                        </div>
+                        <button type="button" class="btn btn-success tab_updata" style="margin: 0;">发布</button>
                         <button type="button" class="btn btn-danger close4" style="margin: 0;">取消</button>
                     </div>
                     <div class="modify_success">
                         <div class="likes_success">
-                            专题创建配置成功！
+                            Tab创建/配置成功！
                         </div>
                     </div>
                     <div class="tips_success">
@@ -2049,12 +2042,12 @@
                 </div>
                 <div class="share_success">
                     <div class="likes_success">
-                        下线成功!
+                        状态更新成功!
                     </div>
                 </div>
             </div>
             <div class="add_option">
-                <button type="button" class="btn btn-success special_create">创建专题</button>
+                <button type="button" class="btn btn-success tab_create">新建Tab</button>
             </div>
         </div>
     </div>

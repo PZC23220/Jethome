@@ -6,8 +6,8 @@ var MySQLUtil = require('./jetModules/MySQLUtil');
 var PORT = 9000;
 
 var mySQLUtil = new MySQLUtil();
-// var connection = mySQLUtil.getConnectionProd();
-var connection = mySQLUtil.getConnectionTest();
+var connection = mySQLUtil.getConnectionProd();
+// var connection = mySQLUtil.getConnectionTest();
 connection.connect();
 
 var server = http.createServer(function(request, response) {
@@ -381,7 +381,7 @@ var server = http.createServer(function(request, response) {
                 resObj.id = reqObj.id;
                 var sql = "UPDATE news_special_topic SET title = ?,cid = ?,topic_time = ?,bg_img = ?,pos = ?,keyword_inclusion = ?,keyword_exclusion = ?,detail_desc = ? WHERE id = ?";
             } else {
-                var sql = "INSERT INTO news_special_topic(title,cid,topic_time,bg_img,pos,keyword_inclusion,keyword_exclusion,detail_desc) VALUES(?,?,?,?,?,?,?,?,?,?)";
+                var sql = "INSERT INTO news_special_topic(title,cid,topic_time,bg_img,pos,keyword_inclusion,keyword_exclusion,detail_desc) VALUES(?,?,?,?,?,?,?,?)";
             }
             var arr = []
             for(var i in resObj) {
@@ -453,20 +453,23 @@ var server = http.createServer(function(request, response) {
             var reqObj = JSON.parse(jsonData);
             console.log(reqObj);
             var resObj = {
-                title: reqObj.title,
-                cid: reqObj.cid,
-                topic_time: reqObj.topic_time,
-                bg_img: reqObj.bg_img,
-                pos: reqObj.pos,
-                keyword_inclusion: reqObj.keyword_inclusion,
-                keyword_exclusion: reqObj.keyword_exclusion,
-                detail_desc: reqObj.detail_desc
+                btn_text: reqObj.btn_text,
+                position: reqObj.position,
+                btn_text_argb: reqObj.btn_text_argb,
+                btn_text_argb_hl: reqObj.btn_text_argb_hl,
+                btn_image2x: reqObj.btn_image2x,
+                btn_image2x_hl: reqObj.btn_image2x_hl,
+                btn_image3x: reqObj.btn_image3x,
+                btn_image3x_hl: reqObj.btn_image3x_hl,
+                btn_uri: reqObj.btn_uri,
+                badge_argb: reqObj.badge_argb,
+                badge_showtype: reqObj.badge_showtype
             };
             if (reqObj.id) {
                 resObj.id = reqObj.id;
-                var sql = "UPDATE switch_appbottom_tab SET title = ?,cid = ?,topic_time = ?,bg_img = ?,pos = ?,keyword_inclusion = ?,keyword_exclusion = ?,detail_desc = ? WHERE id = ?";
+                var sql = "UPDATE switch_appbottom_tab SET btn_text = ?,position = ?,btn_text_argb = ?,btn_text_argb_hl = ?,btn_image2x = ?,btn_image2x_hl = ?,btn_image3x = ?,btn_image3x_hl = ?,btn_uri = ?,badge_argb = ?,badge_showtype = ? WHERE id = ?";
             } else {
-                var sql = "INSERT INTO switch_appbottom_tab(title,cid,topic_time,bg_img,pos,keyword_inclusion,keyword_exclusion,detail_desc) VALUES(?,?,?,?,?,?,?,?,?,?)";
+                var sql = "INSERT INTO switch_appbottom_tab(btn_text,position,btn_text_argb,btn_text_argb_hl,btn_image2x,btn_image2x_hl,btn_image3x,btn_image3x_hl,btn_uri,badge_argb,badge_showtype) VALUES(?,?,?,?,?,?,?,?,?,?,?)";
             }
             var arr = []
             for(var i in resObj) {
