@@ -379,6 +379,8 @@ section.ad .ad_source img {
 .news_ad a>div:first-child {
     float: right !important;
     margin: 0 !important;
+    width: 82px;
+    height: 82px;
 }
 
 .news_ad a>div:last-child {
