@@ -5,6 +5,7 @@
     <result column="id" jdbcType="INTEGER" property="id" />
     <result column="topic_id" jdbcType="INTEGER" property="topicId" />
     <result column="news_id" jdbcType="INTEGER" property="newsId" />
+    <result column="news_title" jdbcType="INTEGER" property="newsTitle" />
     <result column="news_cid" jdbcType="VARCHAR" property="newsCid" />
     <result column="news_type" jdbcType="INTEGER" property="newsType" />
     <result column="news_time" jdbcType="INTEGER" property="newsTime" />
@@ -15,13 +16,13 @@
     <result column="active" jdbcType="INTEGER" property="active" />
   </resultMap>
   <insert id="insert" parameterType="com.newsjet.jethome.dao.entity.NewsSpecialTopicInfo">
-    insert into news_special_topic_info (id, topic_id, news_id, 
-      news_cid, news_type, news_time, 
-      bg_img, detail_desc, pos, 
+    insert into news_special_topic_info (id, topic_id, news_id, news_title,
+      news_cid, news_type, news_time,
+      bg_img, detail_desc, pos,
       stick_at_top, active)
-    values (#{id,jdbcType=INTEGER}, #{topicId,jdbcType=INTEGER}, #{newsId,jdbcType=INTEGER}, 
-      #{newsCid,jdbcType=VARCHAR}, #{newsType,jdbcType=INTEGER}, #{newsTime,jdbcType=INTEGER}, 
-      #{bgImg,jdbcType=VARCHAR}, #{detailDesc,jdbcType=VARCHAR}, #{pos,jdbcType=INTEGER}, 
+    values (#{id,jdbcType=INTEGER}, #{topicId,jdbcType=INTEGER}, #{newsId,jdbcType=INTEGER},
+      #{newsCid,jdbcType=VARCHAR}, #{newsType,jdbcType=INTEGER}, #{newsTime,jdbcType=INTEGER},
+      #{bgImg,jdbcType=VARCHAR}, #{detailDesc,jdbcType=VARCHAR}, #{pos,jdbcType=INTEGER},
       #{stickAtTop,jdbcType=INTEGER}, #{active,jdbcType=INTEGER})
   </insert>
   <insert id="insertSelective" parameterType="com.newsjet.jethome.dao.entity.NewsSpecialTopicInfo">
@@ -35,6 +36,9 @@
       </if>
       <if test="newsId != null">
         news_id,
+      </if>
+      <if test="newsTitle != null">
+        news_title,
       </if>
       <if test="newsCid != null">
         news_cid,

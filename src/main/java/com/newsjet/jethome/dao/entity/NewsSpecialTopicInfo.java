@@ -1,13 +1,13 @@
 package com.newsjet.jethome.dao.entity;
 
-import java.util.Objects;
-
 public class NewsSpecialTopicInfo {
     private Integer id;
 
     private Integer topicId;
 
     private Integer newsId;
+
+    private String newsTitle;
 
     private String newsCid;
 
@@ -47,6 +47,14 @@ public class NewsSpecialTopicInfo {
 
     public void setNewsId(Integer newsId) {
         this.newsId = newsId;
+    }
+
+    public String getNewsTitle() {
+        return newsTitle;
+    }
+
+    public void setNewsTitle(String newsTitle) {
+        this.newsTitle = newsTitle;
     }
 
     public String getNewsCid() {
