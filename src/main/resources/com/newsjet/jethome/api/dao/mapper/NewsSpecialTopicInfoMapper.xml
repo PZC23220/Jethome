@@ -75,6 +75,9 @@
       <if test="newsId != null">
         #{newsId,jdbcType=INTEGER},
       </if>
+      <if test="newsTitle != null">
+        #{newsTitle,jdbcType=VARCHAR},
+      </if>
       <if test="newsCid != null">
         #{newsCid,jdbcType=VARCHAR},
       </if>

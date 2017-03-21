@@ -53,13 +53,13 @@ public class TopicNewsController extends AbstractNewsjetController {
 
     public ApiResponse init(ApiRequest request) {
         try {
-            Integer topicID = request.getParamAsInt("topicID");
-            Objects.requireNonNull(topicID, "Parameter 'topicID' cannot be null or empty. ");
-            getLogger().info("Initialization request for news topic [{}]. ", topicID);
+            String title = request.getParamAsStr("title");
+            Objects.requireNonNull(title, "Parameter 'title' cannot be null or empty. ");
+            getLogger().info("Initialization request for news topic [{}]. ", title);
 
             executor.execute(() -> {
                 try {
-                    NewsSpecialTopic specialTopic = newsSpecialTopicMapper.selectByPrimaryKey(topicID);
+                    NewsSpecialTopic specialTopic = newsSpecialTopicMapper.selectByTitle(title);
                     String keywordInclusion = specialTopic.getKeywordInclusion();
                     String keywordExclusion = specialTopic.getKeywordExclusion();
 
@@ -76,7 +76,7 @@ public class TopicNewsController extends AbstractNewsjetController {
                             .filter(d -> !aids.contains(Objects.toString(d.getFieldValue("vid"))))
                             .map(d -> {
                                 NewsSpecialTopicInfo newsSpecialTopicInfo = new NewsSpecialTopicInfo();
-                                newsSpecialTopicInfo.setTopicId(topicID);
+                                newsSpecialTopicInfo.setTopicId(specialTopic.getId());
                                 if (Objects.equals(d.getFieldValue("newsType"), "news")) {
                                     newsSpecialTopicInfo.setNewsId(Integer.valueOf(Objects.toString(d.getFieldValue("aid"), "-1")));
                                     newsSpecialTopicInfo.setNewsCid(Objects.toString(d.getFieldValue("cid")));
@@ -125,7 +125,7 @@ public class TopicNewsController extends AbstractNewsjetController {
         params.add(CommonParams.DF, "title");
         params.add(CommonParams.DF, "content");
         params.add(CommonParams.DF, "textContent");
-        params.add(CommonParams.FL, "aid,vid,cid,ctime,publishTime");
+        params.add(CommonParams.FL, "aid,vid,cid,ctime,publishTime,title");
         params.add(CommonParams.FQ, "ctime:[0 TO *]");
         params.add(CommonParams.SORT, "ctime desc");
 
