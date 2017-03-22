@@ -6,8 +6,8 @@ var MySQLUtil = require('./jetModules/MySQLUtil');
 var PORT = 9000;
 
 var mySQLUtil = new MySQLUtil();
-// var connection = mySQLUtil.getConnectionProd();
-var connection = mySQLUtil.getConnectionTest();
+var connection = mySQLUtil.getConnectionProd();
+// var connection = mySQLUtil.getConnectionTest();
 connection.connect();
 
 var server = http.createServer(function(request, response) {

@@ -1457,7 +1457,7 @@ $(function($) {
                             } else if ($('.push_news_title').val() && $('.push_news_desc').val()) {
                                 pushNews(aid, 'news','android', $('.push_news_title').val(), $('.push_news_desc').val());
                             } else {
-                                pushNews(aid,'android', 'news');
+                                pushNews(aid, 'news','android');
                             }
                             // pushNews(aid, pushtype, 'android', title, desc);
                         } else if (this.checked && $(this).val() == 'ios') {
@@ -1468,7 +1468,7 @@ $(function($) {
                             } else if ($('.push_news_title').val() && $('.push_news_desc').val()) {
                                 pushNews(aid, 'news','ios', $('.push_news_title').val(), $('.push_news_desc').val());
                             } else {
-                                pushNews(aid,'ios', 'news');
+                                pushNews(aid, 'news','ios');
                             }
                         }
                     });
@@ -1491,7 +1491,7 @@ $(function($) {
                             } else if ($('.push_video_title').val() && $('.push_video_desc').val()) {
                                 pushNews(aid, 'video','ios', $('.push_video_title').val(), $('.push_video_desc').val());
                             } else {
-                                pushNews(aid,'ios', 'video');
+                                pushNews(aid, 'video','ios');
                             }
                         }
                     });
@@ -2915,24 +2915,24 @@ $(function($) {
             url_ += '&body=' + desc;
         }
         console.log(url_)
-        // $.ajax({
-        //     url: url_,
-        //     beforeSend: function() {
-        //         loading.show();
-        //     },
-        //     success: function(res) {
-        //         console.log(res);
-        //         loading.hide();
-        //         success_push.show();
-        //         os.removeAttr("checked");
-        //         setTimeout(function() {
-        //             success_push.hide();
-        //             push_sure.hide();
-        //             window.location.reload();
-        //         }, 2000);
-        //         c = true;
-        //     }
-        // });
+        $.ajax({
+            url: url_,
+            beforeSend: function() {
+                loading.show();
+            },
+            success: function(res) {
+                console.log(res);
+                loading.hide();
+                success_push.show();
+                os.removeAttr("checked");
+                setTimeout(function() {
+                    success_push.hide();
+                    push_sure.hide();
+                    window.location.reload();
+                }, 2000);
+                c = true;
+            }
+        });
     }
 
     // 查看比赛相关新闻
