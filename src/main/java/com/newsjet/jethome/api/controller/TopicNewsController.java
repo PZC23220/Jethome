@@ -132,11 +132,51 @@ public class TopicNewsController extends AbstractNewsjetController {
         params.add(CommonParams.FQ, String.format("ctime:[%s TO *]", topicTime));
         params.add(CommonParams.SORT, "ctime desc");
 
-        if (!keywordInclusion.isEmpty())
-            params.add(CommonParams.Q, keywordInclusion.stream().collect(Collectors.joining("\" OR \"", "(\"", "\")")));
+        if (!keywordInclusion.isEmpty()) {
+            StringBuilder queryString = new StringBuilder();
+            for (String s : keywordInclusion) {
+                if (s.startsWith("&")) {
+                    queryString.append(" AND \"")
+                            .append(s.substring(1))
+                            .append("\"");
+                } else if (s.startsWith("|")) {
+                    queryString.append(" OR \"")
+                            .append(s.substring(1))
+                            .append("\"");
+                }
+            }
+            if (queryString.indexOf(" AND ") == 0) {
+                queryString.delete(0, 4);
+            } else if (queryString.indexOf(" OR ") == 0) {
+                queryString.delete(0, 3);
+            }
+            getLogger().info("QueryString: [{}]. ", queryString.toString());
 
-        if (!keywordExclusion.isEmpty())
-            params.add(CommonParams.Q, keywordExclusion.stream().collect(Collectors.joining("\" OR \"", "-(\"", "\")")));
+            params.add(CommonParams.Q, "(" + queryString.toString() + ")");
+        }
+
+        if (!keywordExclusion.isEmpty()) {
+            StringBuilder queryString = new StringBuilder();
+            for (String s : keywordInclusion) {
+                if (s.startsWith("&")) {
+                    queryString.append(" AND \"")
+                            .append(s.substring(1))
+                            .append("\"");
+                } else if (s.startsWith("|")) {
+                    queryString.append(" OR \"")
+                            .append(s.substring(1))
+                            .append("\"");
+                }
+            }
+            if (queryString.indexOf(" AND ") == 0) {
+                queryString.delete(0, 4);
+            } else if (queryString.indexOf(" OR ") == 0) {
+                queryString.delete(0, 3);
+            }
+            getLogger().info("QueryString: [{}]. ", queryString.toString());
+
+            params.add(CommonParams.Q, "-(" + queryString.toString() + ")");
+        }
 
         QueryResponse query = newsSolrClient.query(params);
         SolrDocumentList results = query.getResults();
