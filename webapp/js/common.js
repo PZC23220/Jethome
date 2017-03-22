@@ -1424,18 +1424,7 @@ $(function($) {
         // console.log(aid);
         push_sure.show();
         push_sure.find('p span').html(aid);
-        if ($('.push_news_title').val()) {
-            surePush(aid, 'news', $('.push_news_title').val());
-        } else {
-            surePush(aid, 'news');
-        }
-
-        if ($('.push_news_desc').val()) {
-            surePush(aid, 'news', $('.push_news_title').val(), $('.push_news_desc').val());
-        } else {
-            surePush(aid, 'news');
-        }
-
+        surePush(aid, 'news');
     });
 
     // 推送视频
@@ -1444,34 +1433,69 @@ $(function($) {
         // console.log(vid);
         push_sure.show();
         push_sure.find('p span').html(vid);
-        if ($('.push_video_title').val()) {
-            surePush(vid, 'video', $('.push_video_title').val());
-        } else {
-            surePush(vid, 'video');
-        }
-
-        if ($('.push_video_desc').val()) {
-            surePush(vid, 'video', $('.push_video_title').val(), $('.push_video_desc').val());
-        } else {
-            surePush(vid, 'video');
-        }
-        // surePush(vid, 'video');
+        // if ($('.push_video_title').val() && !$('.push_video_desc').val()) {
+        //     surePush(vid, 'video', $('.push_video_title').val());
+        // } else if ($('.push_video_title').val() && $('.push_video_desc').val()) {
+        //     surePush(vid, 'video', $('.push_video_title').val(), $('.push_video_desc').val());
+        // } else {
+        //     surePush(vid, 'video');
+        // }
+        surePush(vid, 'video');
     });
 
     // 点击确认推送
-    function surePush(aid, pushtype, title, desc) {
+    function surePush(aid, pushtype) {
         console.log(aid, pushtype);
         sure_push.click(function() {
             if (c) {
                 c = false;
-                os.each(function(idx, ele) {
-                    if (this.checked && $(this).val() == 'android') {
-                        pushNews(aid, pushtype, 'android', title, desc);
-                    } else if (this.checked && $(this).val() == 'ios') {
-                        // console.log(aid,pushtype);
-                        pushNews(aid, pushtype, 'ios', title, desc);
-                    }
-                });
+                if (pushtype == 'news') {
+                    os.each(function(idx, ele) {
+                        if (this.checked && $(this).val() == 'android') {
+                            if ($('.push_news_title').val() && !$('.push_news_desc').val()) {
+                                pushNews(aid, 'news','android', $('.push_news_title').val());
+                            } else if ($('.push_news_title').val() && $('.push_news_desc').val()) {
+                                pushNews(aid, 'news','android', $('.push_news_title').val(), $('.push_news_desc').val());
+                            } else {
+                                pushNews(aid,'android', 'news');
+                            }
+                            // pushNews(aid, pushtype, 'android', title, desc);
+                        } else if (this.checked && $(this).val() == 'ios') {
+                            // console.log(aid,pushtype);
+                            // pushNews(aid, pushtype, 'ios', title, desc);
+                            if ($('.push_news_title').val() && !$('.push_news_desc').val()) {
+                                pushNews(aid, 'news','ios', $('.push_news_title').val());
+                            } else if ($('.push_news_title').val() && $('.push_news_desc').val()) {
+                                pushNews(aid, 'news','ios', $('.push_news_title').val(), $('.push_news_desc').val());
+                            } else {
+                                pushNews(aid,'ios', 'news');
+                            }
+                        }
+                    });
+                } else {
+                    os.each(function(idx, ele) {
+                        if (this.checked && $(this).val() == 'android') {
+                            if ($('.push_video_title').val() && !$('.push_video_desc').val()) {
+                                pushNews(aid, 'video','android', $('.push_video_title').val());
+                            } else if ($('.push_video_title').val() && $('.push_video_desc').val()) {
+                                pushNews(aid, 'video','android', $('.push_video_title').val(), $('.push_video_desc').val());
+                            } else {
+                                pushNews(aid,'android', 'video');
+                            }
+                            // pushNews(aid, pushtype, 'android', title, desc);
+                        } else if (this.checked && $(this).val() == 'ios') {
+                            // console.log(aid,pushtype);
+                            // pushNews(aid, pushtype, 'ios', title, desc);
+                            if ($('.push_video_title').val() && !$('.push_video_desc').val()) {
+                                pushNews(aid, 'video','ios', $('.push_video_title').val());
+                            } else if ($('.push_video_title').val() && $('.push_video_desc').val()) {
+                                pushNews(aid, 'video','ios', $('.push_video_title').val(), $('.push_video_desc').val());
+                            } else {
+                                pushNews(aid,'ios', 'video');
+                            }
+                        }
+                    });
+                }
             }
         });
 
@@ -1486,7 +1510,7 @@ $(function($) {
 
     // 人工推送
     function pushNews(aid, pushtype, type, title, desc) {
-        console.log(aid, pushtype, type);
+        console.log(aid, pushtype, type, title, desc);
         var url_ = server_host + '/people_push?aid=' + aid + '&type=' + type + '&pushtype=' + pushtype;
         if (title) {
             url_ += '&title=' + title;
@@ -2875,41 +2899,40 @@ $(function($) {
     $('.sure_push_baseball').click(function() {
         if (c) {
             c = false;
-            if($('.push_match_title').val() && !$('.push_match_desc').val()) {
-                pushBaseball(5,$('.match_push_id').html(),$('.push_match_title').val());  
-            }
-
-            if($('.push_match_title').val() && $('.push_match_desc').val()) {
-                pushBaseball(6,$('.match_push_id').html(),$('.push_match_title').val(),$('.push_match_desc').val());  
+            if ($('.push_match_title').val() && !$('.push_match_desc').val()) {
+                pushBaseball(5, $('.match_push_id').html(), $('.push_match_title').val());
+            } else if ($('.push_match_title').val() && $('.push_match_desc').val()) {
+                pushBaseball(6, $('.match_push_id').html(), $('.push_match_title').val(), $('.push_match_desc').val());
             }
         }
-        
+
 
     });
-    function pushBaseball(pushContentType,pushTargetId,title,desc) {
+
+    function pushBaseball(pushContentType, pushTargetId, title, desc) {
         var url_ = server_host + '/notification_baseball?pushContentType=' + pushContentType + '&pushTargetId=' + pushTargetId + '&title=' + title;
         if (desc) {
             url_ += '&body=' + desc;
         }
         console.log(url_)
-        $.ajax({
-            url: url_,
-            beforeSend: function() {
-                loading.show();
-            },
-            success: function(res) {
-                console.log(res);
-                loading.hide();
-                success_push.show();
-                os.removeAttr("checked");
-                setTimeout(function() {
-                    success_push.hide();
-                    push_sure.hide();
-                    window.location.reload();
-                }, 2000);
-                c = true;
-            }
-        });
+        // $.ajax({
+        //     url: url_,
+        //     beforeSend: function() {
+        //         loading.show();
+        //     },
+        //     success: function(res) {
+        //         console.log(res);
+        //         loading.hide();
+        //         success_push.show();
+        //         os.removeAttr("checked");
+        //         setTimeout(function() {
+        //             success_push.hide();
+        //             push_sure.hide();
+        //             window.location.reload();
+        //         }, 2000);
+        //         c = true;
+        //     }
+        // });
     }
 
     // 查看比赛相关新闻
@@ -4005,18 +4028,18 @@ $(function($) {
         reply_comment2.show();
     });
 
-    $('.t_position').click(function(){
+    $('.t_position').click(function() {
         console.log($('.special_position').find('option:selected').html());
         table_tab_configuration.find('tr').hide();
         table_tab_configuration.find('.tab_pos').filter(":contains(" + $('.t_position').find('option:selected').html() + ")").parent().show();
     });
 
-    $('.t_status').click(function(){
+    $('.t_status').click(function() {
         table_tab_configuration.find('tr').hide();
         table_tab_configuration.find('.tab_status').filter(":contains(" + $('.t_status').find('option:selected').html() + ")").parent().show();
     });
 
-    $('.t_hot').click(function(){
+    $('.t_hot').click(function() {
         table_tab_configuration.find('tr').hide();
         table_tab_configuration.find('.tab_hot').filter(":contains(" + $('.t_hot').find('option:selected').html() + ")").parent().show();
     });
