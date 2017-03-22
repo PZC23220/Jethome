@@ -127,6 +127,15 @@
                         <input type="checkbox" value="android" class="os android">android
                         <input type="checkbox" value="ios" class="os ios">ios
                     </p>
+                    <p>如果要更改新闻描述，新闻标题要一同编辑才会生效</p>
+                    <div class="input-group" style="width: 80%; margin-bottom: 20px;margin-left: 5%;">
+                        <span class="input-group-addon">编辑新闻标题</span>
+                        <input type="text" class="form-control push_news_title" placeholder="Edit News Title">
+                    </div>
+                    <div class="input-group" style="width: 80%; margin-bottom: 20px;margin-left: 5%;">
+                        <span class="input-group-addon">编辑新闻描述</span>
+                        <input type="text" class="form-control push_news_desc" placeholder="Edit News Description">
+                    </div>
                     <p><a href="#" class="sure_push">确定</a><a href="#" class="close2">取消</a></p>
                 </div>
                 <div class="loading" style="display: none;">
@@ -391,6 +400,15 @@
                         <input type="checkbox" value="android" class="os android">android
                         <input type="checkbox" value="ios" class="os ios">ios
                     </p>
+                    <p>如果要更改视频描述，视频标题要一同编辑才会生效</p>
+                    <div class="input-group" style="width: 80%; margin-bottom: 20px;margin-left: 5%;">
+                        <span class="input-group-addon">编辑视频标题</span>
+                        <input type="text" class="form-control push_video_title" placeholder="Edit Video Title">
+                    </div>
+                    <div class="input-group" style="width: 80%; margin-bottom: 20px;margin-left: 5%;">
+                        <span class="input-group-addon">编辑视频描述</span>
+                        <input type="text" class="form-control push_video_desc" placeholder="Edit Video Description">
+                    </div>
                     <p><a href="#" class="sure_push">确定</a><a href="#" class="close2">取消</a></p>
                 </div>
                 <div class="loading" style="display: none;">
@@ -1304,6 +1322,7 @@
                             <th>比赛新闻</th>
                             <th>正确答案</th>
                             <th>用户答案</th>
+                            <th>推送</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -1735,6 +1754,42 @@
                         </div>
                     </div>
                 </div>
+                <!-- 立即推送 -->
+                <div class="push_sure" style="display: none;">
+                <div class="push_sur_container">
+                    <p>即将推送的(赛事id <span class="match_push_id"></span>)</p>
+                    <p>如果要更改赛事描述，赛事标题要一同编辑才会生效</p>
+                    <div class="input-group" style="width: 80%; margin-bottom: 20px;margin-left: 5%;">
+                        <span class="input-group-addon">编辑赛事标题<i>*</i></span>
+                        <input type="text" class="form-control push_match_title" placeholder="Edit Match Title">
+                    </div>
+                    <div class="input-group" style="width: 80%; margin-bottom: 20px;margin-left: 5%;">
+                        <span class="input-group-addon">编辑赛事描述<i>*</i></span>
+                        <input type="text" class="form-control push_match_desc" placeholder="Edit Match Description">
+                    </div>
+                    <p><a href="#" class="sure_push_baseball">确定</a><a href="#" class="close2">取消</a></p>
+                </div>
+                <div class="loading" style="display: none;">
+                    <div class="sk-fading-circle">
+                        <div class="sk-circle1 sk-circle"></div>
+                        <div class="sk-circle2 sk-circle"></div>
+                        <div class="sk-circle3 sk-circle"></div>
+                        <div class="sk-circle4 sk-circle"></div>
+                        <div class="sk-circle5 sk-circle"></div>
+                        <div class="sk-circle6 sk-circle"></div>
+                        <div class="sk-circle7 sk-circle"></div>
+                        <div class="sk-circle8 sk-circle"></div>
+                        <div class="sk-circle9 sk-circle"></div>
+                        <div class="sk-circle10 sk-circle"></div>
+                        <div class="sk-circle11 sk-circle"></div>
+                        <div class="sk-circle12 sk-circle"></div>
+                    </div>
+                    <p>正在推送，请稍候...</p>
+                </div>
+                <div class="success_push">
+                    推送新闻成功！
+                </div>
+            </div>
             </div>
             <p style="font-size: 18px;font-weight: 600;color: #f00;">点击比赛ID可以添加比赛评论、国家名称可以添加球员/球队评论！</p>
         </div>
@@ -1821,7 +1876,7 @@
                         <div class="input-group" style="float: left;">
                             <span class="input-group-addon">新闻频道<i>*</i></span>
                             <select class="form-control special_channel category">
-                                <option data-id="top">トップ</option>
+                                <!-- <option data-id="top">トップ</option> -->
                                 <option data-id="ent">エンタメ</option>
                                 <option data-id="spo">スポーツ</option>
                                 <option data-id="cn">中国</option>
@@ -1893,6 +1948,13 @@
                             <span class="input-group-addon">排除词</span>
                             <input type="text" placeholder="Exclude Words" class="form-control exclude_words">
                         </div>
+                        <div class="input-group">
+                            <span class="input-group-addon">是否在首页频道展示<i>*</i></span>
+                            <select class="form-control special_toplist">
+                                <option value="0">否</option>
+                                <option value="1">是</option>
+                            </select>
+                        </div>
                         <p style="color: #f00;font-size: 18px;margin-bottom: 20px;text-align: left;">多个关键词/排除词之间用半角逗号(,)隔开</p>
                         <div class="input-group">
                             <span class="input-group-addon">发生时间<i>*</i></span>
@@ -1927,7 +1989,7 @@
             <div class="news_opa">
                 <div class="input-group">
                     <span class="input-group-addon">Tab位置</span>
-                    <select class="form-control special_position">
+                    <select class="form-control t_position">
                         <option value="">1</option>
                         <option value="">2</option>
                         <option value="">3</option>
@@ -1936,19 +1998,19 @@
                 </div>
                 <div class="input-group">
                     <span class="input-group-addon">使用状态</span>
-                    <select class="form-control special_position">
+                    <select class="form-control t_status">
                         <option value="">使用中</option>
                         <option value="">已停用</option>
                     </select>
                 </div>
                 <div class="input-group">
                     <span class="input-group-addon">是否有红点</span>
-                    <select class="form-control special_position">
+                    <select class="form-control t_hot">
                         <option value="">是</option>
                         <option value="">否</option>
                     </select>
                 </div>
-                <button type="button" class="btn btn-success special_search">搜索</button>
+                <!-- <button type="button" class="btn btn-success special_search">搜索</button> -->
             </div>
             <div class="table table-responsive">
                 <table class="table table-bordered table_tab_configuration">
@@ -1971,8 +2033,8 @@
                 <!-- 专题创建/配置 -->
                 <div class="reply_comment">
                     <div class="reply_comment_container" style="height: 90vh; margin: 5vh auto;">
-                        <div class="input-group" style="float: left;width: 40%;margin-left: 5%;">
-                            <span class="input-group-addon">Tab位置<i>*</i</span>
+                        <div class="input-group">
+                            <span class="input-group-addon">Tab位置<i>*</i></span>
                             <select class="form-control tab_position">
                                 <option value="">1</option>
                                 <option value="">2</option>
@@ -1982,63 +2044,56 @@
                         </div>
                         <div class="input-group">
                             <span class="input-group-addon">Tab名称（日文）<i>*</i></span>
-                            <input type="url" class="form-control tab_name" placeholder="Tab Name">
+                            <input type="text" class="form-control tab_name" placeholder="Tab Name">
                         </div>
+                        <p style="text-align: left;">（色值类可不填，若不填则使用默认色值）</p>
                         <div class="input-group">
                             <span class="input-group-addon">Tab文字色值（常规态）</span>
-                            <input type="url" class="form-control tab_name" placeholder="Tab Name">（可不填，若不填则使用默认色值）
+                            <input type="text" class="form-control btn_text_argb" placeholder="Tab Color">
                         </div>
                         <div class="input-group">
                             <span class="input-group-addon">Tab文字色值（选中态）</span>
-                            <input type="url" class="form-control tab_name" placeholder="Tab Name">（可不填，若不填则使用默认色值）
+                            <input type="text" class="form-control btn_text_argb_hl" placeholder="Tab Color LightHight">
                         </div>
                         <div class="input-group">
                             <span class="input-group-addon">logo链接（2X常规态）<i>*</i></span>
-                            <input type="url" class="form-control tab_name" placeholder="Tab Name">
+                            <input type="text" class="form-control btn_image2x" placeholder="Tab Logo url">
                         </div>
                         <div class="input-group">
                             <span class="input-group-addon">logo链接（2X选中态）<i>*</i></span>
-                            <input type="url" class="form-control tab_name" placeholder="Tab Name">
+                            <input type="text" class="form-control btn_image2x_hl" placeholder="Tab Logo url">
                         </div>
                         <div class="input-group">
                             <span class="input-group-addon">logo链接（3X常规态）<i>*</i></span>
-                            <input type="url" class="form-control tab_name" placeholder="Tab Name">
+                            <input type="text" class="form-control btn_image3x" placeholder="Tab Logo url">
                         </div>
                         <div class="input-group">
                             <span class="input-group-addon">logo链接（3X选中态）<i>*</i></span>
-                            <input type="url" class="form-control tab_name" placeholder="Tab Name">
+                            <input type="text" class="form-control btn_image3x_hl" placeholder="Tab Logo url">
                         </div>
+                        <span class="glyphicon glyphicon-question-sign help" style="float: left;"></span>
                         <div class="input-group">
                             <span class="input-group-addon">跳转链接<i>*</i></span>
-                            <input type="url" class="form-control tab_name" placeholder="Tab Name">
-                            <span class="glyphicon glyphicon-question-sign"></span>
-                        </div>
-                        <div class="input-group" style="float: left;width: 40%;margin-left: 5%;">
-                            <span class="input-group-addon">Tab位置<i>*</i</span>
-                            <select class="form-control tab_position">
-                                <option value="">否</option>
-                                <option value="">是</option>
-                            </select>
-                            （默认为“否”，不添加红点则下面内容可以不用填写）
+                            <input type="text" class="form-control tab_uri" placeholder="Tab uri">
                         </div>
                         <div class="input-group">
-                            <span class="input-group-addon">红点色值<i>*</i></span>
-                            <input type="url" class="form-control tab_name" placeholder="Tab Name">（可不填，若不填则使用默认色值）
-                        </div>
-                        <div class="input-group" style="float: left;width: 40%;margin-left: 5%;">
-                            <span class="input-group-addon">红点规则<i>*</i</span>
-                            <select class="form-control tab_position">
-                                <option value="1">只展现一次</option>
-                                <option value="2">一天一次</option>
-                                <option value="3">每次都显示</option>
+                            <span class="input-group-addon">是否显示红点<i>*</i></span>
+                            <select class="form-control tab_badge">
+                                <option value="0">否</option>
+                                <option value="">是</option>
                             </select>
                         </div>
-                        <button type="button" class="btn btn-success special_publish" style="margin: 0;">发布</button>
+                            <p style="text-align: left;">（红点显示默认为“否”，不添加红点则下面内容可以不用填写）</p>
+                        <div class="input-group">
+                            <span class="input-group-addon">红点色值</span>
+                            <input type="url" class="form-control badge_argb" placeholder="Badge Color">
+                        </div>
+                        <button type="button" class="btn btn-success tab_updata" style="margin: 0;">发布</button>
                         <button type="button" class="btn btn-danger close4" style="margin: 0;">取消</button>
                     </div>
                     <div class="modify_success">
                         <div class="likes_success">
-                            专题创建配置成功！
+                            Tab创建/配置成功！
                         </div>
                     </div>
                     <div class="tips_success">
@@ -2047,14 +2102,34 @@
                         </div>
                     </div>
                 </div>
+                <!-- 专题新闻列表 -->
+                <div class="reply_comment2">
+                    <div class="reply_comment_container">
+                        <xmp style="font-size: 18px;font-weight: 600;text-align: left;margin-bottom: 20px;">
+一级界面 新闻－转到新闻页：newsjet://news 
+视频－转到视频页：newsjet://video 
+活动之棒球－转到棒球页：newsjet://baseball 
+个人－转到个人页：newsjet://personal 
+天气－转到天气页：newsjet://weather 
+运势－转到运势页：newsjet://fortune 
+二级界面 新闻－转到新闻页对应频道：newsjet://news?id=<top|ent|pol|...> 
+视频－转到视频页对应频道：newsjet://video?id=<top|ent|pol|...> 
+活动之棒球－转到棒球页对应位置：newsjet://baseball?id=<news|schedule|...> 
+个人－转到个人页对应选项的界面：newsjet://personal?id=<follow|saved|notify|invite|setting|feedback|...> 
+                        </xmp>
+                        <div class="add_option">
+                            <button type="button" class="btn btn-danger close5">关闭窗口</button>
+                        </div>
+                    </div>
+                </div>
                 <div class="share_success">
                     <div class="likes_success">
-                        下线成功!
+                        状态更新成功!
                     </div>
                 </div>
             </div>
             <div class="add_option">
-                <button type="button" class="btn btn-success special_create">创建专题</button>
+                <button type="button" class="btn btn-success tab_create">新建Tab</button>
             </div>
         </div>
     </div>

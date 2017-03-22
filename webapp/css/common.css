@@ -198,6 +198,14 @@ p {
     font-weight: 600;
 }
 
+.push_sur_container {
+    width: 50vw;
+    height: 50vh;
+    margin-top: -25vw;
+    margin-left: -25vh;
+    overflow: auto;
+}
+
 .push_sure p:first-child {
     height: 60px;
     line-height: 60px;

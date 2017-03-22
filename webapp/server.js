@@ -80,8 +80,29 @@ var server = http.createServer(function(request, response) {
             response.end();
         });
     } else if (params.pathname == '/people_push') {
-        console.log(query.pushtype,query.aid,query.type);
+        // console.log(query.pushtype,query.aid,query.type);
         var cmd = "cd /home/ec2-user/api/MobiScripts; java -jar build/libs/MobiScripts-1.0-SNAPSHOT-all.jar notification_surprise_news " + query.pushtype + " " + query.aid + " " + query.type;
+        if(query.title) {
+            cmd += " " + query.title;
+        }
+        if(query.body) {
+            cmd += " " + query.body;
+        }
+        console.log(cmd);
+        process.exec(cmd, function(error, stdout, stderr) {
+            if (error) {
+                console.log('exec error: ' + error);
+            }
+
+            response.write(JSON.stringify(stdout));
+            response.end();
+        });
+    } else if (params.pathname == '/notification_baseball') {
+        // console.log(query.pushtype,query.aid,query.type);
+        var cmd = "cd /home/ec2-user/api/MobiScripts; java -jar build/libs/MobiScripts-1.0-SNAPSHOT-all.jar notification_base111 match" + query.pushContentType + " " + query.pushTargetId + " 0 true " + query.title;
+        if(query.body) {
+            cmd += " " + query.body;
+        }
         console.log(cmd);
         process.exec(cmd, function(error, stdout, stderr) {
             if (error) {
@@ -375,13 +396,14 @@ var server = http.createServer(function(request, response) {
                 pos: reqObj.pos,
                 keyword_inclusion: reqObj.keyword_inclusion,
                 keyword_exclusion: reqObj.keyword_exclusion,
-                detail_desc: reqObj.detail_desc
+                detail_desc: reqObj.detail_desc,
+                is_toplist: reqObj.is_toplist
             };
             if (reqObj.id) {
                 resObj.id = reqObj.id;
-                var sql = "UPDATE news_special_topic SET title = ?,cid = ?,topic_time = ?,bg_img = ?,pos = ?,keyword_inclusion = ?,keyword_exclusion = ?,detail_desc = ? WHERE id = ?";
+                var sql = "UPDATE news_special_topic SET title = ?,cid = ?,topic_time = ?,bg_img = ?,pos = ?,keyword_inclusion = ?,keyword_exclusion = ?,detail_desc = ?,is_toplist = ? WHERE id = ?";
             } else {
-                var sql = "INSERT INTO news_special_topic(title,cid,topic_time,bg_img,pos,keyword_inclusion,keyword_exclusion,detail_desc) VALUES(?,?,?,?,?,?,?,?,?,?)";
+                var sql = "INSERT INTO news_special_topic(title,cid,topic_time,bg_img,pos,keyword_inclusion,keyword_exclusion,detail_desc,is_toplist) VALUES(?,?,?,?,?,?,?,?,?)";
             }
             var arr = []
             for(var i in resObj) {
@@ -453,20 +475,23 @@ var server = http.createServer(function(request, response) {
             var reqObj = JSON.parse(jsonData);
             console.log(reqObj);
             var resObj = {
-                title: reqObj.title,
-                cid: reqObj.cid,
-                topic_time: reqObj.topic_time,
-                bg_img: reqObj.bg_img,
-                pos: reqObj.pos,
-                keyword_inclusion: reqObj.keyword_inclusion,
-                keyword_exclusion: reqObj.keyword_exclusion,
-                detail_desc: reqObj.detail_desc
+                btn_text: reqObj.btn_text,
+                position: reqObj.position,
+                btn_text_argb: reqObj.btn_text_argb,
+                btn_text_argb_hl: reqObj.btn_text_argb_hl,
+                btn_image2x: reqObj.btn_image2x,
+                btn_image2x_hl: reqObj.btn_image2x_hl,
+                btn_image3x: reqObj.btn_image3x,
+                btn_image3x_hl: reqObj.btn_image3x_hl,
+                btn_uri: reqObj.btn_uri,
+                badge_argb: reqObj.badge_argb,
+                badge_showtype: reqObj.badge_showtype
             };
             if (reqObj.id) {
                 resObj.id = reqObj.id;
-                var sql = "UPDATE switch_appbottom_tab SET title = ?,cid = ?,topic_time = ?,bg_img = ?,pos = ?,keyword_inclusion = ?,keyword_exclusion = ?,detail_desc = ? WHERE id = ?";
+                var sql = "UPDATE switch_appbottom_tab SET btn_text = ?,position = ?,btn_text_argb = ?,btn_text_argb_hl = ?,btn_image2x = ?,btn_image2x_hl = ?,btn_image3x = ?,btn_image3x_hl = ?,btn_uri = ?,badge_argb = ?,badge_showtype = ? WHERE id = ?";
             } else {
-                var sql = "INSERT INTO switch_appbottom_tab(title,cid,topic_time,bg_img,pos,keyword_inclusion,keyword_exclusion,detail_desc) VALUES(?,?,?,?,?,?,?,?,?,?)";
+                var sql = "INSERT INTO switch_appbottom_tab(btn_text,position,btn_text_argb,btn_text_argb_hl,btn_image2x,btn_image2x_hl,btn_image3x,btn_image3x_hl,btn_uri,badge_argb,badge_showtype) VALUES(?,?,?,?,?,?,?,?,?,?,?)";
             }
             var arr = []
             for(var i in resObj) {

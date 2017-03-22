@@ -1433,6 +1433,13 @@ $(function($) {
         // console.log(vid);
         push_sure.show();
         push_sure.find('p span').html(vid);
+        // if ($('.push_video_title').val() && !$('.push_video_desc').val()) {
+        //     surePush(vid, 'video', $('.push_video_title').val());
+        // } else if ($('.push_video_title').val() && $('.push_video_desc').val()) {
+        //     surePush(vid, 'video', $('.push_video_title').val(), $('.push_video_desc').val());
+        // } else {
+        //     surePush(vid, 'video');
+        // }
         surePush(vid, 'video');
     });
 
@@ -1442,14 +1449,53 @@ $(function($) {
         sure_push.click(function() {
             if (c) {
                 c = false;
-                os.each(function(idx, ele) {
-                    if (this.checked && $(this).val() == 'android') {
-                        pushNews(aid, pushtype, 'android');
-                    } else if (this.checked && $(this).val() == 'ios') {
-                        // console.log(aid,pushtype);
-                        pushNews(aid, pushtype, 'ios');
-                    }
-                });
+                if (pushtype == 'news') {
+                    os.each(function(idx, ele) {
+                        if (this.checked && $(this).val() == 'android') {
+                            if ($('.push_news_title').val() && !$('.push_news_desc').val()) {
+                                pushNews(aid, 'news','android', $('.push_news_title').val());
+                            } else if ($('.push_news_title').val() && $('.push_news_desc').val()) {
+                                pushNews(aid, 'news','android', $('.push_news_title').val(), $('.push_news_desc').val());
+                            } else {
+                                pushNews(aid,'android', 'news');
+                            }
+                            // pushNews(aid, pushtype, 'android', title, desc);
+                        } else if (this.checked && $(this).val() == 'ios') {
+                            // console.log(aid,pushtype);
+                            // pushNews(aid, pushtype, 'ios', title, desc);
+                            if ($('.push_news_title').val() && !$('.push_news_desc').val()) {
+                                pushNews(aid, 'news','ios', $('.push_news_title').val());
+                            } else if ($('.push_news_title').val() && $('.push_news_desc').val()) {
+                                pushNews(aid, 'news','ios', $('.push_news_title').val(), $('.push_news_desc').val());
+                            } else {
+                                pushNews(aid,'ios', 'news');
+                            }
+                        }
+                    });
+                } else {
+                    os.each(function(idx, ele) {
+                        if (this.checked && $(this).val() == 'android') {
+                            if ($('.push_video_title').val() && !$('.push_video_desc').val()) {
+                                pushNews(aid, 'video','android', $('.push_video_title').val());
+                            } else if ($('.push_video_title').val() && $('.push_video_desc').val()) {
+                                pushNews(aid, 'video','android', $('.push_video_title').val(), $('.push_video_desc').val());
+                            } else {
+                                pushNews(aid,'android', 'video');
+                            }
+                            // pushNews(aid, pushtype, 'android', title, desc);
+                        } else if (this.checked && $(this).val() == 'ios') {
+                            // console.log(aid,pushtype);
+                            // pushNews(aid, pushtype, 'ios', title, desc);
+                            if ($('.push_video_title').val() && !$('.push_video_desc').val()) {
+                                pushNews(aid, 'video','ios', $('.push_video_title').val());
+                            } else if ($('.push_video_title').val() && $('.push_video_desc').val()) {
+                                pushNews(aid, 'video','ios', $('.push_video_title').val(), $('.push_video_desc').val());
+                            } else {
+                                pushNews(aid,'ios', 'video');
+                            }
+                        }
+                    });
+                }
             }
         });
 
@@ -1463,10 +1509,18 @@ $(function($) {
     });
 
     // 人工推送
-    function pushNews(aid, pushtype, type) {
-        console.log(aid, pushtype, type);
+    function pushNews(aid, pushtype, type, title, desc) {
+        console.log(aid, pushtype, type, title, desc);
+        var url_ = server_host + '/people_push?aid=' + aid + '&type=' + type + '&pushtype=' + pushtype;
+        if (title) {
+            url_ += '&title=' + title;
+        }
+        if (desc) {
+            url_ += '&body=' + desc;
+        }
+        console.log(url_);
         $.ajax({
-            url: server_host + '/people_push?aid=' + aid + '&type=' + type + '&pushtype=' + pushtype,
+            url: url_,
             async: 'false',
             beforeSend: function() {
                 loading.show();
@@ -2818,6 +2872,7 @@ $(function($) {
         var td8 = $('<td/>').html('<a href="#">筛选</a>').addClass('r_news').attr('data-info', JSON.stringify(list)).appendTo(tr);
         var td9 = $('<td/>').html('<a href="#">编辑</a>').addClass('t_answer').attr('data-info', JSON.stringify(list)).appendTo(tr);
         var td10 = $('<td/>').html('<a href="#">查看</a>').addClass('u_answer').attr('data-info', JSON.stringify(list)).appendTo(tr);
+        var td11 = $('<td/>').html('<a href="#">推送</a>').addClass('baseball_push').attr('data-id', list.id).appendTo(tr);
         tr.appendTo(table_matchList_tbody);
     }
     close7.click(function() {
@@ -2833,6 +2888,52 @@ $(function($) {
     close_news.click(function() {
         reply_comment.hide();
     });
+
+    // 推送棒球比赛
+    table_matchList_tbody.on('click', '.baseball_push', function() {
+        $('.match_push_id').html($(this).attr('data-id'));
+        push_sure.show();
+    });
+
+    // 确认推送
+    $('.sure_push_baseball').click(function() {
+        if (c) {
+            c = false;
+            if ($('.push_match_title').val() && !$('.push_match_desc').val()) {
+                pushBaseball(5, $('.match_push_id').html(), $('.push_match_title').val());
+            } else if ($('.push_match_title').val() && $('.push_match_desc').val()) {
+                pushBaseball(6, $('.match_push_id').html(), $('.push_match_title').val(), $('.push_match_desc').val());
+            }
+        }
+
+
+    });
+
+    function pushBaseball(pushContentType, pushTargetId, title, desc) {
+        var url_ = server_host + '/notification_baseball?pushContentType=' + pushContentType + '&pushTargetId=' + pushTargetId + '&title=' + title;
+        if (desc) {
+            url_ += '&body=' + desc;
+        }
+        console.log(url_)
+        // $.ajax({
+        //     url: url_,
+        //     beforeSend: function() {
+        //         loading.show();
+        //     },
+        //     success: function(res) {
+        //         console.log(res);
+        //         loading.hide();
+        //         success_push.show();
+        //         os.removeAttr("checked");
+        //         setTimeout(function() {
+        //             success_push.hide();
+        //             push_sure.hide();
+        //             window.location.reload();
+        //         }, 2000);
+        //         c = true;
+        //     }
+        // });
+    }
 
     // 查看比赛相关新闻
     table_matchList_tbody.on('click', '.r_news', function() {
@@ -3366,6 +3467,7 @@ $(function($) {
         reply_comment6.show();
         wbc_player.removeAttr('disabled');
         wbc_player.empty();
+        $('<option/>').html('').appendTo(wbc_player);
         var players = JSON.parse($(this).attr('data-info'));
         for (var i in players) {
             $('<option/>').html(players[i].name).attr('data-id', players[i].id).appendTo(wbc_player);
@@ -3444,6 +3546,12 @@ $(function($) {
     }
     // 创建专题
     special_create.click(function() {
+        $('.special_title').val('');
+        $('.special_description').val('');
+        $('.special_bg_img').val('');
+        $('.special_keyword').val('');
+        $('.exclude_words').val('');
+        $('.special_start_time').val('');
         reply_comment.show();
         $('.special_publish').removeAttr('data-id');
     });
@@ -3453,15 +3561,12 @@ $(function($) {
         var info = JSON.parse($(this).attr('data-info'));
         $('.special_title').val(info.title);
         $('.special_subtitle').val(info.subtitle);
-        $('.special_description').html(info.detail_desc);
+        $('.special_description').val(info.detail_desc);
         $('.special_bg_img').val(info.bg_img);
-        // $('.special_thumbnail1').val(info.imgs.split(',')[0]);
-        // $('.special_thumbnail2').val(info.imgs.split(',')[1]);
-        // $('.special_thumbnail3').val(info.imgs.split(',')[2]);
         $('.special_keyword').val(info.keyword_inclusion);
         $('.exclude_words').val(info.keyword_exclusion);
-        $('.special_start_time').val(new Date(info.topic_time).Format("yyyy-MM-ddThh:mm:ss"));
-        $('.special_publish').attr('data-id',info.id);
+        $('.special_start_time').val(new Date(Date.parse(info.topic_time) - 8 * 60 * 60 * 1000).Format("yyyy-MM-ddThh:mm:ss"));
+        $('.special_publish').attr('data-id', info.id);
         var option1 = $('.special_channel').find('option');
         option1.each(function(idx, ele) {
             if ($(this).attr('data-id') == info.cid) {
@@ -3474,27 +3579,33 @@ $(function($) {
                 $(this).attr('selected', true);
             }
         });
+        var option3 = $('.special_toplist').find('option');
+        option3.each(function(idx, ele) {
+            if ($(this).val() == info.is_toplist) {
+                $(this).attr('selected', true);
+            }
+        });
 
     });
 
     // 点击修改/创建专题
     $('.special_publish').on('click', function() {
-        if($('.special_title').val() && $('.special_bg_img').val() && $('.special_start_time').val() && $('.special_keyword').val()) {
+        if ($('.special_title').val() && $('.special_bg_img').val() && $('.special_start_time').val() && $('.special_keyword').val()) {
 
             var data = {
                 title: $('.special_title').val(),
-                subtitle: $('.special_subtitle').val(),
-                detail_desc: $('.special_description').html(),
+                // subtitle: $('.special_subtitle').val(),
+                detail_desc: $('.special_description').val(),
                 cid: $('.special_channel').find('option:selected').attr('data-id'),
-                imgs: $('.special_thumbnail1').val() + ','+ $('.special_thumbnail2').val() + ',' + $('.special_thumbnail3').val(),
                 bg_img: $('.special_bg_img').val(),
                 pos: $('.special_position').find('option:selected').html(),
                 keyword_inclusion: $('.special_keyword').val(),
                 keyword_exclusion: $('.exclude_words').val(),
-                topic_time: new Date($('.special_start_time').val()).Format("yyyy/MM/dd hh:mm:ss")
+                topic_time: new Date($('.special_start_time').val()).Format("yyyy/MM/dd hh:mm:ss"),
+                is_toplist: $('.special_toplist').find('option:selected').val()
             }
             console.log(data.topic_time);
-            if($(this).attr('data-id')) {
+            if ($(this).attr('data-id')) {
                 data.id = $(this).attr('data-id');
             }
             console.log(data);
@@ -3506,28 +3617,28 @@ $(function($) {
                     console.log(res);
                     modify_success.show();
                     $.ajax({
-                        url: 'news_topic',
-                        success: function(res){
+                        url: 'news_topic?title=' + data.title + '&topic_time=' + Date.parse(data.topic_time) / 1000,
+                        success: function(res) {
                             console.log(res);
                         }
                     });
-                    
-                    setTimeout(function(){
+
+                    setTimeout(function() {
                         reply_comment.find('input').val('');
                         reply_comment.find('textarea').html('');
                         news_special_topic();
                         modify_success.hide();
                         reply_comment.hide();
-                    },2000);
+                    }, 2000);
                 }
             });
-            
+
 
         } else {
             tips_success.show();
-            setTimeout(function(){
+            setTimeout(function() {
                 tips_success.hide();
-            },2000);
+            }, 2000);
         }
     });
     news_special_topic();
@@ -3550,7 +3661,8 @@ $(function($) {
     function createSpecial(list) {
         var tr = $('<tr/>');
         var td1 = $('<td/>').html(list.id).addClass('s_id').appendTo(tr);
-        var td4 = $('<td/>').html(getTime(list.topic_time)).appendTo(tr);
+        console.log(list.topic_time)
+        var td4 = $('<td/>').html(getTime(Date.parse(list.topic_time) - 8 * 60 * 60 * 1000)).appendTo(tr);
         var td5 = $('<td/>').html(list.title).addClass('s_title').appendTo(tr);
         switch (list.cid) {
             case 'top':
@@ -3742,12 +3854,12 @@ $(function($) {
     });
 
     // 专题搜索
-    $('.special_search').click(function(){
+    $('.special_search').click(function() {
         table_special_configuration.find('tr').hide();
-        if($('.special_id').val() != '') {
+        if ($('.special_id').val() != '') {
             console.log(table_special_configuration.find('.s_id').filter(":contains(" + $('.special_id').val() + ")"))
             table_special_configuration.find('.s_id').filter(":contains(" + $('.special_id').val() + ")").parent().show();
-        } else if($('.special_keyword_search').val() != '') {
+        } else if ($('.special_keyword_search').val() != '') {
 
             table_special_configuration.find('.s_title').filter(":contains(" + $('.special_keyword_search').val() + ")").parent().show();
         } else {
@@ -3775,31 +3887,162 @@ $(function($) {
     function createTabConfig(list, t_id) {
         var tr = $('<tr/>');
         var td1 = $('<td/>').html(list.id).appendTo(tr);
-        var td2 = $('<td/>').html(list.position).appendTo(tr);
+        var td2 = $('<td/>').html(list.position).addClass('tab_pos').appendTo(tr);
         var td8 = $('<td/>').html(getTime(list.updatetime)).appendTo(tr);
-        var td3 = $('<td/>').html(list.badge_text).appendTo(tr);
+        var td3 = $('<td/>').html(list.btn_text).appendTo(tr);
         var td4 = $('<td/>').html(list.btn_uri).appendTo(tr);
-        if (list.badge_argb_hl == 0) {
-            var td5 = $('<td/>').html('否').appendTo(tr);
+        if (list.badge_showtype == 0) {
+            var td5 = $('<td/>').html('否').addClass('tab_hot').appendTo(tr);
         } else {
-            var td5 = $('<td/>').html('是').appendTo(tr);
+            var td5 = $('<td/>').html('是').addClass('tab_hot').appendTo(tr);
         }
         if (list.active == 1) {
-            var td6 = $('<td/>').html('使用中').appendTo(tr);
+            var td6 = $('<td/>').html('使用中').addClass('tab_status').appendTo(tr);
         } else {
-            var td6 = $('<td/>').html('已停用').appendTo(tr);
+            var td6 = $('<td/>').html('已停用').addClass('tab_status').appendTo(tr);
         }
-        var td7 = $('<td/>').html('<a href="#">编辑</a>').addClass('tab_config_updata').attr('data-info',JSON.stringify(list)).appendTo(tr);
+        var td7 = $('<td/>').html('<a href="#">编辑</a>').addClass('tab_config_updata').attr('data-info', JSON.stringify(list)).appendTo(tr);
         if (list.active == 1) {
-            var td7 = $('<td/>').html('<a href="#">停用</a>').addClass('tab_config_updata').attr({'data-id': list.id,'data-value': 0}).appendTo(tr);
+            var td9 = $('<td/>').html('<a href="#">停用</a>').addClass('tab_config_active').attr({ 'data-id': list.id, 'data-value': 0 }).appendTo(tr);
         } else {
-            var td7 = $('<td/>').html('<a href="#">启用</a>').addClass('tab_config_updata').attr({'data-id': list.id,'data-value': 1}).appendTo(tr);
+            var td9 = $('<td/>').html('<a href="#">启用</a>').addClass('tab_config_active').attr({ 'data-id': list.id, 'data-value': 1 }).appendTo(tr);
         }
 
-        
+
         tr.appendTo(table_tab_configuration);
 
     }
+
+    // 创建Tab
+    $('.tab_create').click(function() {
+        $('.tab_name').val('');
+        $('.btn_text_argb').val('');
+        $('.btn_text_argb_hl').val('');
+        $('.btn_image2x').val('');
+        $('.btn_image2x_hl').val('');
+        $('.btn_image3x').val('');
+        $('.btn_image3x_hl').val('');
+        $('.tab_uri').val('');
+        $('.badge_argb').val('');
+        $('.tab_updata').removeAttr('data-id');
+        reply_comment.show();
+    });
+
+    // 启用停用
+    table_tab_configuration.on('click', '.tab_config_active', function() {
+        $.ajax({
+            url: server_host + '/switch_appbottom_tab_active?id=' + $(this).attr('data-id') + '&value=' + $(this).attr('data-value'),
+            success: function(res) {
+                console.log(res);
+                share_success.show();
+                setTimeout(function() {
+                    switch_appbottom_tab();
+                    share_success.hide();
+                }, 2000);
+            }
+        });
+
+    });
+
+    // 编辑tab配置
+    table_tab_configuration.on('click', '.tab_config_updata', function() {
+        var info = JSON.parse($(this).attr('data-info'));
+        var option = $('.tab_position').find('option');
+        option.each(function() {
+            if ($(this).html() == info.position) {
+                $(this).attr('selected', true);
+            }
+        });
+        var option1 = $('.tab_badge').find('option');
+        if (info.badge_showtype == 0) {
+            option1.eq(0).attr('selected', true);
+        } else {
+            option1.eq(1).attr('selected', true);
+            option1.eq(1).val(info.badge_showtype);
+        }
+
+        $('.tab_name').val(info.btn_text);
+        $('.btn_text_argb').val(info.btn_text_argb);
+        $('.btn_text_argb_hl').val(info.btn_text_argb_hl);
+        $('.btn_image2x').val(info.btn_image2x);
+        $('.btn_image2x_hl').val(info.btn_image2x_hl);
+        $('.btn_image3x').val(info.btn_image3x);
+        $('.btn_image3x_hl').val(info.btn_image3x_hl);
+        $('.tab_uri').val(info.btn_uri);
+        $('.badge_argb').val(info.badge_argb);
+        $('.tab_updata').attr('data-id', info.id);
+
+        reply_comment.show();
+    });
+
+    // 提交配置
+    $('.tab_updata').click(function() {
+        if ($('.tab_name').val() && $('.btn_image2x').val() && $('.btn_image2x_hl').val() && $('.btn_image3x').val() && $('.btn_image3x_hl').val() && $('.tab_uri').val()) {
+
+            var data = {
+                btn_text: $('.tab_name').val(),
+                position: $('.tab_position').find('option:selected').html(),
+                btn_text_argb: $('.btn_text_argb').val(),
+                btn_text_argb_hl: $('.btn_text_argb_hl').val(),
+                btn_image2x: $('.btn_image2x').val(),
+                btn_image2x_hl: $('.btn_image2x_hl').val(),
+                btn_image3x: $('.btn_image3x').val(),
+                btn_image3x_hl: $('.btn_image3x_hl').val(),
+                btn_uri: $('.tab_uri').val(),
+                badge_argb: $('.badge_argb').val()
+                    // badge_showtype: $('.tab_badge').find('option:selected').val()
+            }
+            if ($('.tab_badge').find('option:selected').index() == 0) {
+                data.badge_showtype = 0;
+            } else {
+                var num = $('.tab_badge').find('option:selected').val()
+                data.badge_showtype = ++num;
+            }
+            if ($(this).attr('data-id')) {
+                data.id = $(this).attr('data-id');
+            }
+            console.log(data);
+            $.ajax({
+                url: server_host + '/set_switch_appbottom_tab',
+                type: 'POST',
+                data: JSON.stringify(data),
+                success: function(res) {
+                    console.log(res);
+                    share_success.show();
+                    setTimeout(function() {
+                        switch_appbottom_tab();
+                        reply_comment.hide();
+                        share_success.hide();
+                    }, 2000);
+                }
+            });
+        } else {
+            tips_success.show();
+            setTimeout(function() {
+                tips_success.hide();
+            }, 2000);
+        }
+    });
+    // 帮助
+    $('.help').click(function() {
+        reply_comment2.show();
+    });
+
+    $('.t_position').click(function() {
+        console.log($('.special_position').find('option:selected').html());
+        table_tab_configuration.find('tr').hide();
+        table_tab_configuration.find('.tab_pos').filter(":contains(" + $('.t_position').find('option:selected').html() + ")").parent().show();
+    });
+
+    $('.t_status').click(function() {
+        table_tab_configuration.find('tr').hide();
+        table_tab_configuration.find('.tab_status').filter(":contains(" + $('.t_status').find('option:selected').html() + ")").parent().show();
+    });
+
+    $('.t_hot').click(function() {
+        table_tab_configuration.find('tr').hide();
+        table_tab_configuration.find('.tab_hot').filter(":contains(" + $('.t_hot').find('option:selected').html() + ")").parent().show();
+    });
 
 
     // var userinfo = $(this).find('option:selected').attr('data-userinfo');
