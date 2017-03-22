@@ -2808,16 +2808,59 @@ $(function($) {
         var td4 = $('<td/>').html(item.answer).appendTo(tr);
         var td5 = $('<td/>').html(item.correctnum).addClass('c_num').appendTo(tr);
         var td6 = $('<td/>').html(item.wrongnum).appendTo(tr);
-        var td7 = $('<td/>').html('<a href="#" class="first_prize">一等奖</a>    <a href="#" class="two_prize">二等奖</a>    <a href="#" class="three_prize">三等奖</a>').addClass('set_arward').attr('data-info', JSON.stringify(item)).appendTo(tr);
+        var td7 = $('<td/>').addClass('set_arward').attr('data-info', JSON.stringify(item))
+        if(item.award) {
+            if(item.award == 1) {
+                td7.html('一等奖    <a href="#" class="two_prize">二等奖</a>    <a href="#" class="three_prize">三等奖</a>');
+            } else if(item.award == 2) {
+                td7.html('<a href="#" class="first_prize">一等奖</a>    二等奖    <a href="#" class="three_prize">三等奖</a>');
+            } else {
+                td7.html('<a href="#" class="first_prize">一等奖</a>    <a href="#" class="two_prize">二等奖</a>    三等奖');
+            }
+        }else {
+            td7.html('<a href="#" class="first_prize">一等奖</a>    <a href="#" class="two_prize">二等奖</a>    <a href="#" class="three_prize">三等奖</a>');
+        }
+        td7.appendTo(tr);
         tr.appendTo(table_user_answer);
     }
+
+    // 设置奖项
+    table_user_answer.on('click','.first_prize',function(){
+        lotterycommitaward($(this).parents('td').attr('data-info'),1);
+    });
+    table_user_answer.on('click','.two_prize',function(){
+        lotterycommitaward($(this).parents('td').attr('data-info'),2);
+    });
+    table_user_answer.on('click','.three_prize',function(){
+        lotterycommitaward($(this).parents('td').attr('data-info'),3);
+    });
+
+    function lotterycommitaward(info,num) {
+        var data = JSON.parse(info);
+        $.ajax({
+            url: 'baseball_lotterycommitaward?uid='+data.uid+ '&targettype=1&targetid=' + data.targetid+ '&lotteryid=' + data.lotteryid + '&award=' + num,
+            success: function(res) {
+                console.log(res);
+                share_success.show();
+                getuseranswerlist(data.targetid)
+                setTimeout(function(){
+                    share_success.hide();
+                },2000);
+            }
+        });
+    }
+
     // 获取用户答案列表
     table_matchList_tbody.on('click', '.u_answer', function() {
         var info = JSON.parse($(this).attr('data-info'));
         console.log(info);
         current_selection_match.val(getTime(info.starttime + 60 * 60 * 1000) + '  ' + info.teamonedesc + '-' + info.teamtwodesc);
+        reply_comment5.show();
+        getuseranswerlist(JSON.parse($(this).attr("data-info")).id);
+    });
+    function getuseranswerlist(id) {
         $.ajax({
-            url: "baseball_lotteryanswer?targettype=1&targetid=" + JSON.parse($(this).attr("data-info")).id,
+            url: "baseball_lotteryanswer?targettype=1&targetid=" + id,
             success: function(res) {
                 console.log(res);
                 console.log(res.data.length);
@@ -2830,9 +2873,7 @@ $(function($) {
                 }
             }
         });
-
-        reply_comment5.show();
-    });
+    }
     // 获取新闻及视频
     function get_news(ids, info,top,hidden) {
         $.ajax({
