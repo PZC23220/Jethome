@@ -1424,7 +1424,18 @@ $(function($) {
         // console.log(aid);
         push_sure.show();
         push_sure.find('p span').html(aid);
-        surePush(aid, 'news');
+        if ($('.push_news_title').val()) {
+            surePush(aid, 'news', $('.push_news_title').val());
+        } else {
+            surePush(aid, 'news');
+        }
+
+        if ($('.push_news_desc').val()) {
+            surePush(aid, 'news', $('.push_news_title').val(), $('.push_news_desc').val());
+        } else {
+            surePush(aid, 'news');
+        }
+
     });
 
     // 推送视频
@@ -1433,21 +1444,32 @@ $(function($) {
         // console.log(vid);
         push_sure.show();
         push_sure.find('p span').html(vid);
-        surePush(vid, 'video');
+        if ($('.push_video_title').val()) {
+            surePush(vid, 'video', $('.push_video_title').val());
+        } else {
+            surePush(vid, 'video');
+        }
+
+        if ($('.push_video_desc').val()) {
+            surePush(vid, 'video', $('.push_video_title').val(), $('.push_video_desc').val());
+        } else {
+            surePush(vid, 'video');
+        }
+        // surePush(vid, 'video');
     });
 
     // 点击确认推送
-    function surePush(aid, pushtype) {
+    function surePush(aid, pushtype, title, desc) {
         console.log(aid, pushtype);
         sure_push.click(function() {
             if (c) {
                 c = false;
                 os.each(function(idx, ele) {
                     if (this.checked && $(this).val() == 'android') {
-                        pushNews(aid, pushtype, 'android');
+                        pushNews(aid, pushtype, 'android', title, desc);
                     } else if (this.checked && $(this).val() == 'ios') {
                         // console.log(aid,pushtype);
-                        pushNews(aid, pushtype, 'ios');
+                        pushNews(aid, pushtype, 'ios', title, desc);
                     }
                 });
             }
@@ -1463,10 +1485,18 @@ $(function($) {
     });
 
     // 人工推送
-    function pushNews(aid, pushtype, type) {
+    function pushNews(aid, pushtype, type, title, desc) {
         console.log(aid, pushtype, type);
+        var url_ = server_host + '/people_push?aid=' + aid + '&type=' + type + '&pushtype=' + pushtype;
+        if (title) {
+            url_ += '&title=' + title;
+        }
+        if (desc) {
+            url_ += '&body=' + desc;
+        }
+        console.log(url_);
         $.ajax({
-            url: server_host + '/people_push?aid=' + aid + '&type=' + type + '&pushtype=' + pushtype,
+            url: url_,
             async: 'false',
             beforeSend: function() {
                 loading.show();
@@ -2818,6 +2848,7 @@ $(function($) {
         var td8 = $('<td/>').html('<a href="#">筛选</a>').addClass('r_news').attr('data-info', JSON.stringify(list)).appendTo(tr);
         var td9 = $('<td/>').html('<a href="#">编辑</a>').addClass('t_answer').attr('data-info', JSON.stringify(list)).appendTo(tr);
         var td10 = $('<td/>').html('<a href="#">查看</a>').addClass('u_answer').attr('data-info', JSON.stringify(list)).appendTo(tr);
+        var td11 = $('<td/>').html('<a href="#">推送</a>').addClass('baseball_push').attr('data-id', list.id).appendTo(tr);
         tr.appendTo(table_matchList_tbody);
     }
     close7.click(function() {
@@ -2833,6 +2864,53 @@ $(function($) {
     close_news.click(function() {
         reply_comment.hide();
     });
+
+    // 推送棒球比赛
+    table_matchList_tbody.on('click', '.baseball_push', function() {
+        $('.match_push_id').html($(this).attr('data-id'));
+        push_sure.show();
+    });
+
+    // 确认推送
+    $('.sure_push_baseball').click(function() {
+        if (c) {
+            c = false;
+            if($('.push_match_title').val() && !$('.push_match_desc').val()) {
+                pushBaseball(5,$('.match_push_id').html(),$('.push_match_title').val());  
+            }
+
+            if($('.push_match_title').val() && $('.push_match_desc').val()) {
+                pushBaseball(6,$('.match_push_id').html(),$('.push_match_title').val(),$('.push_match_desc').val());  
+            }
+        }
+        
+
+    });
+    function pushBaseball(pushContentType,pushTargetId,title,desc) {
+        var url_ = server_host + '/notification_baseball?pushContentType=' + pushContentType + '&pushTargetId=' + pushTargetId + '&title=' + title;
+        if (desc) {
+            url_ += '&body=' + desc;
+        }
+        console.log(url_)
+        $.ajax({
+            url: url_,
+            beforeSend: function() {
+                loading.show();
+            },
+            success: function(res) {
+                console.log(res);
+                loading.hide();
+                success_push.show();
+                os.removeAttr("checked");
+                setTimeout(function() {
+                    success_push.hide();
+                    push_sure.hide();
+                    window.location.reload();
+                }, 2000);
+                c = true;
+            }
+        });
+    }
 
     // 查看比赛相关新闻
     table_matchList_tbody.on('click', '.r_news', function() {
@@ -3366,6 +3444,7 @@ $(function($) {
         reply_comment6.show();
         wbc_player.removeAttr('disabled');
         wbc_player.empty();
+        $('<option/>').html('').appendTo(wbc_player);
         var players = JSON.parse($(this).attr('data-info'));
         for (var i in players) {
             $('<option/>').html(players[i].name).attr('data-id', players[i].id).appendTo(wbc_player);
@@ -3463,7 +3542,7 @@ $(function($) {
         $('.special_bg_img').val(info.bg_img);
         $('.special_keyword').val(info.keyword_inclusion);
         $('.exclude_words').val(info.keyword_exclusion);
-        $('.special_start_time').val(new Date(Date.parse(info.topic_time) - 8*60*60*1000).Format("yyyy-MM-ddThh:mm:ss"));
+        $('.special_start_time').val(new Date(Date.parse(info.topic_time) - 8 * 60 * 60 * 1000).Format("yyyy-MM-ddThh:mm:ss"));
         $('.special_publish').attr('data-id', info.id);
         var option1 = $('.special_channel').find('option');
         option1.each(function(idx, ele) {
@@ -3515,7 +3594,7 @@ $(function($) {
                     console.log(res);
                     modify_success.show();
                     $.ajax({
-                        url: 'news_topic?title=' + data.title + '&topic_time=' + Date.parse(data.topic_time)/1000,
+                        url: 'news_topic?title=' + data.title + '&topic_time=' + Date.parse(data.topic_time) / 1000,
                         success: function(res) {
                             console.log(res);
                         }
@@ -3560,7 +3639,7 @@ $(function($) {
         var tr = $('<tr/>');
         var td1 = $('<td/>').html(list.id).addClass('s_id').appendTo(tr);
         console.log(list.topic_time)
-        var td4 = $('<td/>').html(getTime(Date.parse(list.topic_time) - 8*60*60*1000)).appendTo(tr);
+        var td4 = $('<td/>').html(getTime(Date.parse(list.topic_time) - 8 * 60 * 60 * 1000)).appendTo(tr);
         var td5 = $('<td/>').html(list.title).addClass('s_title').appendTo(tr);
         switch (list.cid) {
             case 'top':
@@ -3785,19 +3864,19 @@ $(function($) {
     function createTabConfig(list, t_id) {
         var tr = $('<tr/>');
         var td1 = $('<td/>').html(list.id).appendTo(tr);
-        var td2 = $('<td/>').html(list.position).appendTo(tr);
+        var td2 = $('<td/>').html(list.position).addClass('tab_pos').appendTo(tr);
         var td8 = $('<td/>').html(getTime(list.updatetime)).appendTo(tr);
         var td3 = $('<td/>').html(list.btn_text).appendTo(tr);
         var td4 = $('<td/>').html(list.btn_uri).appendTo(tr);
         if (list.badge_showtype == 0) {
-            var td5 = $('<td/>').html('否').appendTo(tr);
+            var td5 = $('<td/>').html('否').addClass('tab_hot').appendTo(tr);
         } else {
-            var td5 = $('<td/>').html('是').appendTo(tr);
+            var td5 = $('<td/>').html('是').addClass('tab_hot').appendTo(tr);
         }
         if (list.active == 1) {
-            var td6 = $('<td/>').html('使用中').appendTo(tr);
+            var td6 = $('<td/>').html('使用中').addClass('tab_status').appendTo(tr);
         } else {
-            var td6 = $('<td/>').html('已停用').appendTo(tr);
+            var td6 = $('<td/>').html('已停用').addClass('tab_status').appendTo(tr);
         }
         var td7 = $('<td/>').html('<a href="#">编辑</a>').addClass('tab_config_updata').attr('data-info', JSON.stringify(list)).appendTo(tr);
         if (list.active == 1) {
@@ -3868,14 +3947,14 @@ $(function($) {
         $('.btn_image3x_hl').val(info.btn_image3x_hl);
         $('.tab_uri').val(info.btn_uri);
         $('.badge_argb').val(info.badge_argb);
-        $('.tab_updata').attr('data-id',info.id);
+        $('.tab_updata').attr('data-id', info.id);
 
         reply_comment.show();
     });
 
     // 提交配置
     $('.tab_updata').click(function() {
-        if($('.tab_name').val() && $('.btn_image2x').val() && $('.btn_image2x_hl').val() && $('.btn_image3x').val() && $('.btn_image3x_hl').val() && $('.tab_uri').val()) {
+        if ($('.tab_name').val() && $('.btn_image2x').val() && $('.btn_image2x_hl').val() && $('.btn_image3x').val() && $('.btn_image3x_hl').val() && $('.tab_uri').val()) {
 
             var data = {
                 btn_text: $('.tab_name').val(),
@@ -3888,15 +3967,15 @@ $(function($) {
                 btn_image3x_hl: $('.btn_image3x_hl').val(),
                 btn_uri: $('.tab_uri').val(),
                 badge_argb: $('.badge_argb').val()
-                // badge_showtype: $('.tab_badge').find('option:selected').val()
+                    // badge_showtype: $('.tab_badge').find('option:selected').val()
             }
-            if($('.tab_badge').find('option:selected').index() == 0) {
+            if ($('.tab_badge').find('option:selected').index() == 0) {
                 data.badge_showtype = 0;
             } else {
                 var num = $('.tab_badge').find('option:selected').val()
                 data.badge_showtype = ++num;
             }
-            if($(this).attr('data-id')) {
+            if ($(this).attr('data-id')) {
                 data.id = $(this).attr('data-id');
             }
             console.log(data);
@@ -3916,10 +3995,30 @@ $(function($) {
             });
         } else {
             tips_success.show();
-            setTimeout(function(){
+            setTimeout(function() {
                 tips_success.hide();
-            },2000);
+            }, 2000);
         }
+    });
+    // 帮助
+    $('.help').click(function() {
+        reply_comment2.show();
+    });
+
+    $('.t_position').click(function(){
+        console.log($('.special_position').find('option:selected').html());
+        table_tab_configuration.find('tr').hide();
+        table_tab_configuration.find('.tab_pos').filter(":contains(" + $('.t_position').find('option:selected').html() + ")").parent().show();
+    });
+
+    $('.t_status').click(function(){
+        table_tab_configuration.find('tr').hide();
+        table_tab_configuration.find('.tab_status').filter(":contains(" + $('.t_status').find('option:selected').html() + ")").parent().show();
+    });
+
+    $('.t_hot').click(function(){
+        table_tab_configuration.find('tr').hide();
+        table_tab_configuration.find('.tab_hot').filter(":contains(" + $('.t_hot').find('option:selected').html() + ")").parent().show();
     });
 
 

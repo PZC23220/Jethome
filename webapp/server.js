@@ -6,8 +6,8 @@ var MySQLUtil = require('./jetModules/MySQLUtil');
 var PORT = 9000;
 
 var mySQLUtil = new MySQLUtil();
-var connection = mySQLUtil.getConnectionProd();
-// var connection = mySQLUtil.getConnectionTest();
+// var connection = mySQLUtil.getConnectionProd();
+var connection = mySQLUtil.getConnectionTest();
 connection.connect();
 
 var server = http.createServer(function(request, response) {
@@ -80,8 +80,29 @@ var server = http.createServer(function(request, response) {
             response.end();
         });
     } else if (params.pathname == '/people_push') {
-        console.log(query.pushtype,query.aid,query.type);
+        // console.log(query.pushtype,query.aid,query.type);
         var cmd = "cd /home/ec2-user/api/MobiScripts; java -jar build/libs/MobiScripts-1.0-SNAPSHOT-all.jar notification_surprise_news " + query.pushtype + " " + query.aid + " " + query.type;
+        if(query.title) {
+            cmd += " " + query.title;
+        }
+        if(query.body) {
+            cmd += " " + query.body;
+        }
+        console.log(cmd);
+        process.exec(cmd, function(error, stdout, stderr) {
+            if (error) {
+                console.log('exec error: ' + error);
+            }
+
+            response.write(JSON.stringify(stdout));
+            response.end();
+        });
+    } else if (params.pathname == '/notification_baseball') {
+        // console.log(query.pushtype,query.aid,query.type);
+        var cmd = "cd /home/ec2-user/api/MobiScripts; java -jar build/libs/MobiScripts-1.0-SNAPSHOT-all.jar notification_base111 match" + query.pushContentType + " " + query.pushTargetId + " 0 true " + query.title;
+        if(query.body) {
+            cmd += " " + query.body;
+        }
         console.log(cmd);
         process.exec(cmd, function(error, stdout, stderr) {
             if (error) {
