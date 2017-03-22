@@ -3,40 +3,217 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>Document</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+    <meta property="og:image" content="{{shareImg}}" />
+    <meta property="og:description" content="{{title}}" class="facebook_content"/>
+    <title>{{title}}</title>
+    <link rel="stylesheet" href="css/reset.css">
+    <link rel="stylesheet" href="css/index.css">
 </head>
 
 <body>
-    <div>
-        <p></p>
-    </div>
-    <div>
-        <p></p>
-    </div>
-    <div>
-        <p></p>
-    </div>
+    <!-- 头部 -->
+    <header class="header">
+        <h1 class="news_title">{{title}}</h1>
+        <h3 class="news_subtitle">{{subtitle}}</h3>
+        <p class="news_publishTime"><i></i><span>{{publishTime}}</span><i></i></p>
+    </header>
+    <!-- 新闻 -->
+    <article class="news_content">
+        {{newsContent}}
+        <!-- <p>ベネズエラ代表として出場していたWBCで右肘を負傷したとみられるスアレスが代表を離脱した。ソフトバンクの三笠球団統括本部副本部長は「肘（の故障）と聞いている。日本で検査をしてから」と近く日本に戻り精密検査を受けることを認め、工藤監督は「一度こっち（日本）に戻ると聞いている。</p>
+        <figure>
+            <img src="https://nordot-res.cloudinary.com/ch/images/215716419585982470/origin_1.jpg" alt="">
+            <figcaption>エジプト・カイロで、地上に引き上げられた古代ファラオの巨像の胸部＝13日（共同）</figcaption>
+        </figure>
+        <figure>
+            <img src="https://nordot-res.cloudinary.com/ch/images/215716419585982470/origin_1.jpg" alt="">
+            <figcaption>エジプト・カイロで、地上に引き上げられた古代ファラオの巨像の胸部＝13日（共同）</figcaption>
+        </figure>
+        <figure>
+            <img src="https://nordot-res.cloudinary.com/ch/images/215716419585982470/origin_1.jpg" alt="">
+            <figcaption>エジプト・カイロで、地上に引き上げられた古代ファラオの巨像の胸部＝13日（共同）</figcaption>
+        </figure>
+        <p>細かいことは聞いていない」と話した。スアレスはメキシコで開催されたWBC1次リーグD組で2試合に登板。</p> -->
+    </article>
+    <!-- 分享 -->
+    <section class="share_content">
+        <h3>友達にシェアしよう</h3>
+        <img src="img/share.png" alt="">
+        <div class="share_platform">
+            <a href="newsjetjsbridge://{'method':'shareTo','type':1,'url':'{{shareUrl}}','text':'{{encodedTitle}}','imgurl':''{{shareImg}}','logtype' : '{{transNews}}'}"><img src="img/icon_twitter.png" alt="">
+                <br>スイートする</a>
+            <a href="newsjetjsbridge://{'method':'shareTo','type':2,'url':'{{shareUrl}}','text':'{{encodedTitle}}','imgurl':''{{shareImg}}','logtype' : '{{transNews}}'}"><img src="img/icon_facebook.png" alt="">
+                <br>シェアする</a>
+            <a href="newsjetjsbridge://{'method':'shareTo','type':3,'url':'{{shareUrl}}','text':'{{encodedTitle}}','imgurl':''{{shareImg}}','logtype' : '{{transNews}}'}"><img src="img/icon_line.png" alt="">
+                <br>ラインする</a>
+        </div>
+    </section>
+    <!-- 大图广告 -->
+    <section class="big_ad">
+        <a href="#">
+            <img src="https://nordot-res.cloudinary.com/ch/images/215716419585982470/origin_1.jpg" alt="">
+            <div class="ad_title">
+                h.ear on Wireless NC のデザインについてh.ear on Wireless NC のデザインについて
+            </div>
+            <div class="ad_tips"><img src="img/icon_ad.png" alt=""><span class="ad_name">产品或公司名</span><i>チェックする</i></div>
+        </a>
+    </section>
+    <!-- 专题 -->
+    <section class="special">
+        <h3>トピック</h3>
+        <img src="img/special.png" alt="">
+        <div class="special_content">
+            <img class="special_bgimg" src="https://nordot-res.cloudinary.com/ch/images/215716419585982470/origin_1.jpg" alt="">
+            <div class="news_list">
+                <div class="news_summary more_img">
+                    <a href="#">
+                        <p>{{related_news_title}} </p>
+                        <p class="news_imgs">
+                            <img src="{{related_news_img1}}" alt="">
+                            <img src="{{related_news_img2}}" alt="">
+                            <img src="{{related_news_img3}}" alt="">
+                        </p>
+                        <p><span><img src="{{related_heat}}" alt="">{{related_news_source}}</span><span>{{related_news_comment_count}}<img src="img/icon_comment.png" alt=""></span></p>
+                    </a>
+                </div>
+                <div class="news_summary">
+                    <a href="#">
+                        <p>{{related_news_title}} </p>
+                        <p><span><img src="{{related_heat}}" alt="">{{related_news_source}}</span><span>{{related_news_comment_count}}<img src="img/icon_comment.png" alt=""></span></p>
+                    </a>
+                </div>
+                <div class="news_summary one_img">
+                    <a href="#">
+                        <p>{{related_news_title}} </p>
+                        <p class="news_imgs">
+                            <img src="{{related_news_img1}}" alt="">
+                        </p>
+                        <p><span><img src="{{related_heat}}" alt="">{{related_news_source}}</span><span>{{related_news_comment_count}}<img src="img/icon_comment.png" alt=""></span></p>
+                    </a>
+                </div>
+                <div class="news_summary one_img">
+                    <a href="#">
+                        <p>{{related_video_title}} </p>
+                        <p class="news_imgs">
+                            <span class="play_time">{{related_video_playTime}}</span>
+                            <img src="{{related_video_bgImg}}" alt="">
+                            <img src="img/icon_play_2@2x.png" alt="" class="play">
+                        </p>
+                        <p><span>{{related_video_source}}</span><span>{{related_video_comment_count}}<img src="img/icon_comment.png" alt=""></span></p>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="news_more">もっと見る</div>
+    </section>
+    <!-- 相关新闻 -->
+    <section class="related_news">
+        <h3>関連記事</h3>
+        <img src="img/related_news.png" alt="">
+        <div class="news_list">
+                <div class="news_summary more_img">
+                    <a href="#">
+                        <p>{{related_news_title}} </p>
+                        <p class="news_imgs">
+                            <img src="{{related_news_img1}}" alt="">
+                            <img src="{{related_news_img2}}" alt="">
+                            <img src="{{related_news_img3}}" alt="">
+                        </p>
+                        <p><span><img src="{{related_heat}}" alt="">{{related_news_source}}</span><span>{{related_news_comment_count}}<img src="img/icon_comment.png" alt=""></span></p>
+                    </a>
+                </div>
+                <div class="news_summary">
+                    <a href="#">
+                        <p>{{related_news_title}} </p>
+                        <p><span><img src="{{related_heat}}" alt="">{{related_news_source}}</span><span>{{related_news_comment_count}}<img src="img/icon_comment.png" alt=""></span></p>
+                    </a>
+                </div>
+                <div class="news_summary one_img">
+                    <a href="#">
+                        <p>{{related_news_title}} </p>
+                        <p class="news_imgs">
+                            <img src="{{related_news_img1}}" alt="">
+                        </p>
+                        <p><span><img src="{{related_heat}}" alt="">{{related_news_source}}</span><span>{{related_news_comment_count}}<img src="img/icon_comment.png" alt=""></span></p>
+                    </a>
+                </div>
+                <div class="news_summary one_img news_ad">
+                    <a href="#">
+                        <p>h.ear on Wireless NC のデザインについてh.ear on Wireless NC のデザインについて</p>
+                        <p class="news_imgs">
+                            <img src="https://nordot-res.cloudinary.com/ch/images/216718564066344964/origin_1.jpg" alt="">
+                        </p>
+                        <p><span><img src="img/icon_ad.png" alt="">产品或公司名</span><i>チェックする</i></p>
+                    </a>
+                </div>
+            </div>
+    </section>
+    <!-- 评论 -->
+    <section class="comment">
+        <h3>コメント</h3>
+        <img src="img/comment.png" alt="">
+        <div class="input_content">
+            <i>500</i>
+            <textarea class="input_comment" placeholder="なんでもいいから書いちゃおう！"></textarea>
+            <span class="submit_comment">投稿</span>
+        </div>
+        <div class="comment_list">
+            <!-- <div class="list">
+                <img class="img_head" src="img/default.png">
+                <div class=" container">
+                    <p class="user_info">
+                        <span class="user_name">ティーンエイジ</span>
+                        <span class="num"><i>26</i><em class="support"></em></span>
+                    </p>
+                    <p class="user_comment">
+                        【置賜の天気】曇り。前線が東シナ海から西日本を通り、関東の南海上にのびています。 山形県は、曇りとなっています。 今日30日夜は、前線の影響により、曇りでしょう。
+                    </p>
+                    <p class="operate">
+                        <span class="number">10/29</span>
+                        <a class="ope_comment links" href="#">返信<img src="img/icon_reply.png"></a>
+                    </p>
+                    <div class="comment_more">
+                        <div class="head_user">
+                            <img src="img/default.png" class="head_img">
+                            <span class="head_name">小和田恒は創価ですか</span>
+                        </div>
+                        <div class="head_content">選挙に当選するために原発を利用するて、この人でダメじゃん。</div>
+                        <div class="head_user">
+                            <img src="img/default.png" class="head_img">
+                            <span class="head_name">するて、こ</span>
+                        </div>
+                        <div class="head_content">選挙に当選するために原発を利用するて、この人でダメじゃん。</div>
+                        <div class="fold">以前のコメントを表示(<span>10件</span>)<img src="img/icon_more comments.png" class="fold_img"></div>
+                        <div class="more_list">
+                            <div class="head_user">
+                                <img src="img/default.png" class="head_img">
+                                <span class="head_name">するために</span>
+                            </div>
+                            <div class="head_content">operate選挙に当選するために原発を利用するて、この人でダメじゃん。</div>
+                            <div class="head_user">
+                                <img src="img/default.png" class="head_img">
+                                <span class="head_name">原発を利用</span>
+                            </div>
+                            <div class="head_content">選挙に当選するために原発を利用するて、この人でダメじゃん。</div>
+                        </div>
+                    </div>
+                </div>
+            </div> -->
+        </div>
+    </section>
+    <!-- 大图广告 -->
+    <section class="big_ad">
+        <a href="#">
+            <img src="https://nordot-res.cloudinary.com/ch/images/215716419585982470/origin_1.jpg" alt="">
+            <div class="ad_title">
+                h.ear on Wireless NC のデザインについてh.ear on Wireless NC のデザインについて
+            </div>
+            <div class="ad_tips"><img src="img/icon_ad.png" alt=""><span class="ad_name">产品或公司名</span><i>チェックする</i></div>
+        </a>
+    </section>
 </body>
-<script>
-var ad = document.querySelectorAll('div');
-for (var l = 0; l < ad.length; l++) {
-    var ele = ad[l].querySelector('p');
-    var p = document.createElement('p');
-    var ad_img = document.createElement('img');
-    ad_img.src = 'http://jethome.newsjet.io/tra_page/img/ad.png';
-    p.appendChild(ad_img);
-    insertAfter(p, ele); // 因为js没有直接追加到指定元素后面的方法 所以要自己创建一个方法
-}
-
-   
-function insertAfter(newElement, targetElement) { // newElement是要追加的元素 targetElement 是指定元素的位置   
-    var parent = targetElement.parentNode; // 找到指定元素的父节点   
-    if (parent.lastChild == targetElement) { // 判断指定元素的是否是节点中的最后一个位置 如果是的话就直接使用appendChild方法   
-        parent.appendChild(newElement, targetElement);
-    } else {
-        parent.insertBefore(newElement, targetElement.nextSibling);
-    };
-};
-</script>
-
+<script src="js/zepto.min.js"></script>
+<script src="js/index.js"></script>
 </html>
+

@@ -3463,7 +3463,7 @@ $(function($) {
         $('.special_bg_img').val(info.bg_img);
         $('.special_keyword').val(info.keyword_inclusion);
         $('.exclude_words').val(info.keyword_exclusion);
-        $('.special_start_time').val(new Date(info.topic_time).Format("yyyy-MM-ddThh:mm:ss"));
+        $('.special_start_time').val(new Date(Date.parse(info.topic_time) - 8*60*60*1000).Format("yyyy-MM-ddThh:mm:ss"));
         $('.special_publish').attr('data-id', info.id);
         var option1 = $('.special_channel').find('option');
         option1.each(function(idx, ele) {
@@ -3474,6 +3474,12 @@ $(function($) {
         var option2 = $('.special_position').find('option');
         option2.each(function(idx, ele) {
             if ($(this).html() == info.pos) {
+                $(this).attr('selected', true);
+            }
+        });
+        var option3 = $('.special_toplist').find('option');
+        option3.each(function(idx, ele) {
+            if ($(this).val() == info.is_toplist) {
                 $(this).attr('selected', true);
             }
         });
@@ -3493,7 +3499,8 @@ $(function($) {
                 pos: $('.special_position').find('option:selected').html(),
                 keyword_inclusion: $('.special_keyword').val(),
                 keyword_exclusion: $('.exclude_words').val(),
-                topic_time: new Date($('.special_start_time').val()).Format("yyyy/MM/dd hh:mm:ss")
+                topic_time: new Date($('.special_start_time').val()).Format("yyyy/MM/dd hh:mm:ss"),
+                is_toplist: $('.special_toplist').find('option:selected').val()
             }
             console.log(data.topic_time);
             if ($(this).attr('data-id')) {
@@ -3552,7 +3559,8 @@ $(function($) {
     function createSpecial(list) {
         var tr = $('<tr/>');
         var td1 = $('<td/>').html(list.id).addClass('s_id').appendTo(tr);
-        var td4 = $('<td/>').html(getTime(list.topic_time)).appendTo(tr);
+        console.log(list.topic_time)
+        var td4 = $('<td/>').html(getTime(Date.parse(list.topic_time) - 8*60*60*1000)).appendTo(tr);
         var td5 = $('<td/>').html(list.title).addClass('s_title').appendTo(tr);
         switch (list.cid) {
             case 'top':

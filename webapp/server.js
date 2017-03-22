@@ -375,13 +375,14 @@ var server = http.createServer(function(request, response) {
                 pos: reqObj.pos,
                 keyword_inclusion: reqObj.keyword_inclusion,
                 keyword_exclusion: reqObj.keyword_exclusion,
-                detail_desc: reqObj.detail_desc
+                detail_desc: reqObj.detail_desc,
+                is_toplist: reqObj.is_toplist
             };
             if (reqObj.id) {
                 resObj.id = reqObj.id;
-                var sql = "UPDATE news_special_topic SET title = ?,cid = ?,topic_time = ?,bg_img = ?,pos = ?,keyword_inclusion = ?,keyword_exclusion = ?,detail_desc = ? WHERE id = ?";
+                var sql = "UPDATE news_special_topic SET title = ?,cid = ?,topic_time = ?,bg_img = ?,pos = ?,keyword_inclusion = ?,keyword_exclusion = ?,detail_desc = ?,is_toplist = ? WHERE id = ?";
             } else {
-                var sql = "INSERT INTO news_special_topic(title,cid,topic_time,bg_img,pos,keyword_inclusion,keyword_exclusion,detail_desc) VALUES(?,?,?,?,?,?,?,?)";
+                var sql = "INSERT INTO news_special_topic(title,cid,topic_time,bg_img,pos,keyword_inclusion,keyword_exclusion,detail_desc,is_toplist) VALUES(?,?,?,?,?,?,?,?,?)";
             }
             var arr = []
             for(var i in resObj) {

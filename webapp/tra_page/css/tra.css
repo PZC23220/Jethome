@@ -154,6 +154,7 @@ section.ad a {
 section.ad div {
     border: none !important;
     padding: 0 !important;
+    width: 100% !important;
 }
 
 section.ad .advsc-item-image {
@@ -251,6 +252,15 @@ section.ad .ad_source img {
     font-weight: 500;
 }
 
+.news_list .news_summary a p:last-child span:last-child {
+    float: right;
+}
+
+.news_list .news_summary a p:last-child span:last-child img {
+    margin-left: 4px;
+    width: 10px;
+}
+
 .news_list .news_summary a p:last-child span:first-child {
     float: left;
     overflow: hidden;
@@ -262,16 +272,7 @@ section.ad .ad_source img {
 
 .news_list .news_summary a p:last-child span:first-child img {
     margin-right: 4px;
-    width: 22.5px;
-}
-
-.news_list .news_summary a p:last-child span:last-child {
-    float: right;
-}
-
-.news_list .news_summary a p:last-child span:last-child img {
-    margin-left: 4px;
-    width: 10px;
+    width: 1px;
 }
 
 .news_summary:hover {
@@ -379,7 +380,7 @@ section.ad .ad_source img {
 .news_ad a>div:first-child {
     float: right !important;
     margin: 0 !important;
-    width: 82px;
+    width: 32%;
     height: 82px;
 }
 
@@ -387,6 +388,10 @@ section.ad .ad_source img {
     float: left !important;
     width: 64% !important;
     text-align: left !important;
+}
+
+.news_ad li {
+    border: none !important;
 }
 
 .news_ad a>div:last-child > p {
