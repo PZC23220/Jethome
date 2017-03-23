@@ -73,7 +73,7 @@ public class TopicNewsController extends AbstractNewsjetController {
 
                     List<SolrDocument> solrDocuments = searchApplicableDocuments(topicTime, keywordInclusionList, keywordExclusionList);
 
-                    List<String> aids = newsSpecialTopicInfoMapper.selectAllNewsID();
+                    List<String> aids = newsSpecialTopicInfoMapper.selectAllNewsID(specialTopic.getId());
                     List<NewsSpecialTopicInfo> topicInfos = solrDocuments.stream()
                             .filter(d -> !aids.contains(Objects.toString(d.getFieldValue("aid"))))
                             .filter(d -> !aids.contains(Objects.toString(d.getFieldValue("vid"))))
