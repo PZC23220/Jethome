@@ -129,7 +129,6 @@ public class TopicNewsController extends AbstractNewsjetController {
         params.add(CommonParams.DF, "content");
         params.add(CommonParams.DF, "textContent");
         params.add(CommonParams.FL, "aid,vid,cid,ctime,publishTime,title");
-        params.add(CommonParams.FQ, String.format("ctime:[%s TO *]", topicTime));
         params.add(CommonParams.SORT, "ctime desc");
 
         if (!keywordInclusion.isEmpty()) {
@@ -178,11 +177,14 @@ public class TopicNewsController extends AbstractNewsjetController {
             params.add(CommonParams.Q, "-(" + queryString.toString() + ")");
         }
 
+        params.add(CommonParams.FQ, String.format("ctime:[%s TO *]", topicTime));
         QueryResponse query = newsSolrClient.query(params);
         SolrDocumentList results = query.getResults();
         getLogger().info("Results#size: [{}]. ", results.size());
         results.forEach(doc -> doc.setField("newsType", "news"));
 
+        params.remove(CommonParams.FQ);
+        params.add(CommonParams.FQ, String.format("publishTime:[%s TO *]", topicTime));
         query = videoSolrClient.query(params);
         query.getResults().forEach(doc -> doc.setField("newsType", "video"));
         results.addAll(query.getResults());
