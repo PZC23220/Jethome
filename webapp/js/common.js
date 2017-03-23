@@ -3805,7 +3805,7 @@ $(function($) {
                 var td9 = $('<td/>').html(list.news_type).appendTo(tr);
                 break;
         }
-        var td4 = $('<td/>').html(getTime(list.news_time)).appendTo(tr);
+        var td4 = $('<td/>').html(getTime(list.news_time * 1000)).appendTo(tr);
         var td5 = $('<td/>').html(list.news_title).appendTo(tr);
         if (list.active == 1) {
             var td7 = $('<td/>').html('<a href="#">下线</a>').attr({ 'data-id': list.id, 'data-topid': t_id }).addClass('news_special_topic_info_active').appendTo(tr);
