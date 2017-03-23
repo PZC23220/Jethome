@@ -3747,18 +3747,18 @@ $(function($) {
         var td2 = $('<td/>').html('<a href="#">编辑</a>').addClass('special_config').attr('data-info', JSON.stringify(list)).appendTo(tr);
         var td3 = $('<td/>').html('<a href="#">查看</a>').addClass('special_newslist').attr('data-info', JSON.stringify(list)).appendTo(tr);
         if (list.active == 1) {
-            var td7 = $('<td/>').html('<a href="#">下线</a>').addClass('special_active').attr('data-id', list.id).appendTo(tr);
+            var td7 = $('<td/>').html('<a href="#">下线</a>').addClass('special_active').attr({'data-id': list.id,'data-val': 0}).appendTo(tr);
         } else {
-            var td7 = $('<td/>').html('<span>---</span>').appendTo(tr);
+            var td7 = $('<td/>').html('<a href="#">上线</a>').addClass('special_active').attr({'data-id': list.id,'data-val': 1}).appendTo(tr);
         }
         tr.appendTo(table_special_configuration);
 
     }
 
-    //下线专题
+    //下线/上线专题
     table_special_configuration.on('click', '.special_active', function() {
         $.ajax({
-            url: server_host + '/news_special_topic_active?id=' + $(this).attr('data-id'),
+            url: server_host + '/news_special_topic_active?id=' + $(this).attr('data-id') + '&value=' + $(this).attr('data-val'),
             success: function(res) {
                 share_success.show();
                 setTimeout(function() {
@@ -3808,15 +3808,15 @@ $(function($) {
         var td4 = $('<td/>').html(getTime(list.news_time * 1000)).appendTo(tr);
         var td5 = $('<td/>').html(list.news_title).appendTo(tr);
         if (list.active == 1) {
-            var td7 = $('<td/>').html('<a href="#">下线</a>').attr({ 'data-id': list.id, 'data-topid': t_id }).addClass('news_special_topic_info_active').appendTo(tr);
+            var td7 = $('<td/>').html('<a href="#">下线</a>').attr({ 'data-id': list.id, 'data-topid': t_id,'data-val': 0 }).addClass('news_special_topic_info_active').appendTo(tr);
         } else {
-            var td7 = $('<td/>').html('<span>---</span>').appendTo(tr);
+            var td7 = $('<td/>').html('<a href="#">上线</a>').attr({ 'data-id': list.id, 'data-topid': t_id,'data-val': 1 }).addClass('news_special_topic_info_active').appendTo(tr);
         }
 
         if (list.stick_at_top == 1) {
-            var td6 = $('<td/>').html('<span>已置顶</span>').appendTo(tr);
+            var td6 = $('<td/>').html('<a href="#">取消置顶</a>').addClass('special_news_top').attr({ 'data-id': list.id, 'data-topid': t_id,'data-val': 0 }).appendTo(tr);
         } else {
-            var td6 = $('<td/>').html('<a href="#">置顶</a>').addClass('special_news_top').attr({ 'data-id': list.id, 'data-topid': t_id }).appendTo(tr);
+            var td6 = $('<td/>').html('<a href="#">置顶</a>').addClass('special_news_top').attr({ 'data-id': list.id, 'data-topid': t_id,'data-val': 1 }).appendTo(tr);
         }
         tr.appendTo(table_special_relatedNews);
 
@@ -3826,7 +3826,7 @@ $(function($) {
     table_special_relatedNews.on('click', '.special_news_top', function() {
         var tid = $(this).attr('data-topid');
         $.ajax({
-            url: server_host + '/news_special_topic_info_top?id=' + $(this).attr('data-id'),
+            url: server_host + '/news_special_topic_info_top?id=' + $(this).attr('data-id') + '&value=' + $(this).attr('data-val'),
             success: function(res) {
                 console.log(res);
                 modify_success.show();
@@ -3841,9 +3841,10 @@ $(function($) {
     table_special_relatedNews.on('click', '.news_special_topic_info_active', function() {
         var tid = $(this).attr('data-topid');
         $.ajax({
-            url: server_host + '/news_special_topic_info_active?id=' + $(this).attr('data-id'),
+            url: server_host + '/news_special_topic_info_active?id=' + $(this).attr('data-id') + '&value=' + $(this).attr('data-val'),
             success: function(res) {
                 console.log(res);
+                console.log()
                 del_success.show();
                 setTimeout(function() {
                     news_special_topic_info(tid);
