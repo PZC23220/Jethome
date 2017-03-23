@@ -1457,7 +1457,7 @@ $(function($) {
                             } else if ($('.push_news_title').val() && $('.push_news_desc').val()) {
                                 pushNews(aid, 'news','android', $('.push_news_title').val(), $('.push_news_desc').val());
                             } else {
-                                pushNews(aid,'android', 'news');
+                                pushNews(aid, 'news','android');
                             }
                             // pushNews(aid, pushtype, 'android', title, desc);
                         } else if (this.checked && $(this).val() == 'ios') {
@@ -1468,7 +1468,7 @@ $(function($) {
                             } else if ($('.push_news_title').val() && $('.push_news_desc').val()) {
                                 pushNews(aid, 'news','ios', $('.push_news_title').val(), $('.push_news_desc').val());
                             } else {
-                                pushNews(aid,'ios', 'news');
+                                pushNews(aid, 'news','ios');
                             }
                         }
                     });
@@ -1491,7 +1491,7 @@ $(function($) {
                             } else if ($('.push_video_title').val() && $('.push_video_desc').val()) {
                                 pushNews(aid, 'video','ios', $('.push_video_title').val(), $('.push_video_desc').val());
                             } else {
-                                pushNews(aid,'ios', 'video');
+                                pushNews(aid, 'video','ios');
                             }
                         }
                     });
@@ -2915,24 +2915,24 @@ $(function($) {
             url_ += '&body=' + desc;
         }
         console.log(url_)
-        // $.ajax({
-        //     url: url_,
-        //     beforeSend: function() {
-        //         loading.show();
-        //     },
-        //     success: function(res) {
-        //         console.log(res);
-        //         loading.hide();
-        //         success_push.show();
-        //         os.removeAttr("checked");
-        //         setTimeout(function() {
-        //             success_push.hide();
-        //             push_sure.hide();
-        //             window.location.reload();
-        //         }, 2000);
-        //         c = true;
-        //     }
-        // });
+        $.ajax({
+            url: url_,
+            beforeSend: function() {
+                loading.show();
+            },
+            success: function(res) {
+                console.log(res);
+                loading.hide();
+                success_push.show();
+                os.removeAttr("checked");
+                setTimeout(function() {
+                    success_push.hide();
+                    push_sure.hide();
+                    window.location.reload();
+                }, 2000);
+                c = true;
+            }
+        });
     }
 
     // 查看比赛相关新闻
@@ -3805,7 +3805,7 @@ $(function($) {
                 var td9 = $('<td/>').html(list.news_type).appendTo(tr);
                 break;
         }
-        var td4 = $('<td/>').html(getTime(list.news_time)).appendTo(tr);
+        var td4 = $('<td/>').html(getTime(list.news_time * 1000)).appendTo(tr);
         var td5 = $('<td/>').html(list.news_title).appendTo(tr);
         if (list.active == 1) {
             var td7 = $('<td/>').html('<a href="#">下线</a>').attr({ 'data-id': list.id, 'data-topid': t_id }).addClass('news_special_topic_info_active').appendTo(tr);

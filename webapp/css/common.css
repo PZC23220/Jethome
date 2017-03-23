@@ -198,6 +198,11 @@ p {
     font-weight: 600;
 }
 
+.loading {
+    left: 55%;
+    top: 45%;
+}
+
 .push_sur_container {
     width: 50vw;
     height: 50vh;
