@@ -2,6 +2,7 @@ window.onload = function() {
 	// alert("KK");
 	var main = document.getElementsByTagName('main')[0];
 	var img = main.getElementsByTagName('img');
+	var container = document.getElementsByClassName('.container')[0];
 
 	var images = [];
 	for (var j = 0; j < img.length; j++) {
@@ -14,9 +15,7 @@ window.onload = function() {
 			window.location.href="newsjetjsbridge://{'method':'clickImage','images':[" + images + "],'index':'" + this.getAttribute('index') + "'}";
 		};
 	}
-
 	document.addEventListener('DOMSubtreeModified',function(){
-		alert(111);
 		var all_img = document.querySelectorAll('img');
 		if (!all_img) {
 			return;
@@ -31,7 +30,4 @@ window.onload = function() {
 		
 
 	},false);
-
-
-	var ad = document.getElementsByClassName('.')
 }

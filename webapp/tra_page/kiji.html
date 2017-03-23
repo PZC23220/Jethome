@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="ja">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no;">
+    <link rel="stylesheet" href="http://jethome.newsjet.io/tra_page/css/kiji.css" type="text/css">
+    <link rel="stylesheet" href="http://jethome.newsjet.io/tra_page/css/tra.css" type="text/css">
+</head>
+
+<body>
+    <header class="header header--centerLogo">
+        <h1 class="header__title"><img class="header__img" src="$$LOGO_URL$$" alt="$$SITE$$" height="30"></h1>
+    </header>
+    <div class="container">
+        <main class="main">
+            <div class="main__titleWrapper">
+                <h1 class="main__title">$$TITLE$$</h1>
+                <p class="main__subTitle default-hidden">$$SUBTITLE$$</p>
+            </div>
+            <div class="main__subInfo">
+                <div class="main__dateWrapper">
+                    <time class="main__date">$$TIME$$</time>
+                </div>
+            </div>
+            <div class="main__article">
+                <article class="ma">
+                </article>
+            </div>
+        </main>
+        <section class="share">
+          <a href="newsjetjsbridge://{'method':'newsShareTo', 'type':1, 'url':'$$SHARE_URL$$', 'text':'$$SHARE_TITLE$$', 'imgurl':'$$SHARE_IMG$$', 'cid':'$$CID$$'}"><img src="http://jethome.newsjet.io/tra_page/img/icon_facebook.png"><span>シェアする</span></a>
+          <a href="newsjetjsbridge://{'method':'newsShareTo', 'type':2, 'url':'$$SHARE_URL$$', 'text':'$$SHARE_TITLE$$', 'imgurl':'$$SHARE_IMG$$', 'cid':'$$CID$$'}"><img src="http://jethome.newsjet.io/tra_page/img/icon_twitter.png"><span>スイートする</span></a>
+          <a href="newsjetjsbridge://{'method':'newsShareTo', 'type':3, 'url':'$$SHARE_URL$$', 'text':'$$SHARE_TITLE$$', 'imgurl':'$$SHARE_IMG$$', 'cid':'$$CID$$'}"><img src="http://jethome.newsjet.io/tra_page/img/line_c.png"><span>ラインする</span></a>
+        </section>
+        <!-- <section class="ad">
+          <div data-advs-adspot-id="MDUwOjc5MTk" style="display:none"></div>
+        </section> -->
+        <section class="relation_news default-hidden">
+          <div>関連記事</div>
+          <div class="rel_news">
+            <a href="newsjetjsbridge://{'method':'pushNews', 'id': '$$RELATED_AID$$', 'cid':'$$RELATED_CID$$', 'url':'$$RELATED_URL$$'}"><p>$$RELATED_TITLE$$</p><img src="$$RELATED_IMG$$" class="n_banner"></a>
+          </div>
+          <div class="rel_ad">
+            <div data-advs-adspot-id="MDUwOjc5MTk" style="display:none"></div>  
+          </div>
+        </section>
+        <section class="ad default-hidden">
+          <a href="">
+            <img src="http://jethome.newsjet.io/tra_page/img/ad_banner.png" class="ad_banner advsc-item-image">
+            <div class="advsc-txt-box ad_title">公式アカウントをフォローして、Instagram・Twitterにハッシュタグ</div>
+            <div class="ad_source"><img src="http://jethome.newsjet.io/tra_page/img/ad.png" /><span>Meiji</span></div>
+          </a>
+        </section>
+        <!-- <section class="ad">
+          <div data-advs-adspot-id="MDUwOjc5MTk" style="display:none"></div>
+	 <script src="https://js.mtburn.com/advs-instream.js"></script>
+	 <script type="text/javascript"> MTBADVS.InStream.Default.run({"immediately":true}); </script>
+        </section> -->
+    </div>
+    <script src="js/index.js"></script>
+</body>
+
+</html>
+

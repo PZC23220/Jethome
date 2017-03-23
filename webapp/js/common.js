@@ -2660,10 +2660,10 @@ $(function($) {
             var newsid = JSON.parse(info.newsids);
             console.log(newsid);
             if(newsid.newsid) {
-                get_news(newsid.newsid);
+                get_news(newsid.newsid,$(this).attr('data-info'));
             }
             if(newsid.videoid) {
-                get_videos(newsid.videoid);
+                get_videos(newsid.videoid,$(this).attr('data-info'));
             }
         }
         
@@ -2796,35 +2796,35 @@ $(function($) {
         reply_comment5.show();
     });
 
-    function get_news(ids) {
+    function get_news(ids,info) {
         $.ajax({
             url: 'news_get?ids=' + ids,
             success: function(res) {
                 var list = res.data;
                 
                 for(var i in list) {
-                    createnewslist(list[i],'news')
+                    createnewslist(list[i],'news',info)
                 }
             }
         });
         
     }
 
-    function get_videos(ids) {
+    function get_videos(ids,info) {
         $.ajax({
             url: 'video_get?ids=' + ids,
             success: function(res) {
                 var list = res.data;
                 console.log(list);
                 for(var i in list) {
-                    createnewslist(list[i],'video')
+                    createnewslist(list[i],'video',info)
                 }
             }
         });
         
     }
 
-    function createnewslist(list,type) {
+    function createnewslist(list,type,info) {
         var tr = $('<tr/>');
         var td1 = $('<td/>').html(list.id).addClass('n_id').appendTo(tr);
         if(type == "news") {
@@ -2833,11 +2833,51 @@ $(function($) {
             var td2 = $('<td/>').html('视频').appendTo(tr);
         }       
         var td3 = $('<td/>').html(list.title).appendTo(tr);
-        var td6 = $('<td/>').html('<a href="#">置顶</a>').addClass('a_prize').attr('data-info', JSON.stringify(list)).appendTo(tr);
-        var td7 = $('<td/>').html('<a href="#">隐藏</a>').addClass('a_question').attr('data-info', JSON.stringify(list)).appendTo(tr);
+        var td6 = $('<td/>').html('<a href="#" data-id="'+ list.id +'">置顶</a>').addClass('news_top').attr('data-info', info).appendTo(tr);
+        var td7 = $('<td/>').html('<a href="#" data-id="'+ list.id +'">隐藏</a>').addClass('news_hidden').attr('data-info', info).appendTo(tr);
         tr.appendTo(table_relatedNews_tbody);
 
     }
+
+    // 置顶新闻
+    table_relatedNews_tbody.on('click','.news_top',function(){
+        var data = JSON.parse($(this).attr('data-info'));
+        var newsids = JSON.parse(data.newsids);
+        var arr = [];
+        arr.push($(this).find('a').attr('data-id'));
+        newsids.top = arr;
+        data.newsids = JSON.stringify(newsids);
+        console.log(data);
+        $.ajax({
+            url: 'baseball_matchUpdateDetail',
+            type: 'POST',
+            data: JSON.stringify(data),
+            success : function(res) {
+                console.log(res);
+            }
+        });
+        
+    });
+
+    // 隐藏新闻
+    table_relatedNews_tbody.on('click','.news_hidden',function(){
+        var data = JSON.parse($(this).attr('data-info'));
+        var newsids = JSON.parse(data.newsids);
+        var arr = [];
+        arr.push($(this).find('a').attr('data-id'));
+        newsids.hidden = arr;
+        data.newsids = JSON.stringify(newsids);
+        console.log(data);
+        $.ajax({
+            url: 'baseball_matchUpdateDetail',
+            type: 'POST',
+            data: JSON.stringify(data),
+            success : function(res) {
+                console.log(res);
+            }
+        });
+        
+    });
 
     $('.submitAnswer').click(function () {
        var postData = JSON.parse($(this).attr("data-info"));
