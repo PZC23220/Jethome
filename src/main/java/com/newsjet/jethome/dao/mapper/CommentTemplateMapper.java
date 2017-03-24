@@ -63,7 +63,7 @@ public interface CommentTemplateMapper {
      */
     int updateByPrimaryKey(CommentTemplate record);
 
-    @Select("select * from comment_template limit #{from}, #{size} order by id desc")
+    @Select("select * from comment_template order by id desc limit #{from}, #{size}")
     List<CommentTemplate> selectRange(@Param("from") Integer from, @Param("size") Integer size);
 
     @Select("select * from comment_template where cid = 'all' or cid = #{cid} order by rand() limit #{limit}")
