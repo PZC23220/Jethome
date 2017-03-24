@@ -32,7 +32,7 @@
         <property name="mapperLocations" value="classpath:com/newsjet/jethome/api/dao/mapper/*.xml"/>
     </bean>
     <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
-        <property name="basePackage" value="com.newsjet.jethome.dao.mapper"/>
+        <property name="basePackage" value="com.newsjet.jethome"/>
         <property name="sqlSessionFactoryBeanName" value="sqlSessionFactorydataSource"/>
     </bean>
 
