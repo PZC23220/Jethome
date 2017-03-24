@@ -138,7 +138,7 @@
                     </div>
                     <p><a href="#" class="sure_push">确定</a><a href="#" class="close2">取消</a></p>
                 </div>
-                <div class="loading" style="display: none;" z-index:"3000">
+                <div class="loading" style="display: none;" z-index: "3000">
                     <div class="sk-fading-circle">
                         <div class="sk-circle1 sk-circle"></div>
                         <div class="sk-circle2 sk-circle"></div>
@@ -411,7 +411,7 @@
                     </div>
                     <p><a href="#" class="sure_push">确定</a><a href="#" class="close2">取消</a></p>
                 </div>
-                <div class="loading" style="display: none; z-index:"3000"">
+                <div class="loading" style="display: none; z-index:" 3000 "">
                     <div class="sk-fading-circle">
                         <div class="sk-circle1 sk-circle"></div>
                         <div class="sk-circle2 sk-circle"></div>
@@ -1043,9 +1043,9 @@
                 </div>
                 <div class="input-group activity_comment_content">
                     <span class="input-group-addon">关键词搜索</span>
-                    <input type="text" class="form-control" placeholder="Keywords">
+                    <input type="text" class="form-control comment_keywords" placeholder="Keywords">
                 </div>
-                <button type="button" class="btn btn-success search_">搜索</button>
+                <button type="button" class="btn btn-success search_comments">搜索</button>
             </div>
             <div class="table table-responsive">
                 <table class="table table-bordered table_automation">
@@ -1756,40 +1756,40 @@
                 </div>
                 <!-- 立即推送 -->
                 <div class="push_sure" style="display: none;">
-                <div class="push_sur_container">
-                    <p>即将推送的(赛事id <span class="match_push_id"></span>)</p>
-                    <p>如果要更改赛事描述，赛事标题要一同编辑才会生效</p>
-                    <div class="input-group" style="width: 80%; margin-bottom: 20px;margin-left: 5%;">
-                        <span class="input-group-addon">编辑赛事标题<i>*</i></span>
-                        <input type="text" class="form-control push_match_title" placeholder="Edit Match Title">
+                    <div class="push_sur_container">
+                        <p>即将推送的(赛事id <span class="match_push_id"></span>)</p>
+                        <p>如果要更改赛事描述，赛事标题要一同编辑才会生效</p>
+                        <div class="input-group" style="width: 80%; margin-bottom: 20px;margin-left: 5%;">
+                            <span class="input-group-addon">编辑赛事标题<i>*</i></span>
+                            <input type="text" class="form-control push_match_title" placeholder="Edit Match Title">
+                        </div>
+                        <div class="input-group" style="width: 80%; margin-bottom: 20px;margin-left: 5%;">
+                            <span class="input-group-addon">编辑赛事描述<i>*</i></span>
+                            <input type="text" class="form-control push_match_desc" placeholder="Edit Match Description">
+                        </div>
+                        <p><a href="#" class="sure_push_baseball">确定</a><a href="#" class="close2">取消</a></p>
                     </div>
-                    <div class="input-group" style="width: 80%; margin-bottom: 20px;margin-left: 5%;">
-                        <span class="input-group-addon">编辑赛事描述<i>*</i></span>
-                        <input type="text" class="form-control push_match_desc" placeholder="Edit Match Description">
+                    <div class="loading" style="display: none;">
+                        <div class="sk-fading-circle">
+                            <div class="sk-circle1 sk-circle"></div>
+                            <div class="sk-circle2 sk-circle"></div>
+                            <div class="sk-circle3 sk-circle"></div>
+                            <div class="sk-circle4 sk-circle"></div>
+                            <div class="sk-circle5 sk-circle"></div>
+                            <div class="sk-circle6 sk-circle"></div>
+                            <div class="sk-circle7 sk-circle"></div>
+                            <div class="sk-circle8 sk-circle"></div>
+                            <div class="sk-circle9 sk-circle"></div>
+                            <div class="sk-circle10 sk-circle"></div>
+                            <div class="sk-circle11 sk-circle"></div>
+                            <div class="sk-circle12 sk-circle"></div>
+                        </div>
+                        <p>正在推送，请稍候...</p>
                     </div>
-                    <p><a href="#" class="sure_push_baseball">确定</a><a href="#" class="close2">取消</a></p>
-                </div>
-                <div class="loading" style="display: none;">
-                    <div class="sk-fading-circle">
-                        <div class="sk-circle1 sk-circle"></div>
-                        <div class="sk-circle2 sk-circle"></div>
-                        <div class="sk-circle3 sk-circle"></div>
-                        <div class="sk-circle4 sk-circle"></div>
-                        <div class="sk-circle5 sk-circle"></div>
-                        <div class="sk-circle6 sk-circle"></div>
-                        <div class="sk-circle7 sk-circle"></div>
-                        <div class="sk-circle8 sk-circle"></div>
-                        <div class="sk-circle9 sk-circle"></div>
-                        <div class="sk-circle10 sk-circle"></div>
-                        <div class="sk-circle11 sk-circle"></div>
-                        <div class="sk-circle12 sk-circle"></div>
+                    <div class="success_push">
+                        推送新闻成功！
                     </div>
-                    <p>正在推送，请稍候...</p>
                 </div>
-                <div class="success_push">
-                    推送新闻成功！
-                </div>
-            </div>
             </div>
             <p style="font-size: 18px;font-weight: 600;color: #f00;">点击比赛ID可以添加比赛评论、国家名称可以添加球员/球队评论！</p>
         </div>
@@ -1865,10 +1865,10 @@
                             <span class="input-group-addon">专题标题<i>*</i></span>
                             <input type="text" placeholder="Special Title" class="form-control special_title">
                         </div>
-                        <!-- <div class="input-group" style="width: 60%;">
-                            <span class="input-group-addon">专题副标题</span>
+                        <div class="input-group" style="width: 60%;">
+                            <span class="input-group-addon">专题统计项名称</span>
                             <input type="text" placeholder="Special Subtitle" class="form-control special_subtitle">
-                        </div> -->
+                        </div>
                         <!-- <div class="input-group">
                             <span class="input-group-addon">专题说明</span>
                             <input type="text" placeholder="Special Description" class="form-control special_description">
@@ -2083,7 +2083,7 @@
                                 <option value="">是</option>
                             </select>
                         </div>
-                            <p style="text-align: left;">（红点显示默认为“否”，不添加红点则下面内容可以不用填写）</p>
+                        <p style="text-align: left;">（红点显示默认为“否”，不添加红点则下面内容可以不用填写）</p>
                         <div class="input-group">
                             <span class="input-group-addon">红点色值</span>
                             <input type="url" class="form-control badge_argb" placeholder="Badge Color">
@@ -2106,16 +2106,14 @@
                 <div class="reply_comment2">
                     <div class="reply_comment_container">
                         <xmp style="font-size: 18px;font-weight: 600;text-align: left;margin-bottom: 20px;">
-一级界面 新闻－转到新闻页：newsjet://news 
-视频－转到视频页：newsjet://video 
-活动之棒球－转到棒球页：newsjet://baseball 
-个人－转到个人页：newsjet://personal 
-天气－转到天气页：newsjet://weather 
-运势－转到运势页：newsjet://fortune 
-二级界面 新闻－转到新闻页对应频道：newsjet://news?id=<top|ent|pol|...> 
-视频－转到视频页对应频道：newsjet://video?id=<top|ent|pol|...> 
-活动之棒球－转到棒球页对应位置：newsjet://baseball?id=<news|schedule|...> 
-个人－转到个人页对应选项的界面：newsjet://personal?id=<follow|saved|notify|invite|setting|feedback|...> 
+                            一级界面 新闻－转到新闻页：newsjet://news 视频－转到视频页：newsjet://video 活动之棒球－转到棒球页：newsjet://baseball 个人－转到个人页：newsjet://personal 天气－转到天气页：newsjet://weather 运势－转到运势页：newsjet://fortune 二级界面 新闻－转到新闻页对应频道：newsjet://news?id=
+                            <top|ent|pol|...>
+                                视频－转到视频页对应频道：newsjet://video?id=
+                                <top|ent|pol|...>
+                                    活动之棒球－转到棒球页对应位置：newsjet://baseball?id=
+                                    <news|schedule|...>
+                                        个人－转到个人页对应选项的界面：newsjet://personal?id=
+                                        <follow|saved|notify|invite|setting|feedback|...>
                         </xmp>
                         <div class="add_option">
                             <button type="button" class="btn btn-danger close5">关闭窗口</button>
@@ -2133,13 +2131,318 @@
             </div>
         </div>
     </div>
-    <script async src="http://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-    <!-- News_Articles_Ads_Small -->
-    <ins class="adsbygoogle" style="display:inline-block;width:728px;height:90px" data-ad-client="ca-pub-2570349149079277" data-ad-slot="6404718349"></ins>
+    <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <!-- Ameblo_Large -->
+    <ins class="adsbygoogle" style="display:inline-block;width:320px;height:250px" data-ad-client="ca-pub-2570349149079277" data-ad-slot="6028968341"></ins>
     <script>
     (adsbygoogle = window.adsbygoogle || []).push({});
     </script>
-    
+    <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <!-- Ameblo_Small -->
+    <ins class="adsbygoogle" style="display:inline-block;width:320px;height:100px" data-ad-client="ca-pub-2570349149079277" data-ad-slot="2935901140"></ins>
+    <script>
+    (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+    <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <!-- AtPress_Large -->
+    <ins class="adsbygoogle" style="display:inline-block;width:320px;height:250px" data-ad-client="ca-pub-2570349149079277" data-ad-slot="7784903149"></ins>
+    <script>
+    (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+    <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <!-- AtPress_Small -->
+    <ins class="adsbygoogle" style="display:inline-block;width:320px;height:100px" data-ad-client="ca-pub-2570349149079277" data-ad-slot="9261636342"></ins>
+    <script>
+    (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+    <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <!-- beauty_Large -->
+    <ins class="adsbygoogle" style="display:inline-block;width:320px;height:250px" data-ad-client="ca-pub-2570349149079277" data-ad-slot="7204650349"></ins>
+    <script>
+    (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+    <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <!-- beauty_Small -->
+    <ins class="adsbygoogle" style="display:inline-block;width:320px;height:100px" data-ad-client="ca-pub-2570349149079277" data-ad-slot="8681383542"></ins>
+    <script>
+    (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+    <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <!-- BeautyAuthors_Large -->
+    <ins class="adsbygoogle" style="display:inline-block;width:320px;height:250px" data-ad-client="ca-pub-2570349149079277" data-ad-slot="8842833949"></ins>
+    <script>
+    (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+    <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <!-- BeautyAuthors_Small -->
+    <ins class="adsbygoogle" style="display:inline-block;width:320px;height:100px" data-ad-client="ca-pub-2570349149079277" data-ad-slot="1319567140"></ins>
+    <script>
+    (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+    <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <!-- BeijingReview_Small -->
+    <ins class="adsbygoogle" style="display:inline-block;width:320px;height:100px" data-ad-client="ca-pub-2570349149079277" data-ad-slot="2495249143"></ins>
+    <script>
+    (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+    <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <!-- BeijingReview_Large -->
+    <ins class="adsbygoogle" style="display:inline-block;width:320px;height:250px" data-ad-client="ca-pub-2570349149079277" data-ad-slot="8541782747"></ins>
+    <script>
+    (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+    <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <!-- BillBoard_Large -->
+    <ins class="adsbygoogle" style="display:inline-block;width:320px;height:250px" data-ad-client="ca-pub-2570349149079277" data-ad-slot="1738369548"></ins>
+    <script>
+    (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+    <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <!-- BillBoard_Small -->
+    <ins class="adsbygoogle" style="display:inline-block;width:320px;height:100px" data-ad-client="ca-pub-2570349149079277" data-ad-slot="3215102747"></ins>
+    <script>
+    (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+    <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <!-- china.org.cn_Large -->
+    <ins class="adsbygoogle" style="display:inline-block;width:320px;height:250px" data-ad-client="ca-pub-2570349149079277" data-ad-slot="5448715548"></ins>
+    <script>
+    (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+    <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <!-- china.org.cn_Small -->
+    <ins class="adsbygoogle" style="display:inline-block;width:320px;height:100px" data-ad-client="ca-pub-2570349149079277" data-ad-slot="6925448748"></ins>
+    <script>
+    (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+    <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <!-- eastday_Large -->
+    <ins class="adsbygoogle" style="display:inline-block;width:320px;height:250px" data-ad-client="ca-pub-2570349149079277" data-ad-slot="2355648349"></ins>
+    <script>
+    (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+    <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <!-- eastday_Small -->
+    <ins class="adsbygoogle" style="display:inline-block;width:320px;height:100px" data-ad-client="ca-pub-2570349149079277" data-ad-slot="5309114748"></ins>
+    <script>
+    (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+    <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <!-- GamecastBlog_Large -->
+    <ins class="adsbygoogle" style="display:inline-block;width:320px;height:250px" data-ad-client="ca-pub-2570349149079277" data-ad-slot="4831436744"></ins>
+    <script>
+    (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+    <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <!-- GamecastBlog_Small -->
+    <ins class="adsbygoogle" style="display:inline-block;width:320px;height:100px" data-ad-client="ca-pub-2570349149079277" data-ad-slot="6308169945"></ins>
+    <script>
+    (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+    <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <!-- Jiji_Large -->
+    <ins class="adsbygoogle" style="display:inline-block;width:320px;height:250px" data-ad-client="ca-pub-2570349149079277" data-ad-slot="4971037547"></ins>
+    <script>
+    (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+    <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <!-- Jiji_Small -->
+    <ins class="adsbygoogle" style="display:inline-block;width:320px;height:100px" data-ad-client="ca-pub-2570349149079277" data-ad-slot="6447770749"></ins>
+    <script>
+    (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+    <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <!-- Jiji_Large -->
+    <ins class="adsbygoogle" style="display:inline-block;width:320px;height:250px" data-ad-client="ca-pub-2570349149079277" data-ad-slot="1158116741"></ins>
+    <script>
+    (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+    <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <!-- Jiji_Small -->
+    <ins class="adsbygoogle" style="display:inline-block;width:320px;height:100px" data-ad-client="ca-pub-2570349149079277" data-ad-slot="2634849940"></ins>
+    <script>
+    (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+    <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <!-- Jiji_Large -->
+    <ins class="adsbygoogle" style="display:inline-block;width:320px;height:250px" data-ad-client="ca-pub-2570349149079277" data-ad-slot="1877970349"></ins>
+    <script>
+    (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+    <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <!-- Jiji_Small -->
+    <ins class="adsbygoogle" style="display:inline-block;width:320px;height:100px" data-ad-client="ca-pub-2570349149079277" data-ad-slot="3354703543"></ins>
+    <script>
+    (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+    <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <!-- Jiji_Small -->
+    <ins class="adsbygoogle" style="display:inline-block;width:320px;height:100px" data-ad-client="ca-pub-2570349149079277" data-ad-slot="6404718349"></ins>
+    <script>
+    (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+    <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <!-- Jiji_Large -->
+    <ins class="adsbygoogle" style="display:inline-block;width:320px;height:250px" data-ad-client="ca-pub-2570349149079277" data-ad-slot="7924503945"></ins>
+    <script>
+    (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+    <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <!-- Jiji_Small -->
+    <ins class="adsbygoogle" style="display:inline-block;width:320px;height:100px" data-ad-client="ca-pub-2570349149079277" data-ad-slot="9401237149"></ins>
+    <script>
+    (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+    <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <!-- Jiji_Large -->
+    <ins class="adsbygoogle" style="display:inline-block;width:320px;height:250px" data-ad-client="ca-pub-2570349149079277" data-ad-slot="4691835949"></ins>
+    <script>
+    (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+    <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <!-- Jiji_Small -->
+    <ins class="adsbygoogle" style="display:inline-block;width:320px;height:100px" data-ad-client="ca-pub-2570349149079277" data-ad-slot="6168569141"></ins>
+    <script>
+    (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+    <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <!-- Jiji_Large -->
+    <ins class="adsbygoogle" style="display:inline-block;width:320px;height:250px" data-ad-client="ca-pub-2570349149079277" data-ad-slot="4111583149"></ins>
+    <script>
+    (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+    <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <!-- Jiji_Small -->
+    <ins class="adsbygoogle" style="display:inline-block;width:320px;height:100px" data-ad-client="ca-pub-2570349149079277" data-ad-slot="5588316341"></ins>
+    <script>
+    (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+    <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <!-- Jiji_Large -->
+    <ins class="adsbygoogle" style="display:inline-block;width:320px;height:250px" data-ad-client="ca-pub-2570349149079277" data-ad-slot="6977651149"></ins>
+    <script>
+    (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+    <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <!-- Jiji_Small -->
+    <ins class="adsbygoogle" style="display:inline-block;width:320px;height:100px" data-ad-client="ca-pub-2570349149079277" data-ad-slot="8454384345"></ins>
+    <script>
+    (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+    <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <!-- Jiji_Large -->
+    <ins class="adsbygoogle" style="display:inline-block;width:320px;height:250px" data-ad-client="ca-pub-2570349149079277" data-ad-slot="5889367544"></ins>
+    <script>
+    (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+    <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <!-- Jiji_Small -->
+    <ins class="adsbygoogle" style="display:inline-block;width:320px;height:100px" data-ad-client="ca-pub-2570349149079277" data-ad-slot="7366100747"></ins>
+    <script>
+    (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+    <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <!-- Jiji_Large -->
+    <ins class="adsbygoogle" style="display:inline-block;width:320px;height:250px" data-ad-client="ca-pub-2570349149079277" data-ad-slot="8402181945"></ins>
+    <script>
+    (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+    <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <!-- Jiji_Small -->
+    <ins class="adsbygoogle" style="display:inline-block;width:320px;height:100px" data-ad-client="ca-pub-2570349149079277" data-ad-slot="9878915149"></ins>
+    <script>
+    (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+    <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <!-- Jiji_Large -->
+    <ins class="adsbygoogle" style="display:inline-block;width:320px;height:250px" data-ad-client="ca-pub-2570349149079277" data-ad-slot="8262581140"></ins>
+    <script>
+    (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+    <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <!-- Jiji_Small -->
+    <ins class="adsbygoogle" style="display:inline-block;width:320px;height:100px" data-ad-client="ca-pub-2570349149079277" data-ad-slot="9739314345"></ins>
+    <script>
+    (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+    <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <!-- Jiji_Large -->
+    <ins class="adsbygoogle" style="display:inline-block;width:320px;height:250px" data-ad-client="ca-pub-2570349149079277" data-ad-slot="6587371541"></ins>
+    <script>
+    (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+    <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <!-- Jiji_Small -->
+    <ins class="adsbygoogle" style="display:inline-block;width:320px;height:100px" data-ad-client="ca-pub-2570349149079277" data-ad-slot="6587371541"></ins>
+    <script>
+    (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+    <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <!-- Jiji_Large -->
+    <ins class="adsbygoogle" style="display:inline-block;width:320px;height:250px" data-ad-client="ca-pub-2570349149079277" data-ad-slot="1297717540"></ins>
+    <script>
+    (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+    <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <!-- Jiji_Small -->
+    <ins class="adsbygoogle" style="display:inline-block;width:320px;height:100px" data-ad-client="ca-pub-2570349149079277" data-ad-slot="5727917146"></ins>
+    <script>
+    (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+    <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <!-- Jiji_Large -->
+    <ins class="adsbygoogle" style="display:inline-block;width:320px;height:250px" data-ad-client="ca-pub-2570349149079277" data-ad-slot="2216047545"></ins>
+    <script>
+    (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+    <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <!-- Jiji_Small -->
+    <ins class="adsbygoogle" style="display:inline-block;width:320px;height:100px" data-ad-client="ca-pub-2570349149079277" data-ad-slot="5169513944"></ins>
+    <script>
+    (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+    <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <!-- Jiji_Large -->
+    <ins class="adsbygoogle" style="display:inline-block;width:320px;height:250px" data-ad-client="ca-pub-2570349149079277" data-ad-slot="7344251142"></ins>
+    <script>
+    (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+    <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <!-- Jiji_Small -->
+    <ins class="adsbygoogle" style="display:inline-block;width:320px;height:100px" data-ad-client="ca-pub-2570349149079277" data-ad-slot="8820984344"></ins>
+    <script>
+    (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+    <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <!-- news_articles_ad_large -->
+    <ins class="adsbygoogle" style="display:inline-block;width:320px;height:250px" data-ad-client="ca-pub-2570349149079277" data-ad-slot="6858069941"></ins>
+    <script>
+    (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+    <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <!-- backup1_large -->
+    <ins class="adsbygoogle" style="display:inline-block;width:320px;height:250px" data-ad-client="ca-pub-2570349149079277" data-ad-slot="8334803149"></ins>
+    <script>
+    (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+    <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <!-- backup1_small -->
+    <ins class="adsbygoogle" style="display:inline-block;width:320px;height:100px" data-ad-client="ca-pub-2570349149079277" data-ad-slot="9811536349"></ins>
+    <script>
+    (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+    <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <!-- backup2_large -->
+    <ins class="adsbygoogle" style="display:inline-block;width:320px;height:250px" data-ad-client="ca-pub-2570349149079277" data-ad-slot="2288269541"></ins>
+    <script>
+    (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+    <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <!-- backup2_small -->
+    <ins class="adsbygoogle" style="display:inline-block;width:320px;height:100px" data-ad-client="ca-pub-2570349149079277" data-ad-slot="3765002740"></ins>
+    <script>
+    (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
 </body>
 <script src="lib/jquery/jquery-1.12.0.js"></script>
 <script type="text/javascript" src="js/md5.js"></script>

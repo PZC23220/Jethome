@@ -2614,6 +2614,19 @@ $(function($) {
         add_mould.show();
         reply_comment.show();
     });
+    // 搜索 
+    $('.comment_category_sel').click(function(){
+        table_automation_tbody.find('tr').hide().filter(":contains(" + $('.comment_category_sel').find('option:selected').html() + ")").show();
+    });
+
+    $('.search_comments').click(function(){
+        if($('.comment_keywords').val()) {
+            table_automation_tbody.find('tr').hide().filter(":contains(" + $('.comment_keywords').val() + ")").show();
+        } else {
+            table_automation_tbody.find('tr').show()
+        }
+        
+    });
 
     // 点击模板分页
     comment_li.on('click', function() {
@@ -2643,7 +2656,6 @@ $(function($) {
         });
 
     }
-
     function createOptimize(list) {
         var tr = $('<tr/>');
         var td1 = $('<td/>').html(list.id).appendTo(tr);
