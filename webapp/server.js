@@ -368,7 +368,7 @@ var server = http.createServer(function(request, response) {
             response.end();
         });
     } else if (params.pathname == '/news_special_topic_active') {
-        var sql = "UPDATE news_special_topic set active = 0 WHERE id = " + query.id;
+        var sql = "UPDATE news_special_topic set active = "+ query.value +" WHERE id = " + query.id;
         connection.query(sql, function(err, rows, fields) {
             //处理你的结果
             if (err) {
@@ -432,7 +432,7 @@ var server = http.createServer(function(request, response) {
             response.end();
         });
     } else if (params.pathname == '/news_special_topic_info_active') {
-        var sql = "UPDATE news_special_topic_info set active = 0 WHERE id = " + query.id;
+        var sql = "UPDATE news_special_topic_info set active = "+ query.value +" WHERE id = " + query.id;
         connection.query(sql, function(err, rows, fields) {
             //处理你的结果
             if (err) {
@@ -443,7 +443,7 @@ var server = http.createServer(function(request, response) {
             response.end();
         });
     } else if (params.pathname == '/news_special_topic_info_top') {
-        var sql = "UPDATE news_special_topic_info set stick_at_top = 1 WHERE id = " + query.id;
+        var sql = "UPDATE news_special_topic_info set stick_at_top = "+ query.value +" WHERE id = " + query.id;
         connection.query(sql, function(err, rows, fields) {
             //处理你的结果
             if (err) {
