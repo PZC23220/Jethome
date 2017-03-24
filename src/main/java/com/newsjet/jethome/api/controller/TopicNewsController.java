@@ -127,6 +127,7 @@ public class TopicNewsController extends AbstractNewsjetController {
         params.add(CommonParams.ROWS, String.valueOf(Integer.MAX_VALUE));
         params.add(CommonParams.DF, "title");
         params.add(CommonParams.DF, "content");
+        params.add(CommonParams.DF, "description");
         params.add(CommonParams.DF, "textContent");
         params.add(CommonParams.FL, "aid,vid,cid,ctime,publishTime,title");
         params.add(CommonParams.SORT, "ctime desc");
