@@ -422,7 +422,7 @@ var server = http.createServer(function(request, response) {
             });
         });
     }  else if (params.pathname == '/news_special_topic_info') {
-        var sql = "SELECT * FROM news_special_topic_info WHERE topic_id = " + query.id + "order by news_time desc";
+        var sql = "SELECT * FROM news_special_topic_info WHERE topic_id = " + query.id + " order by news_time desc";
         connection.query(sql, function(err, rows, fields) {
             //处理你的结果
             if (err) {
