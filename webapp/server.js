@@ -397,13 +397,14 @@ var server = http.createServer(function(request, response) {
                 keyword_inclusion: reqObj.keyword_inclusion,
                 keyword_exclusion: reqObj.keyword_exclusion,
                 detail_desc: reqObj.detail_desc,
-                is_toplist: reqObj.is_toplist
+                is_toplist: reqObj.is_toplist,
+                topic_cid: reqObj.topic_cid
             };
             if (reqObj.id) {
                 resObj.id = reqObj.id;
-                var sql = "UPDATE news_special_topic SET title = ?,cid = ?,topic_time = ?,bg_img = ?,pos = ?,keyword_inclusion = ?,keyword_exclusion = ?,detail_desc = ?,is_toplist = ? WHERE id = ?";
+                var sql = "UPDATE news_special_topic SET title = ?,cid = ?,topic_time = ?,bg_img = ?,pos = ?,keyword_inclusion = ?,keyword_exclusion = ?,detail_desc = ?,is_toplist = ?,topic_cid = ? WHERE id = ?";
             } else {
-                var sql = "INSERT INTO news_special_topic(title,cid,topic_time,bg_img,pos,keyword_inclusion,keyword_exclusion,detail_desc,is_toplist) VALUES(?,?,?,?,?,?,?,?,?)";
+                var sql = "INSERT INTO news_special_topic(title,cid,topic_time,bg_img,pos,keyword_inclusion,keyword_exclusion,detail_desc,is_toplist,topic_cid) VALUES(?,?,?,?,?,?,?,?,?,?)";
             }
             var arr = []
             for(var i in resObj) {
@@ -421,7 +422,7 @@ var server = http.createServer(function(request, response) {
             });
         });
     }  else if (params.pathname == '/news_special_topic_info') {
-        var sql = "SELECT * FROM news_special_topic_info WHERE topic_id = " + query.id;
+        var sql = "SELECT * FROM news_special_topic_info WHERE topic_id = " + query.id + "order by news_time desc";
         connection.query(sql, function(err, rows, fields) {
             //处理你的结果
             if (err) {

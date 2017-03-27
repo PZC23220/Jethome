@@ -3562,6 +3562,7 @@ $(function($) {
         $('.special_keyword').val('');
         $('.exclude_words').val('');
         $('.special_start_time').val('');
+        $('.topic_cid').val('');
         reply_comment.show();
         $('.special_publish').removeAttr('data-id');
     });
@@ -3570,7 +3571,8 @@ $(function($) {
         reply_comment.show();
         var info = JSON.parse($(this).attr('data-info'));
         $('.special_title').val(info.title);
-        $('.special_subtitle').val(info.subtitle);
+        // $('.special_subtitle').val(info.subtitle);
+        $('.topic_cid').val(info.topic_cid);
         $('.special_description').val(info.detail_desc);
         $('.special_bg_img').val(info.bg_img);
         $('.special_keyword').val(info.keyword_inclusion);
@@ -3606,12 +3608,13 @@ $(function($) {
                 title: $('.special_title').val(),
                 // subtitle: $('.special_subtitle').val(),
                 detail_desc: $('.special_description').val(),
+                topic_cid: $('.topic_cid').val(),
                 cid: $('.special_channel').find('option:selected').attr('data-id'),
                 bg_img: $('.special_bg_img').val(),
                 pos: $('.special_position').find('option:selected').html(),
                 keyword_inclusion: $('.special_keyword').val(),
                 keyword_exclusion: $('.exclude_words').val(),
-                topic_time: new Date($('.special_start_time').val()).Format("yyyy/MM/dd hh:mm:ss"),
+                topic_time: new Date(Date.parse($('.special_start_time').val()) - 8 * 60 * 60 * 1000).Format("yyyy/MM/dd hh:mm:ss"),
                 is_toplist: $('.special_toplist').find('option:selected').val()
             }
             console.log(data.topic_time);
