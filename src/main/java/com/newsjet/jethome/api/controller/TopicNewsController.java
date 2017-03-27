@@ -1,5 +1,6 @@
 package com.newsjet.jethome.api.controller;
 
+import com.google.common.base.Strings;
 import com.newsjet.common.net.ApiRequest;
 import com.newsjet.common.net.ApiResponse;
 import com.newsjet.jethome.dao.entity.NewsSpecialTopic;
@@ -66,17 +67,23 @@ public class TopicNewsController extends AbstractNewsjetController {
                     String keywordInclusion = specialTopic.getKeywordInclusion();
                     String keywordExclusion = specialTopic.getKeywordExclusion();
 
-                    List<String> keywordInclusionList = Stream.of(keywordInclusion.split(","))
-                            .collect(Collectors.toList());
-                    List<String> keywordExclusionList = Stream.of(keywordExclusion.split(","))
-                            .collect(Collectors.toList());
-
-                    List<SolrDocument> solrDocuments = searchApplicableDocuments(topicTime, keywordInclusionList, keywordExclusionList);
+                    List<SolrDocument> solrDocuments = searchApplicableDocuments(topicTime);
 
                     List<String> aids = newsSpecialTopicInfoMapper.selectAllNewsID(specialTopic.getId());
                     List<NewsSpecialTopicInfo> topicInfos = solrDocuments.stream()
                             .filter(d -> !aids.contains(Objects.toString(d.getFieldValue("aid"))))
                             .filter(d -> !aids.contains(Objects.toString(d.getFieldValue("vid"))))
+                            .filter(d -> {
+                                if (!Strings.isNullOrEmpty(keywordInclusion))
+                                    return Objects.toString(d.getFieldValue("title")).matches(keywordInclusion);
+                                return false;
+                            })
+                            .filter(d -> {
+                                if (!Strings.isNullOrEmpty(keywordExclusion)) {
+                                    return !Objects.toString(d.getFieldValue("title")).matches(keywordExclusion);
+                                }
+                                return true;
+                            })
                             .map(d -> {
                                 NewsSpecialTopicInfo newsSpecialTopicInfo = new NewsSpecialTopicInfo();
                                 newsSpecialTopicInfo.setTopicId(specialTopic.getId());
@@ -111,71 +118,31 @@ public class TopicNewsController extends AbstractNewsjetController {
                 }
             });
             return ApiResponse.ok();
-        } catch (NullPointerException e) {
+        } catch (
+                NullPointerException e)
+
+        {
             getLogger().warn(e.getMessage(), e);
             return ApiResponse.error(HttpResponseStatus.NOT_ACCEPTABLE).setResponseMsg(e.getMessage());
-        } catch (Exception e) {
+        } catch (
+                Exception e)
+
+        {
             getLogger().warn(e.getMessage(), e);
             return ApiResponse.error(HttpResponseStatus.INTERNAL_SERVER_ERROR).setResponseMsg(e.getMessage());
         }
+
     }
 
-    private List<SolrDocument> searchApplicableDocuments(Long topicTime, List<String> keywordInclusion, List<String> keywordExclusion)
+    private List<SolrDocument> searchApplicableDocuments(Long topicTime)
             throws IOException, SolrServerException {
         ModifiableSolrParams params = new ModifiableSolrParams();
         params.add(CommonParams.QT, "select");
         params.add(CommonParams.ROWS, String.valueOf(Integer.MAX_VALUE));
-        params.add(CommonParams.DF, "title");
         params.add(CommonParams.FL, "aid,vid,cid,ctime,publishTime,title");
         params.add(CommonParams.SORT, "ctime desc");
-
-        if (!keywordInclusion.isEmpty()) {
-            StringBuilder queryString = new StringBuilder();
-            for (String s : keywordInclusion) {
-                if (s.startsWith("&")) {
-                    queryString.append(" AND \"")
-                            .append(s.substring(1))
-                            .append("\"");
-                } else if (s.startsWith("|")) {
-                    queryString.append(" OR \"")
-                            .append(s.substring(1))
-                            .append("\"");
-                }
-            }
-            if (queryString.indexOf(" AND ") == 0) {
-                queryString.delete(0, 4);
-            } else if (queryString.indexOf(" OR ") == 0) {
-                queryString.delete(0, 3);
-            }
-            getLogger().info("QueryString: [{}]. ", queryString.toString());
-
-            params.add(CommonParams.Q, "(" + queryString.toString() + ")");
-        }
-
-        if (!keywordExclusion.isEmpty()) {
-            StringBuilder queryString = new StringBuilder();
-            for (String s : keywordInclusion) {
-                if (s.startsWith("&")) {
-                    queryString.append(" AND \"")
-                            .append(s.substring(1))
-                            .append("\"");
-                } else if (s.startsWith("|")) {
-                    queryString.append(" OR \"")
-                            .append(s.substring(1))
-                            .append("\"");
-                }
-            }
-            if (queryString.indexOf(" AND ") == 0) {
-                queryString.delete(0, 4);
-            } else if (queryString.indexOf(" OR ") == 0) {
-                queryString.delete(0, 3);
-            }
-            getLogger().info("QueryString: [{}]. ", queryString.toString());
-
-            params.add(CommonParams.Q, "-(" + queryString.toString() + ")");
-        }
-
         params.add(CommonParams.FQ, String.format("ctime:[%s TO *]", topicTime));
+
         QueryResponse query = newsSolrClient.query(params);
         SolrDocumentList results = query.getResults();
         getLogger().info("Results#size: [{}]. ", results.size());
@@ -183,6 +150,7 @@ public class TopicNewsController extends AbstractNewsjetController {
 
         params.remove(CommonParams.FQ);
         params.add(CommonParams.FQ, String.format("publishTime:[%s TO *]", topicTime));
+
         query = videoSolrClient.query(params);
         query.getResults().forEach(doc -> doc.setField("newsType", "video"));
         results.addAll(query.getResults());
