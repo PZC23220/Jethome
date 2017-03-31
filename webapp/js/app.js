@@ -3,13 +3,15 @@ define(function(require, exports) {
     var content_text;
     var page1 = function() {
         content_text = require('../html/commentContainer.html');
-        main_content.html(content_text);
+        content_text2 = require('../html/videoContainer.html');
+        main_content.html(content_text+content_text2);
         var newsAndVideo = require('./newsAndvideo.js');
         newsAndVideo.newsAndVideo();
     }
     var page2 = function() {
-        content_text = require('../html/videoContainer.html');
-        main_content.html(content_text);
+        content_text = require('../html/commentContainer.html');
+        content_text2 = require('../html/videoContainer.html');
+        main_content.html(content_text+content_text2);
         var newsAndVideo = require('./newsAndvideo.js');
         newsAndVideo.newsAndVideo();
     }
