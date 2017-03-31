@@ -1098,14 +1098,14 @@ define(function(require, exports, module) {
                 url: url_,
                 async: 'false',
                 beforeSend: function() {
-                    loading.show();
+                    $('.loading').show();
                     $('.success_push').hide();
                 },
                 success: function(res) {
                     console.log(c);
-                    loading.hide();
+                    $('.loading').hide();
                     $('.success_push').show();
-                    os.removeAttr("checked");
+                    $('.os').removeAttr("checked");
                     setTimeout(function() {
                         push_sure.hide();
                         $('.success_push').hide();
