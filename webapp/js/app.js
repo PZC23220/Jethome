@@ -4,14 +4,18 @@ define(function(require, exports) {
     var page1 = function() {
         content_text = require('../html/commentContainer.html');
         content_text2 = require('../html/videoContainer.html');
-        main_content.html(content_text+content_text2);
+        main_content.html(content_text + content_text2);
+        $('#commentContainer').show();
+        $('#videoContainer').hide();
         var newsAndVideo = require('./newsAndvideo.js');
         newsAndVideo.newsAndVideo();
     }
     var page2 = function() {
         content_text = require('../html/commentContainer.html');
         content_text2 = require('../html/videoContainer.html');
-        main_content.html(content_text+content_text2);
+        main_content.html(content_text + content_text2);
+        $('#commentContainer').hide();
+        $('#videoContainer').show();
         var newsAndVideo = require('./newsAndvideo.js');
         newsAndVideo.newsAndVideo();
     }
@@ -89,5 +93,3 @@ define(function(require, exports) {
     exports.page11 = page11;
     exports.page12 = page12;
 });
-
-
