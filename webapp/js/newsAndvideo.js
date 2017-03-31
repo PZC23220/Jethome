@@ -45,6 +45,7 @@ define(function(require, exports, module) {
         var category = $('.category');
         var comment_opa2 = $('.comment_opa2');
         var search_video = $('.search_video');
+        var loading = $('.loading');
         getCategorys();
 
         function getCategorys() {
