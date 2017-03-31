@@ -3,9 +3,6 @@ define(function(require, exports, module) {
         var table_tab_configuration = $('.table_tab_configuration tbody');
         var reply_comment = $('.reply_comment');
         var reply_comment2 = $('.reply_comment2');
-        var close4 = $('.close4');
-        // var server_host = "http://jethome.newsjet.io:9000";
-        var server_host = "http://localhost:9000";
         switch_appbottom_tab();
         // Tab配置页
         function switch_appbottom_tab() {

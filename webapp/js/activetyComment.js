@@ -8,8 +8,6 @@ define(function(require, exports, module) {
         var activity_comment_likes = $('.activity_comment_likes input');
         var reply_comment = $('.reply_comment');
         var reference_id = $('.reference_id');
-        // var server_host = "http://jethome.newsjet.io:9000";
-    var server_host = "http://localhost:9000";
         var arr10 = getUserimg();
         // 获取机器人账户
         function getUserimg() {

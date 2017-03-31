@@ -4,8 +4,6 @@ define(function(require, exports, module) {
         var pushLog_opa = $('.pushLog_opa');
         var news_id_push = $('.news_id_push');
         var search_push = $('.search_push');
-        // var server_host = "http://jethome.newsjet.io:9000";
-        var server_host = "http://localhost:9000";
         pushLog();
         // 查看已推送的新闻
         function pushLog() {

@@ -23,8 +23,8 @@ var close2 = $('.close2');
 var nav_left_list = $('.nav_left_list li');
 var loading = $('.loading');
 var main_content = $('.main_content');
-// var server_host = "http://jethome.newsjet.io:9000";
-var server_host = "http://localhost:9000";
+var server_host = "http://jethome.newsjet.io:9000";
+// var server_host = "http://localhost:9000";
 
 var commonFn = {
     //获取栏目
