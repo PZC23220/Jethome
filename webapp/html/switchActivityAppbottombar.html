@@ -1,0 +1,113 @@
+<!-- App活动配置页 -->
+<div class="switch_activity_appbottombar table_container" id="switchActivityAppbottombar">
+    <!-- <div class="news_opa">
+                <div class="input-group">
+                    <span class="input-group-addon">用户ID</span>
+                    <select class="form-control comment_user_id">
+                        <option>不限</option>
+                            <option>0</option>
+                    </select>
+                </div>
+                <div class="input-group activity_comment_likes">
+                    <span class="input-group-addon">赞同数</span>
+                    <input type="text" class="form-control" placeholder="Comment Likes" value="0">
+                </div>
+                <div class="input-group activity_comment_content">
+                    <span class="input-group-addon">评论内容</span>
+                    <input type="text" class="form-control" placeholder="Comment Content">
+                </div>
+                <button type="button" class="btn btn-success add_activity_comment">添加评论</button>
+            </div> -->
+    <div class="table table-responsive">
+        <table class="table table-bordered table_appbtmbar">
+            <thead>
+                <tr>
+                    <th>id</th>
+                    <th>image2x</th>
+                    <th>image3x</th>
+                    <th>活动链接</th>
+                    <th>分享图片</th>
+                    <th>按钮文本</th>
+                    <th>(日本时区)
+                        <br>开始时间</th>
+                    <th>(日本时区)
+                        <br>结束时间</th>
+                    <th>当前按钮</th>
+                    <th>修改</th>
+                    <th>删除</th>
+                </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+        <!-- 发表回复 -->
+        <div class="reply_comment">
+            <div class="reply_comment_container" style="height: 70vh">
+                <div class="input-group">
+                    <span class="input-group-addon">Appbtmbar ID</span>
+                    <input type="text" class="form-control appbtmbar_id" placeholder="Appbtmbar ID" value="0" disabled>
+                </div>
+                <div class="input-group">
+                    <span class="input-group-addon">Image2x</span>
+                    <input type="text" class="form-control appbtmbar_image2x" placeholder="Image2x" value="">
+                </div>
+                <div class="input-group">
+                    <span class="input-group-addon">Image3x</span>
+                    <input type="text" class="form-control appbtmbar_image3x" placeholder="Image3x" value="">
+                </div>
+                <div class="input-group activity_comment_content">
+                    <span class="input-group-addon">活动链接</span>
+                    <input type="url" class="form-control appbtmbar_acticity_url" placeholder="Activity Url">
+                </div>
+                <div class="input-group activity_comment_content">
+                    <span class="input-group-addon">分享图片</span>
+                    <input type="url" class="form-control appbtmbar_shareImage" placeholder="Appbtmbar ShareImage">
+                </div>
+                <div class="input-group activity_comment_content">
+                    <span class="input-group-addon">按钮文字</span>
+                    <input type="text" class="form-control appbtmbar_text" placeholder="Appbtmbar Text">
+                </div>
+                <div class="input-group activity_comment_content">
+                    <span class="input-group-addon">是否设置为当前按钮</span>
+                    <select class="form-control appbtmbar_active">
+                        <option data-id="1">是</option>
+                        <option data-id="0">否</option>
+                    </select>
+                </div>
+                <div class="input-group">
+                    <span class="input-group-addon">Start Time</span>
+                    <input type="datetime-local" placeholder="Start Time" class="appbtmbar_start_time">
+                </div>
+                <div class="input-group">
+                    <span class="input-group-addon">End Time</span>
+                    <input type="datetime-local" placeholder="End Time" class="appbtmbar_end_time">
+                </div>
+                <button type="button" class="btn btn-success add_appbtmbar_sure">添加</button>
+                <button type="button" class="btn btn-danger close4">取消</button>
+            </div>
+        </div>
+        <div class="share_success">
+            <div class="likes_success">
+                添加按钮成功！
+            </div>
+        </div>
+        <div class="del_success">
+            <div class="likes_success">
+                删除按钮成功！
+            </div>
+        </div>
+        <div class="modify_success">
+            <div class="likes_success">
+                修改按钮成功！
+            </div>
+        </div>
+        <div class="tips_success">
+            <div class="likes_success">
+                所有输入内容不能为空！
+            </div>
+        </div>
+    </div>
+    <div class="add_option">
+        <button type="button" class="btn btn-success add_appbtmbar">添加底栏按钮</button>
+    </div>
+</div>

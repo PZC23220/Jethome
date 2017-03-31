@@ -1,0 +1,228 @@
+<!-- 视频列表 -->
+<div class="video_container table_container" id="commentContainer">
+    <!-- 新闻页 -->
+    <div class="news_list">
+        <!-- 新闻检索 -->
+        <p style="font-size: 14px;font-weight: 600;line-height: 30px;text-align: center;">标题搜索为搜索solr的视频，solr里面没有已有评论条数的参数，需要点击评论才能知道视频有没有评论</p>
+        <div class="news_opa">
+            <div class="input-group">
+                <span class="input-group-addon">视频ID</span>
+                <input type="text" class="form-control video_id" placeholder="Video ID">
+            </div>
+            <div class="input-group">
+                <span class="input-group-addon">评论数</span>
+                <select class="form-control comment_opa2">
+                    <option>不限</option>
+                    <option>0</option>
+                </select>
+            </div>
+            <div class="input-group">
+                <span class="input-group-addon">视频标题</span>
+                <input type="text" class="form-control video_title" placeholder="Video Title">
+            </div>
+            <button type="button" class="btn btn-success search_video">搜索</button>
+        </div>
+        <!-- 新闻列表 -->
+        <div class="table table-responsive">
+            <table class="table table-bordered table_video">
+                <thead>
+                    <tr>
+                        <th>编号</th>
+                        <th>视频ID</th>
+                        <th>视频标题</th>
+                        <th>当前评论数</th>
+                        <th>扒取评论数</th>
+                        <th>操作</th>
+                        <th>系统推送</th>
+                        <th>立即推送</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- <tr>
+                                <td>1</td>
+                                <td class="newsid">60612</td>
+                                <td>世界のニュースを、意のままに</td>
+                                <td>2</td>
+                                <td>17</td>
+                                <td class="comment"><a href="#">评论</a></td>
+                                <td class="system_push">
+                                    <input type="checkbox" value="noon">午间
+                                    <input type="checkbox" value="night">晚间
+                                </td>
+                                <td class="people_push"><a href="#">立即推送</a></td>
+                            </tr> -->
+                </tbody>
+            </table>
+        </div>
+        <nav class="page_nav">
+            <div class="input-group">
+                <span class="input-group-addon">视频数</span>
+                <select class="form-control video_opa" id="video_opa">
+                    <option>20</option>
+                    <option>50</option>
+                    <option>100</option>
+                </select>
+            </div>
+            <ul class="pagination video_li">
+                <li class="disabled"><a href="#">&laquo;</a></li>
+                <li class="active"><a href="#">1</a></li>
+                <li><a href="#">2</a></li>
+                <li><a href="#">3</a></li>
+                <li><a href="#">4</a></li>
+                <li><a href="#">5</a></li>
+                <li><a href="#">6</a></li>
+                <li><a href="#">7</a></li>
+                <li><a href="#">8</a></li>
+                <li><a href="#">9</a></li>
+                <li><a href="#">10</a></li>
+                <li class="disabled"><a href="#">&raquo;</a></li>
+            </ul>
+        </nav>
+    </div>
+    <!-- 读取新闻 -->
+    <div class="news_content">
+        <div>
+            <p><span class="close3">&times;</span></p>
+            <iframe src=""></iframe>
+        </div>
+    </div>
+    <!-- 立即推送确认框 -->
+    <div class="push_sure">
+        <div class="push_sur_container">
+            <p>请选择平台(视频id<span></span>)</p>
+            <p>
+                <input type="checkbox" value="android" class="os android">android
+                <input type="checkbox" value="ios" class="os ios">ios
+            </p>
+            <p>如果要更改视频描述，视频标题要一同编辑才会生效</p>
+            <div class="input-group" style="width: 80%; margin-bottom: 20px;margin-left: 5%;">
+                <span class="input-group-addon">编辑视频标题</span>
+                <input type="text" class="form-control push_video_title" placeholder="Edit Video Title">
+            </div>
+            <div class="input-group" style="width: 80%; margin-bottom: 20px;margin-left: 5%;">
+                <span class="input-group-addon">编辑视频描述</span>
+                <input type="text" class="form-control push_video_desc" placeholder="Edit Video Description">
+            </div>
+            <p><a href="#" class="sure_push">确定</a><a href="#" class="close2">取消</a></p>
+        </div>
+        <div class="loading" style="display: none; z-index:" 3000 "">
+            <div class="sk-fading-circle">
+                <div class="sk-circle1 sk-circle"></div>
+                <div class="sk-circle2 sk-circle"></div>
+                <div class="sk-circle3 sk-circle"></div>
+                <div class="sk-circle4 sk-circle"></div>
+                <div class="sk-circle5 sk-circle"></div>
+                <div class="sk-circle6 sk-circle"></div>
+                <div class="sk-circle7 sk-circle"></div>
+                <div class="sk-circle8 sk-circle"></div>
+                <div class="sk-circle9 sk-circle"></div>
+                <div class="sk-circle10 sk-circle"></div>
+                <div class="sk-circle11 sk-circle"></div>
+                <div class="sk-circle12 sk-circle"></div>
+            </div>
+            <p>正在推送，请稍候...</p>
+        </div>
+        <div class="success_push">
+            推送新闻成功！
+        </div>
+    </div>
+    <!-- 评论页 -->
+    <div class="shade">
+        <div class="all_comments">
+            <div class="tips">
+                <span class="close">&times;</span>
+            </div>
+            <div class="haved_comments">
+                <h4>已发布的评论</h4>
+                <div class="comment_list">
+                    <div class="list_container_left">
+                        <!-- <div class="detail">
+                                    <div class="rows">
+                                        <div class="checkbox">
+                                            <label>
+                                                <input type="checkbox" checked style="display: none;" class="che"> 评论<span>1</span>
+                                            </label>
+                                        </div>
+                                        <img src="img/newsjet.png" class="user_img">
+                                        <textarea class="form-control" rows="3"></textarea>
+                                        <div class="floor">
+                                            <input type="text" name="floor_comment" class="floor_comment">
+                                            <button type="button" class="btn btn-default ctr_add">添加楼层</button>
+                                        </div>
+                                        <div>赞同数（0~30）</div>
+                                    </div>
+                                    <div class="floors">
+                                        <div class="floor_num">
+                                            楼层<span>1</span>
+                                        </div>
+                                        <img src="img/newsjet.png" class="user_img">
+                                        <textarea class="form-control" rows="3"></textarea>
+                                        <button type="button" class="btn btn-info del_flo">删除楼层</button>
+                                    </div>
+                                </div> -->
+                    </div>
+                    <div class="more_opa">
+                        <button type="button" class="btn btn-primary publish_likes">发布</button>
+                    </div>
+                </div>
+            </div>
+            <div class="comment_content">
+                <h4>扒取/添加评论</h4>
+                <div class="comment_list">
+                    <a href="#" class="source" target="_blank">源评论链接：暂无</a>
+                    <!-- 获取列表 -->
+                    <div class="list_container_right">
+                        <!--  <div class="detail">
+                                    <div class="rows">
+                                        <div class="checkbox">
+                                            <label>
+                                                <input type="checkbox" class="che"> 评论<span>1</span>
+                                            </label>
+                                        </div>
+                                        <img src="img/newsjet.png" class="user_img">
+                                        <textarea class="form-control" rows="3"></textarea>
+                                        <div class="floor">
+                                            <input type="text" name="floor_comment" class="floor_comment">
+                                        </div>
+                                        <div>赞同数（0~30）</div>
+                                    </div>
+                                </div>
+                                <div class="detail">
+                                    <div class="rows">
+                                        <div class="checkbox">
+                                            <label>
+                                                <input type="checkbox" checked style="display: none;" class="che"> 评论<span>2</span>
+                                            </label>
+                                        </div>
+                                        <img src="img/newsjet.png" class="user_img">
+                                        <textarea class="form-control" rows="3"></textarea>
+                                        <div class="floor">
+                                            <input type="text" name="floor_comment" class="floor_comment">
+                                        </div>
+                                        <div>赞同数（0~30）</div>
+                                    </div>
+                                </div> -->
+                    </div>
+                    <div class="more_opa">
+                        <button type="button" class="btn btn-default add_more">添加更多</button>
+                        <button type="button" class="btn btn-primary publish2">发布</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- 弹窗 -->
+    <div class="share_success">
+        <div class="comment_success">
+            发表评论成功！
+        </div>
+        <div class="likes_success">
+            点赞成功！
+        </div>
+    </div>
+    <div class="del_success">
+        <div class="likes_success">
+            删除评论成功
+        </div>
+    </div>
+</div>

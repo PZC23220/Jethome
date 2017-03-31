@@ -85,7 +85,7 @@ p {
     border: 1px #ddd solid;
     padding: 20px 10px 0;
     border-radius: 4px;
-    display: none;
+    /*display: none;*/
     max-height: 93vh;
 }
 
@@ -144,11 +144,12 @@ p {
 .news_list .page_nav .input-group {
     float: left;
     width: 20%;
-    margin: 20px 5vw 20px 0;
+    margin: 0 5vw 20px 0;
 }
 
 .news_list .page_nav ul.pagination {
     float: left;
+    margin-top: 0;
 }
 
 .table .newstitle,

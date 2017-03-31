@@ -1,0 +1,72 @@
+<!-- 活动评论 -->
+<div class="activety_comment table_container" id="activetyComment">
+    <div class="news_opa">
+        <div class="input-group">
+            <span class="input-group-addon">用户ID</span>
+            <select class="form-control comment_user_id">
+                <!-- <option>不限</option>
+                            <option>0</option> -->
+            </select>
+        </div>
+        <div class="input-group activity_comment_likes">
+            <span class="input-group-addon">赞同数</span>
+            <input type="text" class="form-control" placeholder="Comment Likes" value="0">
+        </div>
+        <div class="input-group activity_comment_content">
+            <span class="input-group-addon">评论内容</span>
+            <input type="text" class="form-control" placeholder="Comment Content">
+        </div>
+        <button type="button" class="btn btn-success add_activity_comment">添加评论</button>
+    </div>
+    <div class="table table-responsive">
+        <table class="table table-bordered table_activity">
+            <thead>
+                <tr>
+                    <th>id</th>
+                    <th>uid</th>
+                    <th>nickname</th>
+                    <th>content</th>
+                    <th>likes</th>
+                    <th>createdtime</th>
+                    <th>reply</th>
+                    <th>delete</th>
+                </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+        <!-- 发表回复 -->
+        <div class="reply_comment">
+            <div class="reply_comment_container">
+                <div class="input-group">
+                    <span class="input-group-addon">用户ID</span>
+                    <select class="form-control comment_user_id">
+                        <!-- <option>不限</option>
+                                <option>0</option> -->
+                    </select>
+                </div>
+                <div class="input-group activity_comment_likes">
+                    <span class="input-group-addon">赞同数</span>
+                    <input type="text" class="form-control" placeholder="Comment Likes" value="0">
+                </div>
+                <div class="input-group activity_comment_content">
+                    <span class="input-group-addon">评论内容</span>
+                    <input type="text" class="form-control" placeholder="Comment Content">
+                </div>
+                <p>源评论ID<span class="reference_id"></span></p>
+                <button type="button" class="btn btn-success add_activity_comment2">发表回复</button>
+                <button type="button" class="btn btn-danger close4">取消</button>
+            </div>
+        </div>
+        <div class="share_success">
+            <div class="likes_success">
+                发表评论成功！
+            </div>
+        </div>
+        <div class="del_success">
+            <div class="likes_success">
+                删除评论成功！
+            </div>
+        </div>
+    </div>
+</div>

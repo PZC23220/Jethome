@@ -1,0 +1,93 @@
+<!-- 评论自动化 -->
+<div class="comment_automation table_container" id="commentAutomation">
+    <div class="news_opa">
+        <div class="input-group">
+            <span class="input-group-addon">新闻分类</span>
+            <select class="form-control comment_category_sel category"></select>
+        </div>
+        <div class="input-group activity_comment_content">
+            <span class="input-group-addon">关键词搜索</span>
+            <input type="text" class="form-control comment_keywords" placeholder="Keywords">
+        </div>
+        <button type="button" class="btn btn-success search_comments">搜索</button>
+    </div>
+    <div class="table table-responsive">
+        <table class="table table-bordered table_automation">
+            <thead>
+                <tr>
+                    <th>id</th>
+                    <th>新闻分类</th>
+                    <th>关键词</th>
+                    <th>内容</th>
+                    <th>修改</th>
+                    <th>删除</th>
+                </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+        <!-- 发表回复 -->
+        <div class="reply_comment">
+            <div class="reply_comment_container">
+                <!-- <div class="input-group">
+                            <span class="input-group-addon">用户ID</span>
+                            <select class="form-control comment_user_id">
+                                <option>不限</option>
+                                <option>0</option>
+                            </select>
+                        </div> -->
+                <div class="input-group">
+                    <span class="input-group-addon">新闻分类</span>
+                    <select class="form-control comment_category category"></select>
+                </div>
+                <div class="input-group">
+                    <span class="input-group-addon">关键词</span>
+                    <input type="text" class="form-control mould_keywords" placeholder="Mould Keywords">
+                </div>
+                <p style="text-align: left;margin-bottom: 20px;margin-left: 100px;">(多个关键词请用半角逗号(,)隔开)</p>
+                <div></div>
+                <div class="input-group">
+                    <span class="input-group-addon">模板内容</span>
+                    <input type="text" class="form-control mould_content" placeholder="Mould Content">
+                </div>
+                <button type="button" class="btn btn-success add_mould">添加模板</button>
+                <button type="button" class="btn btn-success update_mould" style="display: none;">修改模板</button>
+                <button type="button" class="btn btn-danger close4">取消</button>
+            </div>
+        </div>
+        <div class="share_success">
+            <div class="likes_success">
+                添加评论模板成功！
+            </div>
+        </div>
+        <div class="modify_success">
+            <div class="likes_success">
+                修改评论模板成功！
+            </div>
+        </div>
+        <div class="del_success">
+            <div class="likes_success">
+                删除评论模板成功！
+            </div>
+        </div>
+    </div>
+    <div class="add_option">
+        <nav class="page_nav">
+            <ul class="pagination comment_li" style="margin-left: 20%;">
+                <li class="disabled"><a href="#">&laquo;</a></li>
+                <li class="active"><a href="#">1</a></li>
+                <li><a href="#">2</a></li>
+                <li><a href="#">3</a></li>
+                <li><a href="#">4</a></li>
+                <li><a href="#">5</a></li>
+                <li><a href="#">6</a></li>
+                <li><a href="#">7</a></li>
+                <li><a href="#">8</a></li>
+                <li><a href="#">9</a></li>
+                <li><a href="#">10</a></li>
+                <li class="disabled"><a href="#">&raquo;</a></li>
+            </ul>
+            <button type="button" class="btn btn-success mould_add" style="margin-top: 20px;">添加模板</button>
+        </nav>
+    </div>
+</div>

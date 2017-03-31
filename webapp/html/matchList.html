@@ -1,0 +1,500 @@
+<!-- 比赛列表 -->
+<div class="match_list table_container" id="matchList">
+    <div class="news_opa">
+        <div class="input-group">
+            <span class="input-group-addon">比赛ID</span>
+            <input type="text" class="form-control match_id" placeholder="Match ID">
+        </div>
+        <div class="input-group">
+            <span class="input-group-addon">比赛日期</span>
+            <select class="form-control race_date">
+                <option></option>
+            </select>
+        </div>
+        <button type="button" class="btn btn-success search_comment">搜索</button>
+    </div>
+    <div class="table table-responsive" style="max-height: 70vh;">
+        <table class="table table-bordered table_matchList">
+            <thead>
+                <tr>
+                    <th>比赛ID</th>
+                    <th>比赛时间</th>
+                    <th>比赛性质</th>
+                    <th>1队</th>
+                    <th>2队</th>
+                    <th>竞猜状态</th>
+                    <th>竞猜题目</th>
+                    <th>比赛新闻</th>
+                    <th>正确答案</th>
+                    <th>用户答案</th>
+                    <th>推送</th>
+                </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+        <!-- 相关新闻推荐 -->
+        <div class="reply_comment">
+            <div class="related_news" id="relatedNews">
+                <div class="news_opa">
+                    <div class="input-group">
+                        <span class="input-group-addon">新闻ID</span>
+                        <input type="text" class="form-control related_news_id" placeholder="News ID">
+                    </div>
+                    <div class="input-group">
+                        <span class="input-group-addon">视频ID</span>
+                        <input type="text" class="form-control related_video_id" placeholder="Video ID">
+                    </div>
+                    <div class="input-group">
+                        <span class="input-group-addon">当前选择比赛</span>
+                        <input type="text" disabled class="form-control current_selection_match">
+                    </div>
+                    <div class="input-group" style="margin-top: 10px;">
+                        <span class="input-group-addon">
+                                    <input type="checkbox" aria-label="置顶" style="height: 30px !important;" class="set_top">
+                                </span>
+                        <input type="text" class="form-control" aria-label="置顶" value="置顶" disabled>
+                    </div>
+                    <button type="button" class="btn btn-success add_related_news">添加</button>
+                </div>
+                <div class="table table-responsive" style="max-height: 70vh;">
+                    <table class="table table-bordered table_relatedNews">
+                        <thead>
+                            <tr>
+                                <th>新闻ID</th>
+                                <th>类别</th>
+                                <th>标题</th>
+                                <th>置顶</th>
+                                <th>隐藏</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
+                    <div class="share_success">
+                        <div class="likes_success">
+                            添加新闻成功
+                        </div>
+                    </div>
+                    <div class="modify_success">
+                        <div class="likes_success">
+                            置顶成功！
+                        </div>
+                    </div>
+                    <div class="del_success">
+                        <div class="likes_success">
+                            隐藏新闻成功！
+                        </div>
+                    </div>
+                    <div class="add_option">
+                        <button type="button" class="btn btn-danger close_news">关闭窗口</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- 竞猜题目编写 -->
+        <div class="reply_comment3" id="lotteryContainer">
+            <div class="reply_comment_container" style="height: 90vh; margin: 5vh auto; padding: 10px 30px; overflow: auto;">
+                <div class="q_content question">
+                    <div class="input-group">
+                        <span class="input-group-addon">题目1</span>
+                        <input type="text" class="form-control content" placeholder="题目1">
+                    </div>
+                    <div class="input-group choice">
+                        <span class="input-group-addon">A</span>
+                        <input type="text" class="form-control choice1" placeholder="">
+                    </div>
+                    <div class="input-group choice">
+                        <span class="input-group-addon">B</span>
+                        <input type="text" class="form-control choice2" placeholder="">
+                    </div>
+                    <div class="input-group choice">
+                        <span class="input-group-addon">C</span>
+                        <input type="text" class="form-control choice3" placeholder="">
+                    </div>
+                </div>
+                <div class="q_content question">
+                    <div class="input-group">
+                        <span class="input-group-addon">题目2</span>
+                        <input type="text" class="form-control content" placeholder="题目2">
+                    </div>
+                    <div class="input-group choice">
+                        <span class="input-group-addon">A</span>
+                        <input type="text" class="form-control choice1" placeholder="">
+                    </div>
+                    <div class="input-group choice">
+                        <span class="input-group-addon">B</span>
+                        <input type="text" class="form-control choice2" placeholder="">
+                    </div>
+                    <div class="input-group choice">
+                        <span class="input-group-addon">C</span>
+                        <input type="text" class="form-control choice3" placeholder="">
+                    </div>
+                </div>
+                <div class="q_content question">
+                    <div class="input-group">
+                        <span class="input-group-addon">题目3</span>
+                        <input type="text" class="form-control content" placeholder="题目3">
+                    </div>
+                    <div class="input-group choice">
+                        <span class="input-group-addon">A</span>
+                        <input type="text" class="form-control choice1" placeholder="">
+                    </div>
+                    <div class="input-group choice">
+                        <span class="input-group-addon">B</span>
+                        <input type="text" class="form-control choice2" placeholder="">
+                    </div>
+                    <div class="input-group choice">
+                        <span class="input-group-addon">C</span>
+                        <input type="text" class="form-control choice3" placeholder="">
+                    </div>
+                </div>
+                <div class="q_content question">
+                    <div class="input-group">
+                        <span class="input-group-addon">题目4</span>
+                        <input type="text" class="form-control content" placeholder="题目4">
+                    </div>
+                    <div class="input-group choice">
+                        <span class="input-group-addon">A</span>
+                        <input type="text" class="form-control choice1" placeholder="">
+                    </div>
+                    <div class="input-group choice">
+                        <span class="input-group-addon">B</span>
+                        <input type="text" class="form-control choice2" placeholder="">
+                    </div>
+                    <div class="input-group choice">
+                        <span class="input-group-addon">C</span>
+                        <input type="text" class="form-control choice3" placeholder="">
+                    </div>
+                </div>
+                <div class="q_content question">
+                    <div class="input-group">
+                        <span class="input-group-addon">题目5</span>
+                        <input type="text" class="form-control content" placeholder="题目5">
+                    </div>
+                    <div class="input-group choice">
+                        <span class="input-group-addon">A</span>
+                        <input type="text" class="form-control choice1" placeholder="">
+                    </div>
+                    <div class="input-group choice">
+                        <span class="input-group-addon">B</span>
+                        <input type="text" class="form-control choice2" placeholder="">
+                    </div>
+                    <div class="input-group choice">
+                        <span class="input-group-addon">C</span>
+                        <input type="text" class="form-control choice3" placeholder="">
+                    </div>
+                </div>
+                <div style="padding-top: 12px;" id="awardContainer">
+                    <p style="text-align: left;">(1人様)(2人様)(3人様)后台已自动添加，不要在页面上写</p>
+                    <div class="input-group">
+                        <span class="input-group-addon">一等奖</span>
+                        <input type="text" class="form-control award1" placeholder="一等奖奖品">
+                    </div>
+                    <div class="input-group">
+                        <span class="input-group-addon">二等奖</span>
+                        <input type="text" class="form-control award2" placeholder="二等奖奖品">
+                    </div>
+                    <div class="input-group">
+                        <span class="input-group-addon">三等奖</span>
+                        <input type="text" class="form-control award3" placeholder="三等奖奖品">
+                    </div>
+                </div>
+                <button type="button" class="btn btn-success addQuestionsButton">发布</button>
+                <button type="button" class="btn btn-danger offline">下线竞猜</button>
+                <button type="button" class="btn btn-danger close6">关闭窗口</button>
+            </div>
+            <div class="share_success">
+                <div class="likes_success">
+                    提交问题及奖品成功！
+                </div>
+            </div>
+            <div class="modify_success">
+                <div class="likes_success">
+                    下线竞猜成功！
+                </div>
+            </div>
+        </div>
+        <!-- 正确答案提供 -->
+        <div class="reply_comment4">
+            <div class="reply_comment_container" style="height: 80vh; overflow: auto;">
+                <div class="q_content">
+                    <div class="input-group">
+                        <span class="input-group-addon">题目1</span>
+                        <input type="text" class="form-control content" placeholder="题目1" disabled>
+                    </div>
+                    <div class="input-group">
+                        <span class="input-group-addon">
+                                    <input type="radio" name="q1" aria-label="">
+                                </span>
+                        <input type="text" class="form-control choice1" aria-label="" value="" disabled>
+                    </div>
+                    <div class="input-group">
+                        <span class="input-group-addon">
+                                    <input type="radio" name="q1" aria-label="">
+                                </span>
+                        <input type="text" class="form-control choice2" aria-label="" value="" disabled>
+                    </div>
+                    <div class="input-group">
+                        <span class="input-group-addon">
+                                    <input type="radio" name="q1" aria-label="">
+                                </span>
+                        <input type="text" class="form-control choice3" aria-label="" value="" disabled>
+                    </div>
+                </div>
+                <div class="q_content">
+                    <div class="input-group">
+                        <span class="input-group-addon">题目2</span>
+                        <input type="text" class="form-control content" placeholder="题目2" disabled>
+                    </div>
+                    <div class="input-group">
+                        <span class="input-group-addon">
+                                    <input type="radio" name="q2" aria-label="">
+                                </span>
+                        <input type="text" class="form-control choice1" aria-label="" value="" disabled="">
+                    </div>
+                    <div class="input-group">
+                        <span class="input-group-addon">
+                                    <input type="radio" name="q2" aria-label="">
+                                </span>
+                        <input type="text" class="form-control choice2" aria-label="" value="" disabled="">
+                    </div>
+                    <div class="input-group">
+                        <span class="input-group-addon">
+                                    <input type="radio" name="q2" aria-label="">
+                                </span>
+                        <input type="text" class="form-control choice3" aria-label="" value="" disabled="">
+                    </div>
+                </div>
+                <div class="q_content">
+                    <div class="input-group">
+                        <span class="input-group-addon">题目3</span>
+                        <input type="text" class="form-control content" placeholder="题目3" disabled>
+                    </div>
+                    <div class="input-group">
+                        <span class="input-group-addon">
+                                    <input type="radio" name="q3" aria-label="">
+                                </span>
+                        <input type="text" class="form-control choice1" aria-label="" value="" disabled="">
+                    </div>
+                    <div class="input-group">
+                        <span class="input-group-addon">
+                                    <input type="radio" name="q3" aria-label="">
+                                </span>
+                        <input type="text" class="form-control choice2" aria-label="" value="" disabled="">
+                    </div>
+                    <div class="input-group">
+                        <span class="input-group-addon">
+                                    <input type="radio" name="q3" aria-label="">
+                                </span>
+                        <input type="text" class="form-control choice3" aria-label="" value="" disabled="">
+                    </div>
+                </div>
+                <div class="q_content">
+                    <div class="input-group">
+                        <span class="input-group-addon">题目4</span>
+                        <input type="text" class="form-control content" placeholder="题目4" disabled>
+                    </div>
+                    <div class="input-group">
+                        <span class="input-group-addon">
+                                    <input type="radio" name="q4" aria-label="">
+                                </span>
+                        <input type="text" class="form-control choice1" aria-label="" value="" disabled="">
+                    </div>
+                    <div class="input-group">
+                        <span class="input-group-addon">
+                                    <input type="radio" name="q4" aria-label="">
+                                </span>
+                        <input type="text" class="form-control choice2" aria-label="" value="" disabled="">
+                    </div>
+                    <div class="input-group">
+                        <span class="input-group-addon">
+                                    <input type="radio" name="q4" aria-label="">
+                                </span>
+                        <input type="text" class="form-control choice3" aria-label="" value="" disabled="">
+                    </div>
+                </div>
+                <div class="q_content">
+                    <div class="input-group">
+                        <span class="input-group-addon">题目5</span>
+                        <input type="text" class="form-control content" placeholder="题目5" disabled>
+                    </div>
+                    <div class="input-group">
+                        <span class="input-group-addon">
+                                    <input type="radio" name="q5" aria-label="">
+                                </span>
+                        <input type="text" class="form-control choice1" aria-label="" value="" disabled="">
+                    </div>
+                    <div class="input-group">
+                        <span class="input-group-addon">
+                                    <input type="radio" name="q5" aria-label="">
+                                </span>
+                        <input type="text" class="form-control choice2" aria-label="" value="" disabled="">
+                    </div>
+                    <div class="input-group">
+                        <span class="input-group-addon">
+                                    <input type="radio" name="q5" aria-label="">
+                                </span>
+                        <input type="text" class="form-control choice3" aria-label="" value="" disabled="">
+                    </div>
+                </div>
+                <button type="button" class="btn btn-success submitAnswer">提交</button>
+                <button type="button" class="btn btn-danger close7">取消</button>
+            </div>
+            <div class="del_success">
+                <div class="likes_success">
+                    提交答案成功
+                </div>
+            </div>
+            <div class="tips_success">
+                <div class="likes_success">
+                    输入内容不能为空！
+                </div>
+            </div>
+        </div>
+        <!-- 用户答案查看 -->
+        <div class="reply_comment5">
+            <div class="related_news" id="relatedNews">
+                <div class="news_opa">
+                    <div class="input-group">
+                        <span class="input-group-addon">用户ID</span>
+                        <input type="text" class="form-control b_user_id" placeholder="User ID">
+                    </div>
+                    <div class="input-group">
+                        <span class="input-group-addon">答对数</span>
+                        <select class="form-control correct_num">
+                            <option></option>
+                            <option>1</option>
+                            <option>2</option>
+                            <option>3</option>
+                            <option>4</option>
+                            <option>5</option>
+                        </select>
+                    </div>
+                    <div class="input-group">
+                        <span class="input-group-addon">当前选择比赛</span>
+                        <input type="text" disabled class="form-control current_selection_match">
+                    </div>
+                    <!-- <button type="button" class="btn btn-success add_related_answer">添加</button> -->
+                </div>
+                <div class="table table-responsive" style="max-height: 70vh;">
+                    <table class="table table-bordered table_user_answer">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>提交时间</th>
+                                <th>用户ID</th>
+                                <th>用户答案</th>
+                                <th>答对数</th>
+                                <th>答错数</th>
+                                <th>奖项设置</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
+                    <div class="share_success">
+                        <div class="likes_success">
+                            设置奖项成功！
+                        </div>
+                    </div>
+                    <div class="modify_success">
+                        <div class="likes_success">
+                            添加答题用户成功！
+                        </div>
+                    </div>
+                    <!-- <div class="del_success">
+                                <div class="likes_success">
+                                    隐藏新闻成功！
+                                </div>
+                            </div> -->
+                    <div class="add_option">
+                        <div class="input-group" style="width: 20%;float: left; margin-right: 20px;">
+                            <span class="input-group-addon">用户ID</span>
+                            <select class="form-control set_award_user_id">
+                            </select>
+                        </div>
+                        <button type="button" class="btn btn-success set_award_user" style="float: left;">添加答题用户</button>
+                        <button type="button" class="btn btn-danger close8">关闭窗口</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="reply_comment6">
+            <div class="reply_comment_container">
+                <div class="input-group">
+                    <span class="input-group-addon">用户ID</span>
+                    <select class="form-control comment_user_id wbc_user_id" style="height: 40px;">
+                        <!-- <option>不限</option>
+                                <option>0</option> -->
+                    </select>
+                </div>
+                <div class="input-group">
+                    <span class="input-group-addon">球员</span>
+                    <select class="form-control wbc_player" style="height: 40px;">
+                        <option></option>
+                    </select>
+                </div>
+                <p style="font-size: 18px;font-weight: 600;">若不选择球员，则为对球队的评论！选择球员即为对球员进行评论！</p>
+                <!-- <div class="input-group">
+                            <span class="input-group-addon">赞同数</span>
+                            <input type="text" class="form-control wbc_comment_likes" placeholder="Comment Likes" value="0">
+                        </div> -->
+                <div class="input-group" style="width: 100%;">
+                    <span class="input-group-addon">评论内容</span>
+                    <input type="text" class="form-control wbc_comment_content" placeholder="Comment Content">
+                </div>
+                <p>当前编辑评论为<span class="wbc_comment_id"></span></p>
+                <button type="button" class="btn btn-success submit_wbc_comment">提交评论</button>
+                <button type="button" class="btn btn-danger close9">取消</button>
+            </div>
+            <div class="del_success">
+                <div class="likes_success">
+                    提交评论成功
+                </div>
+            </div>
+            <div class="tips_success">
+                <div class="likes_success">
+                    输入内容不能为空！
+                </div>
+            </div>
+        </div>
+        <!-- 立即推送 -->
+        <div class="push_sure" style="display: none;">
+            <div class="push_sur_container">
+                <p>即将推送的(赛事id <span class="match_push_id"></span>)</p>
+                <p>如果要更改赛事描述，赛事标题要一同编辑才会生效</p>
+                <div class="input-group" style="width: 80%; margin-bottom: 20px;margin-left: 5%;">
+                    <span class="input-group-addon">编辑赛事标题<i>*</i></span>
+                    <input type="text" class="form-control push_match_title" placeholder="Edit Match Title">
+                </div>
+                <div class="input-group" style="width: 80%; margin-bottom: 20px;margin-left: 5%;">
+                    <span class="input-group-addon">编辑赛事描述<i>*</i></span>
+                    <input type="text" class="form-control push_match_desc" placeholder="Edit Match Description">
+                </div>
+                <p><a href="#" class="sure_push_baseball">确定</a><a href="#" class="close2">取消</a></p>
+            </div>
+            <div class="loading" style="display: none;">
+                <div class="sk-fading-circle">
+                    <div class="sk-circle1 sk-circle"></div>
+                    <div class="sk-circle2 sk-circle"></div>
+                    <div class="sk-circle3 sk-circle"></div>
+                    <div class="sk-circle4 sk-circle"></div>
+                    <div class="sk-circle5 sk-circle"></div>
+                    <div class="sk-circle6 sk-circle"></div>
+                    <div class="sk-circle7 sk-circle"></div>
+                    <div class="sk-circle8 sk-circle"></div>
+                    <div class="sk-circle9 sk-circle"></div>
+                    <div class="sk-circle10 sk-circle"></div>
+                    <div class="sk-circle11 sk-circle"></div>
+                    <div class="sk-circle12 sk-circle"></div>
+                </div>
+                <p>正在推送，请稍候...</p>
+            </div>
+            <div class="success_push">
+                推送新闻成功！
+            </div>
+        </div>
+    </div>
+    <p style="font-size: 18px;font-weight: 600;">点击比赛ID可以添加比赛评论、国家名称可以添加球员/球队评论！</p>
+</div>

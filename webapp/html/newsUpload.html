@@ -1,0 +1,105 @@
+<!-- 新闻上传页 -->
+<div class="news_upload table_container" id="newsUpload">
+    <div class="table table-responsive">
+        <table class="table table-bordered table_newsupload">
+            <thead>
+                <tr>
+                    <th>id</th>
+                    <th>title</th>
+                    <th>source</th>
+                    <th>publish_time</th>
+                    <th>content</th>
+                    <th>处理时间</th>
+                    <th>category_id</th>
+                    <th>status</th>
+                    <th>site</th>
+                    <th>源url</th>
+                    <th>image1</th>
+                    <th>image2</th>
+                    <th>image3</th>
+                    <th>修改状态</th>
+                </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+        <!-- 发表回复 -->
+        <div class="reply_comment">
+            <div class="reply_comment_container">
+                <div class="input-group ">
+                    <span class="input-group-addon"><i>*</i>新闻标题</span>
+                    <input type="text" class="form-control upload_news_title" placeholder="News Title" value="">
+                </div>
+                <div class="input-group">
+                    <span class="input-group-addon"><i>*</i>新闻来源网站</span>
+                    <input type="text" class="form-control upload_news_site" placeholder="News Site" value="">
+                </div>
+                <div class="input-group">
+                    <span class="input-group-addon"><i>*</i>新闻来源媒体</span>
+                    <input type="text" class="form-control upload_news_source" placeholder="News Source" value="">
+                </div>
+                <div class="input-group">
+                    <span class="input-group-addon"><i>*</i>新闻发布时间</span>
+                    <input type="date" class="form-control upload_news_publishtime" placeholder="News Publish Time" value="">
+                </div>
+                <div class="input-group">
+                    <span class="input-group-addon"><i>*</i>新闻分类</span>
+                    <select class="form-control news_category category"></select>
+                </div>
+                <div class="news_content_upload">
+                    <p style="overflow: hidden;margin-bottom: 10px;"><i>*</i>新闻内容：
+                        <button type="button" class="btn btn-success add_imgs_click">添加图片</button>
+                        <input type="file" name="" class="add_imgs">
+                        <br/>
+                    </p>
+                    <div class="content_upload" contenteditable></div>
+                </div>
+                <div class="upload_images">
+                    <div class="img1 img_pre">
+                        <p style="overflow: hidden;margin-bottom: 10px;">
+                            <button type="button" class="btn btn-success add_img1_click">添加图片</button>
+                            <input type="file" name="" class="add_img1">
+                            <br/>
+                        </p>
+                        <div class="previewdiv previewdiv1" contenteditable></div>
+                    </div>
+                    <div class="img2 img_pre">
+                        <p style="overflow: hidden;margin-bottom: 10px;">
+                            <button type="button" class="btn btn-success add_img2_click">添加图片</button>
+                            <input type="file" name="" class="add_img2">
+                            <br/>
+                        </p>
+                        <div class="previewdiv previewdiv2" contenteditable></div>
+                    </div>
+                    <div class="img3 img_pre">
+                        <p style="overflow: hidden;margin-bottom: 10px;">
+                            <button type="button" class="btn btn-success add_img3_click">添加图片</button>
+                            <input type="file" name="" class="add_img3">
+                            <br/>
+                        </p>
+                        <div class="previewdiv previewdiv3" contenteditable></div>
+                    </div>
+                </div>
+                <div class="input-group">
+                    <span class="input-group-addon">源新闻url</span>
+                    <input type="text" class="form-control news_source_url" placeholder="News Source Url" value="">
+                </div>
+                <button type="button" class="btn btn-success upload_news">确定上传</button>
+                <button type="button" class="btn btn-danger close4">取消</button>
+            </div>
+        </div>
+        <div class="share_success">
+            <div class="likes_success">
+                上传新闻成功！
+            </div>
+        </div>
+        <div class="del_success">
+            <div class="likes_success">
+                符号*对应输入内容不能为空
+            </div>
+        </div>
+    </div>
+    <div class="add_option">
+        <button type="button" class="btn btn-success add_splash">上传新闻</button>
+    </div>
+</div>
