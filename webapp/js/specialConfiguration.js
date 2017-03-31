@@ -43,21 +43,20 @@ define(function(require, exports, module) {
             option1.each(function(idx, ele) {
                 if ($(this).attr('data-id') == info.cid) {
                     $(this).attr('selected', true);
-                    $('.special_channel').val($(this).html())
                 } else {
                      $(this).removeAttr('selected');
                 }
             });
-            var option2 = $('.special_position').find('option');
-            option2.each(function(idx, ele) {
-                if ($(this).html() == info.pos) {
+            var option20 = $('.special_position').find('option');
+            option20.each(function(idx, ele) {
+                if ($(this).val() == info.pos) {
                     $(this).attr('selected', true);
                 } else {
                      $(this).removeAttr('selected');
                 }
             });
-            var option3 = $('.special_toplist').find('option');
-            option3.each(function(idx, ele) {
+            var option30 = $('.special_toplist').find('option');
+            option30.each(function(idx, ele) {
                 if ($(this).val() == info.is_toplist) {
                     $(this).attr('selected', true);
                 } else {
