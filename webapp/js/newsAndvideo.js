@@ -1098,6 +1098,7 @@ define(function(require, exports, module) {
             $.ajax({
                 url: url_,
                 async: 'false',
+                cache: false,
                 beforeSend: function() {
                     $('.loading').show();
                     $('.success_push').hide();

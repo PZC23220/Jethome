@@ -37,19 +37,12 @@ define(function(require, exports, module) {
             $('.special_bg_img').val(info.bg_img);
             $('.special_keyword').val(info.keyword_inclusion);
             $('.exclude_words').val(info.keyword_exclusion);
+            $('.special_position').val(info.pos);
             $('.special_start_time').val(new Date(Date.parse(info.topic_time) - 8 * 60 * 60 * 1000).Format("yyyy-MM-ddThh:mm:ss"));
             $('.special_publish').attr('data-id', info.id);
             var option1 = $('.special_channel').find('option');
             option1.each(function(idx, ele) {
                 if ($(this).attr('data-id') == info.cid) {
-                    $(this).attr('selected', true);
-                } else {
-                     $(this).removeAttr('selected');
-                }
-            });
-            var option20 = $('.special_position').find('option');
-            option20.each(function(idx, ele) {
-                if ($(this).val() == info.pos) {
                     $(this).attr('selected', true);
                 } else {
                      $(this).removeAttr('selected');
@@ -77,7 +70,7 @@ define(function(require, exports, module) {
                     topic_cid: $('.topic_cid').val(),
                     cid: $('.special_channel').find('option:selected').attr('data-id'),
                     bg_img: $('.special_bg_img').val(),
-                    pos: $('.special_position').find('option:selected').html(),
+                    pos: $('.special_position').val(),
                     keyword_inclusion: $('.special_keyword').val(),
                     keyword_exclusion: $('.exclude_words').val(),
                     topic_time: new Date($('.special_start_time').val()).Format("yyyy/MM/dd hh:mm:ss"),
@@ -213,7 +206,7 @@ define(function(require, exports, module) {
             var td4 = $('<td/>').html(getTime(list.news_time * 1000)).appendTo(tr);
             var td5 = $('<td/>').html(list.news_title).appendTo(tr);
             if (list.active == 1) {
-                var td7 = $('<td/>').html('<a href="#">下线</a>').attr({ 'data-id': list.id, 'data-topid': t_id, 'data-val': 0 }).addClass('news_special_topic_info_active').appendTo(tr);
+                var td7 = $('<td/>').html('<a href="#">取消上线</a>').attr({ 'data-id': list.id, 'data-topid': t_id, 'data-val': 0 }).addClass('news_special_topic_info_active').appendTo(tr);
             } else {
                 var td7 = $('<td/>').html('<a href="#">上线</a>').attr({ 'data-id': list.id, 'data-topid': t_id, 'data-val': 1 }).addClass('news_special_topic_info_active').appendTo(tr);
             }
