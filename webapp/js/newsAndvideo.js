@@ -1107,7 +1107,7 @@ define(function(require, exports, module) {
                     $('.success_push').show();
                     $('.os').removeAttr("checked");
                     setTimeout(function() {
-                        push_sure.hide();
+                        $('.push_sure').hide();
                         $('.success_push').hide();
                         window.location.reload();
                     }, 2000);
