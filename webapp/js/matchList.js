@@ -33,7 +33,7 @@ define(function(require, exports, module) {
                 option.appendTo(race_date)
             }
             $.ajax({
-                url: 'http://api2.newsjet.io:8080/baseball/matchlist',
+                url: '/japi/baseball/matchlist',
                 success: function(res) {
                     console.log(res);
                     var list = res.data;
@@ -113,7 +113,7 @@ define(function(require, exports, module) {
             $('.choice2').empty();
             $('.choice3').empty();
         });
-        
+
         close_news.click(function() {
             reply_comment.hide();
         });
@@ -195,7 +195,7 @@ define(function(require, exports, module) {
             console.log("match id = " + matchJson.id);
             reply_comment3.show();
             $.ajax({
-                url: 'http://api2.newsjet.io:8080/baseball/lottery?targettype=1&targetid=' + matchJson.id,
+                url: '/japi/baseball/lottery?targettype=1&targetid=' + matchJson.id,
                 // async: false,
                 success: function(res) {
                     console.log(res);
@@ -240,7 +240,7 @@ define(function(require, exports, module) {
         // 设置正确选项
         table_matchList_tbody.on('click', '.t_answer', function() {
             $.ajax({
-                url: 'http://api2.newsjet.io:8080/baseball/lottery?targettype=1&targetid=' + JSON.parse($(this).attr("data-info")).id,
+                url: '/japi/baseball/lottery?targettype=1&targetid=' + JSON.parse($(this).attr("data-info")).id,
                 async: false,
                 success: function(res) {
                     console.log("res = " + JSON.stringify(res));
@@ -331,7 +331,7 @@ define(function(require, exports, module) {
             }
             console.log(data);
             $.ajax({
-                url: 'http://api2.newsjet.io:8080/baseball/lotterycommit',
+                url: '/japi/baseball/lotterycommit',
                 type: 'POST',
                 data: JSON.stringify(data),
                 success: function(res) {
@@ -349,7 +349,7 @@ define(function(require, exports, module) {
         function lotterycommitaward(info, num) {
             var data = JSON.parse(info);
             $.ajax({
-                url: 'http://api2.newsjet.io:8080/baseball/lotterycommitaward?uid=' + data.uid + '&targettype=1&targetid=' + data.targetid + '&lotteryid=' + data.lotteryid + '&award=' + num,
+                url: '/japi/baseball/lotterycommitaward?uid=' + data.uid + '&targettype=1&targetid=' + data.targetid + '&lotteryid=' + data.lotteryid + '&award=' + num,
                 success: function(res) {
                     console.log(res);
                     $('.share_success').show();
@@ -373,7 +373,7 @@ define(function(require, exports, module) {
         function getuseranswerlist(id) {
             table_user_answer.empty();
             $.ajax({
-                url: "http://api2.newsjet.io:8080/baseball/lotteryanswer?targettype=1&targetid=" + id,
+                url: "/japi/baseball/lotteryanswer?targettype=1&targetid=" + id,
                 success: function(res) {
                     console.log(res);
                     $('.set_award_user').attr('data-info', JSON.stringify((res.data)[0]));
@@ -392,7 +392,7 @@ define(function(require, exports, module) {
         // 获取新闻及视频
         function get_news(ids, info, top, hidden) {
             $.ajax({
-                url: 'http://api2.newsjet.io:8080/news/gets?ids=' + ids,
+                url: '/japi/news/gets?ids=' + ids,
                 success: function(res) {
                     var list = res.data;
 
@@ -406,7 +406,7 @@ define(function(require, exports, module) {
 
         function get_videos(ids, info, top, hidden) {
             $.ajax({
-                url: 'http://api2.newsjet.io:8080/video/gets?ids=' + ids,
+                url: '/japi/video/gets?ids=' + ids,
                 success: function(res) {
                     var list = res.data;
                     console.log(list);
@@ -467,7 +467,7 @@ define(function(require, exports, module) {
             data.newsids = JSON.stringify(newsids);
             console.log(data);
             $.ajax({
-                url: 'http://api2.newsjet.io:8080/baseball/matchUpdateDetail',
+                url: '/japi/baseball/matchUpdateDetail',
                 type: 'POST',
                 data: JSON.stringify(data),
                 success: function(res) {
@@ -501,7 +501,7 @@ define(function(require, exports, module) {
             data.newsids = JSON.stringify(newsids);
             console.log(data);
             $.ajax({
-                url: 'http://api2.newsjet.io:8080/baseball/matchUpdateDetail',
+                url: '/japi/baseball/matchUpdateDetail',
                 type: 'POST',
                 data: JSON.stringify(data),
                 success: function(res) {
@@ -532,7 +532,7 @@ define(function(require, exports, module) {
             data.newsids = JSON.stringify(newsids);
             console.log(data);
             $.ajax({
-                url: 'http://api2.newsjet.io:8080/baseball/matchUpdateDetail',
+                url: '/japi/baseball/matchUpdateDetail',
                 type: 'POST',
                 data: JSON.stringify(data),
                 success: function(res) {
@@ -569,13 +569,13 @@ define(function(require, exports, module) {
             postData.answer = answers.toString();
             console.log("post data = " + JSON.stringify(postData));
             $.ajax({
-                url: 'http://api2.newsjet.io:8080/baseball/lotteryupdate?targettype=1&targetid=' + postData.targetid,
+                url: '/japi/baseball/lotteryupdate?targettype=1&targetid=' + postData.targetid,
                 type: 'POST',
                 data: JSON.stringify(postData),
                 success: function(res) {
                     console.log(res);
                     $.ajax({
-                        url: "http://api2.newsjet.io:8080/baseball/lotteryanswercheck?targettype=1&targetid=" + postData.targetid,
+                        url: "/japi/baseball/lotteryanswercheck?targettype=1&targetid=" + postData.targetid,
                         success: function(res) {
                             console.log(res);
                             $('.del_success').show();
@@ -649,7 +649,7 @@ define(function(require, exports, module) {
             console.log("post data = " + JSON.stringify(postData));
 
             $.ajax({
-                url: 'http://api2.newsjet.io:8080/baseball/lotteryupdate',
+                url: '/japi/baseball/lotteryupdate',
                 type: 'POST',
                 data: JSON.stringify(postData),
                 success: function(res) {
@@ -668,7 +668,7 @@ define(function(require, exports, module) {
             postData.active = 0;
             console.log(postData);
             $.ajax({
-                url: 'http://api2.newsjet.io:8080/baseball/lotteryupdate',
+                url: '/japi/baseball/lotteryupdate',
                 type: 'POST',
                 data: JSON.stringify(postData),
                 success: function(res) {
@@ -707,7 +707,7 @@ define(function(require, exports, module) {
 
         // function baseball_team(id) {
         //     $.ajax({
-        //         url: 'http://api2.newsjet.io:8080/baseball/team?id=' + id,
+        //         url: '/japi/baseball/team?id=' + id,
         //         success: function(res) {
         //             console.log(res);
         //             for(var i=0;i<)
@@ -752,7 +752,7 @@ define(function(require, exports, module) {
             }
             console.log(data);
             $.ajax({
-                url: 'http://api2.newsjet.io:8080/baseball/postsave',
+                url: '/japi/baseball/postsave',
                 type: 'POST',
                 data: JSON.stringify(data),
                 success: function(res) {

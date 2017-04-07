@@ -17,12 +17,12 @@ define(function(require, exports, module) {
         var splash_time = $('.splash_time');
         var splash_active = $('.splash_active');
         var reply_comment = $('.reply_comment');
-        // 设置闪屏表格 
+        // 设置闪屏表格
         getSplash();
 
         function getSplash() {
             $.ajax({
-                url: 'http://api2.newsjet.io:8080/switchconfig/splash',
+                url: '/japi/switchconfig/splash',
                 success: function(res) {
                     console.log(res);
                     var list = res.data;
@@ -124,7 +124,7 @@ define(function(require, exports, module) {
                 }
                 console.log(JSON.stringify(data));
                 $.ajax({
-                    url: 'http://api2.newsjet.io:8080/switchconfig/updateSplash',
+                    url: '/japi/switchconfig/updateSplash',
                     type: 'POST',
                     data: JSON.stringify(data),
                     success: function(res) {
@@ -189,7 +189,7 @@ define(function(require, exports, module) {
         // 删除闪屏
         table_splash_tbody.on('click', '.del_splash', function() {
             $.ajax({
-                url: 'http://api2.newsjet.io:8080/switchconfig/deleteSplash?id=' + $(this).attr('data-id'),
+                url: '/japi/switchconfig/deleteSplash?id=' + $(this).attr('data-id'),
                 success: function(res) {
                     console.log(res);
                     $('.del_success').show();

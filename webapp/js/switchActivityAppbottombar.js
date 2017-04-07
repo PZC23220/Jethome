@@ -19,7 +19,7 @@ define(function(require, exports, module) {
 
         function getAppbtmba() {
             $.ajax({
-                url: 'http://api2.newsjet.io:8080/switchconfig/appbtmbar',
+                url: '/japi/switchconfig/appbtmbar',
                 success: function(res) {
                     console.log(res);
                     var list = res.data;
@@ -78,7 +78,7 @@ define(function(require, exports, module) {
                 }
                 console.log(data);
                 $.ajax({
-                    url: 'http://api2.newsjet.io:8080/switchconfig/updateAppbtmbar',
+                    url: '/japi/switchconfig/updateAppbtmbar',
                     type: 'POST',
                     data: JSON.stringify(data),
                     success: function(res) {
@@ -137,7 +137,7 @@ define(function(require, exports, module) {
             console.log($(this).attr('data-id'));
             var id = $(this).attr('data-id');
             $.ajax({
-                url: 'http://api2.newsjet.io:8080/switchconfig/deleteSplash?id=' + id,
+                url: '/japi/switchconfig/deleteSplash?id=' + id,
                 success: function(res) {
                     $('.del_success').show();
                     setTimeout(function() {

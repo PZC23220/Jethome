@@ -23,10 +23,7 @@ var close2 = $('.close2');
 var nav_left_list = $('.nav_left_list li');
 var loading = $('.loading');
 var main_content = $('.main_content');
-// var server_host = "http://jethome.newsjet.io:9000";
 var server_host = '';
-
-// var server_host = "http://localhost:9000";
 
 var commonFn = {
     //获取栏目
@@ -258,15 +255,15 @@ function transCategory(c_id, id,tr) {
     }
 }
 // 时间戳转固定格式函数
-Date.prototype.Format = function(fmt) { //author: meizz  
+Date.prototype.Format = function(fmt) { //author: meizz
     var o = {
-        "M+": this.getMonth() + 1, //月份  
-        "d+": this.getDate(), //日  
-        "h+": this.getHours(), //小时  
-        "m+": this.getMinutes(), //分  
-        "s+": this.getSeconds(), //秒  
-        "q+": Math.floor((this.getMonth() + 3) / 3), //季度  
-        "S": this.getMilliseconds() //毫秒  
+        "M+": this.getMonth() + 1, //月份
+        "d+": this.getDate(), //日
+        "h+": this.getHours(), //小时
+        "m+": this.getMinutes(), //分
+        "s+": this.getSeconds(), //秒
+        "q+": Math.floor((this.getMonth() + 3) / 3), //季度
+        "S": this.getMilliseconds() //毫秒
     };
     if (/(y+)/.test(fmt))
         fmt = fmt.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));

@@ -63,7 +63,7 @@ define(function(require, exports, module) {
         // 搜索视频
         function getSinglevideo(videoid) {
             $.ajax({
-                url: 'http://api2.newsjet.io:8080/video/get?id=' + videoid,
+                url: '/japi/video/get?id=' + videoid,
                 success: function(res) {
                     var list = res.data;
                     var tr = $('<tr/>');
@@ -108,7 +108,7 @@ define(function(require, exports, module) {
         // 获取视频主体内容
         function getNewsContent(newsid) {
             $.ajax({
-                url: 'http://api2.newsjet.io:8080/news/get?id=' + newsid,
+                url: '/japi/news/get?id=' + newsid,
                 success: function(res) {
 
                     iframe.attr('src', res.data.url);
@@ -208,7 +208,7 @@ define(function(require, exports, module) {
         // 搜索新闻
         function getSinglenews(newsid) {
             $.ajax({
-                url: 'http://api2.newsjet.io:8080/news/get?id=' + newsid,
+                url: '/japi/news/get?id=' + newsid,
                 success: function(res) {
                     var list = res.data;
                     var tr = $('<tr/>');
@@ -484,7 +484,7 @@ define(function(require, exports, module) {
 
         function commentLikes(id, count) {
             $.ajax({
-                url: 'http://api2.newsjet.io:8080/post/like?id=' + id + "&count=" + count,
+                url: '/japi/post/like?id=' + id + "&count=" + count,
                 success: function(res) {
                     console.log(res);
                     $('.share_success').show();
@@ -503,7 +503,7 @@ define(function(require, exports, module) {
         // 获取新闻列表
         function getNews(idx, start, news) {
             $.ajax({
-                url: 'http://api2.newsjet.io:8080/news/hot?version=2&start=' + start + '&rows=' + idx,
+                url: '/japi/news/hot?version=2&start=' + start + '&rows=' + idx,
                 async: false,
                 success: function(res) {
                     if (news == 'video') {
@@ -836,7 +836,7 @@ define(function(require, exports, module) {
                 'post': postBean
             }
             $.ajax({
-                url: 'http://api2.newsjet.io:8080/post/save',
+                url: '/japi/post/save',
                 type: 'POST',
                 data: JSON.stringify(data),
                 success: function(res) {
@@ -887,7 +887,7 @@ define(function(require, exports, module) {
             console.log(newsInfo)
             console.log(data);
             $.ajax({
-                url: 'http://api2.newsjet.io:8080/post/save',
+                url: '/japi/post/save',
                 type: 'POST',
                 data: JSON.stringify(data),
                 success: function(res) {
@@ -941,7 +941,7 @@ define(function(require, exports, module) {
         //获取已有评论
         function getHavedComments(newsid, newsInfo) {
             $.ajax({
-                url: 'http://api2.newsjet.io:8080/post/list?aid=' + newsid,
+                url: '/japi/post/list?aid=' + newsid,
                 success: function(res) {
                     list_container_left.empty();
                     if ((res.data.posts).length > 0) {

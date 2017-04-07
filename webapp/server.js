@@ -3,7 +3,7 @@ var app = express();
 var cmd = require('child_process');
 app.use(express.static('./'));
 var MySQLUtil = require('./jetModules/MySQLUtil');
-// var mySQLUtil = new MySQLUtil();
+var mySQLUtil = new MySQLUtil();
 var log4js = require('log4js');
 
 log4js.configure({
@@ -16,29 +16,13 @@ var logger = log4js.getLogger('debug');
 logger.setLevel('INFO');
 
 var PORT = process.env.PORT || '9000';
+var environment = process.env.NODE_ENV || 'development';
 
-
-// var connection = mySQLUtil.getConnectionProd();
-// function handleDisconnect(){
-//     connection.connect(function(err){
-//         if(err){
-//             logger.error('DB connect error: ', err);
-//             setTimeout(handleDisconnect, 2000);
-//         }
-//     });
-//
-//     connection.on('error', function(err){
-//         logger.error('DB error', err);
-//         if(err.code === 'PROTOCOL_CONNECTION_LOST') { // Connection to the MySQL server is usually
-//           handleDisconnect();                         // lost due to either server restart, or a
-//         } else {                                      // connnection idle timeout (the wait_timeout
-//           throw err;                                  // server variable configures this)
-//         }
-//     });
-// }
-// handleDisconnect();
-
-
+if(environment === 'online'){
+    var connection = mySQLUtil.getConnectionProd();
+}else if(environment === 'development'){
+    var connection = mySQLUtil.getConnectionTest();
+}
 
 // var connection = mySQLUtil.getConnectionTest();
 // 执行数据库操作
@@ -51,17 +35,23 @@ var PORT = process.env.PORT || '9000';
  * @return [type]            [description]
  */
 function select(sql, response, arr) {
-    MySQLUtil.getConnection(function(err, connection){
-        connection.query(sql, arr, function(err, rows, fields) {
-            //处理你的结果
-            if (err) {
-                logger.error('DB ERROR:', err);
-                return false;
-            }
-            response.send(rows);
-            response.end();
-        });
-    })
+    connection.query(sql, arr, function(err, rows, fields) {
+        //处理你的结果
+        if (err) {
+            logger.error('DB ERROR:', err);
+            return false;
+        }
+        response.send(rows);
+        response.end();
+    });
+    connection.on('error', function(err){
+        if(err.code === 'PROTOCOL_CONNECTION_LOST') {
+            // handleDisconnect();
+            throw err;                  
+        } else {
+          throw err;
+        }
+    });
 }
 
 //设置跨域访问
@@ -382,7 +372,8 @@ app.get('/get_comments', function(request, response) {
 // 获取机器人账户
 app.get('/get_username', function(request, response) {
     // vm.$log([keyPath-optional])
-    console.log('this is a test logger');
+    // console.log('this is a test logger')
+    logger.info('get_username:');
 
     var sql = "select * from user where id BETWEEN 1100 and 1170 OR id BETWEEN 2020 and 2068";
     select(sql, response);
@@ -403,7 +394,6 @@ app.get('/del_comments', function(request, response) {
     var sql = "DELETE FROM post where id = " + request.query.id;
     select(sql, response);
 });
-
 
 var server = app.listen(PORT, function() {
     console.log('服务器创建成功，请打开http://localhost:' + PORT);
