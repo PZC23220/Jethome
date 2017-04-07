@@ -37,6 +37,12 @@
 <script src="js/common.js"></script>
 <script src="js/sea-text.js"></script>
 <!--sea 配置-->
-<script src="js/sea-config.js" charset="utf-8"></script>
-
+<!-- <script src="js/sea-config.js" charset="utf-8"></script> -->
+<script>
+seajs.config({
+    base: "./js/",//基本路径
+    alias: {
+        "jquery": "./sea_jquery_min.js"//引用jquery.min jquery规范和sea不同，所以需要包装一下，就是套一个define
+    }})
+</script>
 </html>
