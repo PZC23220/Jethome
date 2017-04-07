@@ -1,6 +1,6 @@
 var express = require('express');
 var app = express();
-var process = require('child_process');
+var cmd = require('child_process');
 app.use(express.static('./'));
 var MySQLUtil = require('./jetModules/MySQLUtil');
 // var mySQLUtil = new MySQLUtil();
@@ -15,8 +15,8 @@ log4js.configure({
 var logger = log4js.getLogger('debug');
 logger.setLevel('INFO');
 
+var PORT = process.env.PORT || '9000';
 
-var PORT = 9000;
 
 // var connection = mySQLUtil.getConnectionProd();
 // function handleDisconnect(){
@@ -83,7 +83,7 @@ app.get('/people_push', function(request, response) {
         cmd += " " + request.query.body;
     }
     console.log(cmd);
-    process.exec(cmd, function(error, stdout, stderr) {
+    cmd.exec(cmd, function(error, stdout, stderr) {
         if (error) {
             console.log('exec error: ' + error);
         }
@@ -99,7 +99,7 @@ app.get('/notification_baseball', function(request, response) {
         cmd += " " + request.query.body;
     }
     console.log(cmd);
-    process.exec(cmd, function(error, stdout, stderr) {
+    cmd.exec(cmd, function(error, stdout, stderr) {
         if (error) {
             console.log('exec error: ' + error);
         }

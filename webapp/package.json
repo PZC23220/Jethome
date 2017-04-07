@@ -13,7 +13,7 @@
     "browser-sync": "^2.18.8"
   },
   "scripts": {
-    "dev": "export NODE_ENV=development && nohup node server.js &",
+    "dev": "export NODE_ENV=development && export PORT=3333 && nohup node server.js &",
     "online": "export NODE_ENV=online && nohup node server.js &",
     "start": "node server.js"
   },
