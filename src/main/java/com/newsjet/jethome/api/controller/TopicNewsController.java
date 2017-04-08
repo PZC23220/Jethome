@@ -1,12 +1,14 @@
 package com.newsjet.jethome.api.controller;
 
 import com.google.common.base.Strings;
-import com.newsjet.common.net.ApiRequest;
-import com.newsjet.common.net.ApiResponse;
-import com.newsjet.jethome.dao.entity.NewsSpecialTopic;
-import com.newsjet.jethome.dao.entity.NewsSpecialTopicInfo;
-import com.newsjet.jethome.dao.mapper.NewsSpecialTopicInfoMapper;
-import com.newsjet.jethome.dao.mapper.NewsSpecialTopicMapper;
+import com.mobi.core.net.http.ApiRequest;
+import com.mobi.core.net.http.ApiResponse;
+import com.mobi.dao.entity.NewsSpecialTopic;
+import com.mobi.dao.entity.NewsSpecialTopicInfo;
+import com.mobi.dao.entity.OperationLog;
+import com.mobi.dao.mapper.NewsSpecialTopicInfoMapper;
+import com.mobi.dao.mapper.NewsSpecialTopicMapper;
+import com.mobi.dao.mapper.OperationLogMapper;
 import io.netty.handler.codec.http.HttpResponseStatus;
 import org.apache.solr.client.solrj.SolrClient;
 import org.apache.solr.client.solrj.SolrServerException;
@@ -24,7 +26,6 @@ import java.util.Objects;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 /**
  * Created by kezhenxu on 3/17/17.
@@ -43,6 +44,8 @@ public class TopicNewsController extends AbstractNewsjetController {
     private SolrClient newsSolrClient;
     @Resource
     private SolrClient videoSolrClient;
+    @Resource
+    private OperationLogMapper operationLogMapper;
 
     public TopicNewsController() {
         executor = Executors.newCachedThreadPool();
@@ -53,6 +56,7 @@ public class TopicNewsController extends AbstractNewsjetController {
     }
 
     public ApiResponse init(ApiRequest request) {
+        String result = "Unknown";
         try {
             String title = request.getParamAsStr("title");
             Objects.requireNonNull(title, "Parameter 'title' cannot be null or empty. ");
@@ -117,21 +121,25 @@ public class TopicNewsController extends AbstractNewsjetController {
                     getLogger().warn(e.getMessage(), e);
                 }
             });
+            result = "success";
             return ApiResponse.ok();
-        } catch (
-                NullPointerException e)
-
-        {
+        } catch (NullPointerException e) {
+            result = "fail";
             getLogger().warn(e.getMessage(), e);
             return ApiResponse.error(HttpResponseStatus.NOT_ACCEPTABLE).setResponseMsg(e.getMessage());
-        } catch (
-                Exception e)
-
-        {
+        } catch (Exception e) {
+            result = "fail";
             getLogger().warn(e.getMessage(), e);
             return ApiResponse.error(HttpResponseStatus.INTERNAL_SERVER_ERROR).setResponseMsg(e.getMessage());
+        } finally {
+            OperationLog operationLog = new OperationLog();
+            operationLog.setResult(result);
+            operationLog.setAction(request.getInvokeMethod());
+            operationLog.setTable("newsTopicInfo");
+            operationLog.setRole(request.ip());
+            operationLog.setParameters(request.getParamMap().toString());
+            operationLogMapper.insertSelective(operationLog);
         }
-
     }
 
     private List<SolrDocument> searchApplicableDocuments(Long topicTime)

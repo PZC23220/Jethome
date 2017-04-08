@@ -1,7 +1,10 @@
-package com.newsjet.common.net;
+package com.newsjet.common;
 
+import com.mobi.core.net.component.AbstractControllerAdapter;
+import com.mobi.core.net.component.ApiController;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
+//import com.mobi.service.consumer.component.ServiceRegister;
 
 /**
  * 
@@ -14,6 +17,9 @@ public class TrackControllerAdapter extends AbstractControllerAdapter {
 	
 	static {
 		ctx = new ClassPathXmlApplicationContext("classpath:spring-application.xml");
+		
+//		CommonPropertyPlacehodler propertyHolder = ctx.getBean("placeholderConfig", CommonPropertyPlacehodler.class);
+//		ServiceRegister.build(propertyHolder.getPropAsStr("zookeeper.server"), propertyHolder.getPropAsInt("zookeeper.port"));
 	}
 	
 	@Override
