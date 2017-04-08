@@ -137,7 +137,7 @@ public class TopicNewsController extends AbstractNewsjetController {
             operationLog.setAction(request.getInvokeMethod());
             operationLog.setTable("newsTopicInfo");
             operationLog.setRole(request.ip());
-            operationLog.setParameters(request.getBody());
+            operationLog.setParameters(request.getParamMap().toString());
             operationLogMapper.insertSelective(operationLog);
         }
     }

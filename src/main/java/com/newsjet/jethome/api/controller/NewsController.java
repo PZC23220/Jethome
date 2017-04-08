@@ -74,7 +74,8 @@ public class NewsController extends AbstractNewsjetController {
             operationLog.setResult(result);
             operationLog.setAction(request.getInvokeMethod());
             operationLog.setRole(request.ip());
-            operationLog.setParameters(request.getBody());
+            operationLog.setParameters(request.getParamMap().toString());
+            operationLog.setTable("solr_news");
             operationLogMapper.insertSelective(operationLog);
         }
     }
