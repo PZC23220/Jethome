@@ -29,10 +29,9 @@
 
     <bean id="sqlSessionFactorydataSource" class="org.mybatis.spring.SqlSessionFactoryBean">
         <property name="dataSource" ref="dataSource"/>
-        <property name="mapperLocations" value="classpath:com/newsjet/jethome/api/dao/mapper/*.xml"/>
     </bean>
     <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
-        <property name="basePackage" value="com.newsjet;com.mobi"/>
+        <property name="basePackage" value="com.mobi"/>
         <property name="sqlSessionFactoryBeanName" value="sqlSessionFactorydataSource"/>
     </bean>
 

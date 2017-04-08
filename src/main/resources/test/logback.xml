@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration scan="true">
+
+    <property name="LOG_PATH" value="/root/local/logs"/>
+
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <layout class="ch.qos.logback.classic.PatternLayout">
+            <Pattern>
+                %d{yyyy-MM-dd HH:mm:ss.SSS} %-5level %logger{36} - %msg%n
+            </Pattern>
+        </layout>
+    </appender>
+
+    <appender name="STDOUT_SELF" class="ch.qos.logback.core.ConsoleAppender">
+        <layout class="ch.qos.logback.classic.PatternLayout">
+            <Pattern>
+                # %d{yyyy-MM-dd HH:mm:ss} %-5level %logger{36}.%M\(%line\) - %msg%n
+            </Pattern>
+        </layout>
+    </appender>
+
+    <logger name="*" level="INFO" additivity="false">
+        <appender-ref ref="STDOUT" />
+    </logger>
+
+    <logger name="com.mobi" level="INFO" additivity="false">
+        <appender-ref ref="STDOUT_SELF" />
+    </logger>
+
+    <logger name="com.newsjet" level="INFO" additivity="false">
+        <appender-ref ref="STDOUT_SELF" />
+    </logger>
+
+    <root level="INFO">
+        <appender-ref ref="STDOUT" />
+    </root>
+
+</configuration>

@@ -63,6 +63,7 @@ public class CommentTemplateController extends AbstractNewsjetController {
             operationLog.setResult(result);
             operationLog.setAction(request.getInvokeMethod());
             operationLog.setRole(request.ip());
+
             operationLog.setParameters(request.getBody());
             operationLogMapper.insertSelective(operationLog);
         }
@@ -118,6 +119,7 @@ public class CommentTemplateController extends AbstractNewsjetController {
             operationLog.setResult(result);
             operationLog.setAction(request.getInvokeMethod());
             operationLog.setRole(request.ip());
+            operationLog.setTable("comment_template");
             operationLog.setParameters(request.getBody());
             operationLogMapper.insertSelective(operationLog);
         }
@@ -145,8 +147,9 @@ public class CommentTemplateController extends AbstractNewsjetController {
             operationLog.setResult(result);
             operationLog.setAction(request.getInvokeMethod());
             operationLog.setRole(request.ip());
-            operationLog.setParameters(request.getBody());
-
+            operationLog.setParameters(request.getParamMap().toString());
+            operationLog.setTable("comment_template");
+            operationLogMapper.insertSelective(operationLog);
         }
     }
 }
