@@ -1,9 +1,9 @@
 package com.newsjet.jethome.api.controller;
 
 import com.alibaba.fastjson.JSON;
-import com.newsjet.common.net.ApiController;
-import com.newsjet.common.net.ApiResponse;
-import com.newsjet.common.net.CommonResponse;
+import com.mobi.core.net.component.ApiController;
+import com.mobi.core.net.http.ApiResponse;
+import com.newsjet.common.CommonResponse;
 import org.apache.commons.lang.StringUtils;
 
 /**

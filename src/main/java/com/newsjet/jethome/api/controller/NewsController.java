@@ -1,8 +1,10 @@
 package com.newsjet.jethome.api.controller;
 
 import com.alibaba.fastjson.JSON;
-import com.newsjet.common.net.ApiRequest;
-import com.newsjet.common.net.ApiResponse;
+import com.mobi.core.net.http.ApiRequest;
+import com.mobi.core.net.http.ApiResponse;
+import com.mobi.dao.entity.OperationLog;
+import com.mobi.dao.mapper.OperationLogMapper;
 import org.apache.http.HttpStatus;
 import org.apache.solr.client.solrj.SolrClient;
 import org.apache.solr.common.SolrDocumentList;
@@ -32,8 +34,11 @@ public class NewsController extends AbstractNewsjetController {
 
     @Resource
     private SolrClient newsSolrClient;
+    @Resource
+    private OperationLogMapper operationLogMapper;
 
     public ApiResponse fixCID(ApiRequest request) {
+        String result = "Unknown";
         try {
             getLogger().info("Request = [{}]. ", JSON.toJSONString(request));
 
@@ -55,13 +60,22 @@ public class NewsController extends AbstractNewsjetController {
                 newsSolrClient.add(solrInputDocument);
                 newsSolrClient.commit();
             }
-
+            result = "success";
             return ApiResponse.ok();
         } catch (NullPointerException e) {
+            result = "fail";
             getLogger().error(e.getMessage(), e);
             return response(HttpStatus.SC_NOT_FOUND, e.getMessage());
         } catch (Exception e) {
+            result = "fail";
             return response(HttpStatus.SC_INTERNAL_SERVER_ERROR, e.getMessage());
+        } finally {
+            OperationLog operationLog = new OperationLog();
+            operationLog.setResult(result);
+            operationLog.setAction(request.getInvokeMethod());
+            operationLog.setRole(request.ip());
+            operationLog.setParameters(request.getBody());
+            operationLogMapper.insertSelective(operationLog);
         }
     }
 

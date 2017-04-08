@@ -1,4 +1,4 @@
-package com.newsjet.common.net;
+package com.newsjet.common;
 
 /**
  * Created by RoyDeng on 16/11/2.
@@ -65,6 +65,9 @@ public class CommonResponse {
         return "CommonResponse{" +
                 "status=" + status +
                 ", errorMsg='" + errorMsg + '\'' +
+                ", alertMsg='" + alertMsg + '\'' +
+                ", data=" + data +
+                ", headers=" + headers +
                 '}';
     }
 }

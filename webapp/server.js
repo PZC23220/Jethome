@@ -6,24 +6,58 @@ app.use(express.static('./'));
 var MySQLUtil = require('./jetModules/MySQLUtil');
 var mySQLUtil = new MySQLUtil();
 
-var connection = mySQLUtil.getConnectionProd();
+var connection = mySQLUtil.getConnectionTest();
 connection.connect();
 // var connection = mySQLUtil.getConnectionTest();
 // 执行数据库操作
-function select(sql, response, arr) {
+function select(sql, request, response, arr) {
     // console.log(sql);
     // console.log(arr);
     connection.query(sql, arr, function(err, rows, fields) {
-        //处理你的结果
-        if (err) {
-            console.log('error msg:', err);
-            return;
+        var s = sql.split(" ");
+        var action = s[0];
+        var result = 'Unknown';
+        try {
+            //处理你的结果
+            if (err) {
+                result = 'fail';
+                console.log('error msg:', err);
+                return;
+            }
+            // console.log(rows);
+            result = 'success';
+            response.send(rows);
+            response.end();
+        } catch (e) {
+            result = 'fail';
+        } finally {
+            log(request, action, arr, result, sql);
         }
-        // console.log(rows);
-        response.send(rows);
-        response.end();
     });
     // connection.end();
+}
+
+function log(request, action, parameters, result, extra) {
+    try {
+        var time = new Date().getTime();
+        var role = request.connection.remoteAddress;
+        console.log("action:" + action + " parameters:" + parameters + " role:" + role + " result:" + result);
+        var logSQL = 'insert into operation_log (action, parameters, role, result, extra) values (?, ?, ?, ?, ?)';
+        var p = '';
+        if (parameters) {
+            p = parameters.toString();
+        }
+        connection.query(logSQL, [action, p, role, result, extra], function(err, rows, fields) {
+            if (err) {
+                console.log(err)
+                console.log('添加操作记录失败')
+                console.log("action:" + action + " parameters:" + p + " role:" + role + " result:" + result);
+            }
+        });
+    } catch (ex) {
+        console.log('添加操作记录失败')
+        console.log("action:" + action + " parameters:" + p + " role:" + role + " result:" + result);
+    }
 }
 
 //设置跨域访问
@@ -46,9 +80,14 @@ app.get('/people_push', function(request, response) {
     }
     console.log(cmd);
     process.exec(cmd, function(error, stdout, stderr) {
+        var result = 'Unknown';
         if (error) {
+            result = 'fail';
             console.log('exec error: ' + error);
+        } else {
+            result = 'success';
         }
+        log(request, 'notification_surprise_news', request.query.pushtype + " " + request.query.aid + " " + request.query.type, result, cmd);
 
         response.send(stdout);
         response.end();
@@ -62,9 +101,14 @@ app.get('/notification_baseball', function(request, response) {
     }
     console.log(cmd);
     process.exec(cmd, function(error, stdout, stderr) {
+        var result = 'Unknown';
         if (error) {
+            result = 'fail';
             console.log('exec error: ' + error);
+        } else {
+            result = 'success';
         }
+        log(request, 'notification_base111', request.query.pushContentType + " " + request.query.pushTargetId + " 0 true " + request.query.title, result, cmd);
 
         response.send(stdout);
         response.end();
@@ -85,34 +129,34 @@ app.post('/add_push', function(request, response) {
             time: reqObj.time
         };
         var arr = [resObj.aid, resObj.type, resObj.time];
-        select(sql, response, arr);
+        select(sql, request, response, arr);
     });
 });
 // 午间/晚间新闻删除推送
 app.get('/del_push', function(request, response) {
     var sql = "DELETE FROM pushSetting where aid = " + request.query.aid;
-    select(sql, response);
+    select(sql, request, response);
 });
 // 查看午间/晚间新闻推送
 app.get('/sel_push', function(request, response) {
     var sql = "SELECT aid, type, isPush from pushSetting where aid IN (" + request.query.aid + ") GROUP BY aid";
-    select(sql, response);
+    select(sql, request, response);
 });
 
 // 查看推送日志
 app.get('/push_log', function(request, response) {
     var sql = "SELECT * from pushLog";
-    select(sql, response);
+    select(sql, request, response);
 });
 // 搜索推送日志
 app.get('/push_log_news', function(request, response) {
     var sql = "SELECT * from pushLog where aid = " + request.query.aid;
-    select(sql, response);
+    select(sql, request, response);
 });
 // 闪屏配置获取
 app.get('/get_newsupload', function(request, response) {
     var sql = "SELECT * from news_upload";
-    select(sql, response);
+    select(sql, request, response);
 });
 // 提交闪屏
 app.post('/set_newsupload', function(request, response) {
@@ -159,13 +203,13 @@ app.post('/set_newsupload', function(request, response) {
         for (var i in resObj) {
             arr.push(resObj[i]);
         }
-        select(sql, response, arr);
+        select(sql, request, response, arr);
     });
 });
 // 获取栏目
 app.get('/get_news_category', function(request, response) {
     var sql = "SELECT * from news_category";
-    select(sql, response);
+    select(sql, request, response);
 });
 // 设置栏目权重
 app.post('/set_news_category_weight', function(request, response) {
@@ -186,7 +230,7 @@ app.post('/set_news_category_weight', function(request, response) {
         for (var i in resObj) {
             arr.push(resObj[i]);
         }
-        select(sql, response, arr);
+        select(sql, request, response, arr);
     });
 });
 // 设置栏目位置
@@ -207,7 +251,7 @@ app.post('/set_news_category_status', function(request, response) {
         for (var i in resObj) {
             arr.push(resObj[i]);
         }
-        select(sql, response, arr);
+        select(sql, request, response, arr);
     });
 });
 // 新增栏目
@@ -233,17 +277,17 @@ app.post('/insert_news_category', function(request, response) {
         for (var i in resObj) {
             arr.push(resObj[i]);
         }
-        select(sql, response, arr);
+        select(sql, request, response, arr);
     });
 });
 // 专题
 app.get('/news_special_topic', function(request, response) {
     var sql = "SELECT * FROM news_special_topic";
-    select(sql, response);
+    select(sql, request, response);
 });
 app.get('/news_special_topic_active', function(request, response) {
     var sql = "UPDATE news_special_topic set active = " + request.query.value + " WHERE id = " + request.query.id;
-    select(sql, response);
+    select(sql, request, response);
 });
 app.post('/set_news_special_topic', function(request, response) {
     var sql = "INSERT INTO news_category(cid,channel,pos,status,fixed,icon,plus_weight,minus_weight,plus_init) VALUES(?,?,?,?,0,?,?,?,?)";
@@ -275,26 +319,26 @@ app.post('/set_news_special_topic', function(request, response) {
         for (var i in resObj) {
             arr.push(resObj[i]);
         }
-        select(sql, response, arr);
+        select(sql, request, response, arr);
     });
 });
 // 专题新闻
 app.get('/news_special_topic_info', function(request, response) {
     var sql = "SELECT * FROM news_special_topic_info WHERE topic_id = " + request.query.id + " order by news_time desc";
-    select(sql, response);
+    select(sql, request, response);
 });
 app.get('/news_special_topic_info_active', function(request, response) {
     var sql = "UPDATE news_special_topic_info set active = " + request.query.value + " WHERE id = " + request.query.id;
-    select(sql, response);
+    select(sql, request, response);
 });
 app.get('/news_special_topic_info_top', function(request, response) {
     var sql = "UPDATE news_special_topic_info set stick_at_top = " + request.query.value + " WHERE id = " + request.query.id;
-    select(sql, response);
+    select(sql, request, response);
 });
 // tab配置
 app.get('/switch_appbottom_tab', function(request, response) {
     var sql = "SELECT * FROM switch_appbottom_tab";
-    select(sql, response);
+    select(sql, request, response);
 });
 app.post('/set_switch_appbottom_tab', function(request, response) {
     var sql = "INSERT INTO news_category(cid,channel,pos,status,fixed,icon,plus_weight,minus_weight,plus_init) VALUES(?,?,?,?,0,?,?,?,?)";
@@ -328,39 +372,39 @@ app.post('/set_switch_appbottom_tab', function(request, response) {
             arr.push(resObj[i]);
         }
         console.log(arr);
-        select(sql, response, arr);
+        select(sql, request, response, arr);
     });
 });
 app.get('/switch_appbottom_tab_active', function(request, response) {
     var sql = "UPDATE switch_appbottom_tab set active = "+ request.query.value +" WHERE id = " + request.query.id;
-    select(sql, response);
+    select(sql, request, response);
 });
 // 获取已有评论
 app.get('/get_comments', function(request, response) {
     var sql = "SELECT aid, content, likes from post_greped where aid = ?";
     var arr = request.query.aid;
-    select(sql, response, arr);
+    select(sql, request, response, arr);
 });
 // 获取机器人账户
 app.get('/get_username', function(request, response) {
     var sql = "select * from user where id BETWEEN 1100 and 1170 OR id BETWEEN 2020 and 2068";
-    select(sql, response);
+    select(sql, request, response);
 });
 // 获取源评论链接
 app.get('/get_sourceLinks', function(request, response) {
     var sql = "SELECT url from post_greped_url where aid = ?";
     var arr = request.query.aid;
-    select(sql, response, arr);
+    select(sql, request, response, arr);
 });
 // 获取扒取评论
 app.get('/get_postGreped', function(request, response) {
     var sql = "SELECT aid, count(1) FROM post_greped WHERE aid IN (" + request.query.aid + ") GROUP BY aid";
-    select(sql, response);
+    select(sql, request, response);
 });
 // 删除评论
 app.get('/del_comments', function(request, response) {
     var sql = "DELETE FROM post where id = " + request.query.id;
-    select(sql, response);
+    select(sql, request, response);
 });
 
 var server = app.listen(PORT, function() {
