@@ -47,7 +47,9 @@ function select(sql, response, arr) {
     connection.on('error', function(err){
         if(err.code === 'PROTOCOL_CONNECTION_LOST') {
             // handleDisconnect();
-            throw err;                  
+            logger.info('PROTOCOL_CONNECTION_LOST');
+            // throw err;
+            return;
         } else {
           throw err;
         }

@@ -23,7 +23,7 @@ define(function(require, exports, module) {
 
         function automation(from) {
             $.ajax({
-                url: '/commentTemplate_read?size=30&from=' + from,
+                url: '/japi/commentTemplate_read?size=30&from=' + from,
                 success: function(res) {
                     table_automation_tbody.empty();
                     console.log(res);
