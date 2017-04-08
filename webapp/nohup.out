@@ -1,0 +1,17 @@
+development
+[32m[2017-04-07 14:15:08.586] [INFO] console - [39m服务器创建成功，请打开http://localhost:9000
+/Users/libp/Code/newsjet/JetHome/webapp/server.js:19
+var PORT = process.env.PORT || '9000';
+                      ^
+
+TypeError: Cannot read property 'PORT' of undefined
+    at Object.<anonymous> (/Users/libp/Code/newsjet/JetHome/webapp/server.js:19:23)
+    at Module._compile (module.js:573:32)
+    at Object.Module._extensions..js (module.js:582:10)
+    at Module.load (module.js:490:32)
+    at tryModuleLoad (module.js:449:12)
+    at Function.Module._load (module.js:441:3)
+    at Module.runMain (module.js:607:10)
+    at run (bootstrap_node.js:382:7)
+    at startup (bootstrap_node.js:137:9)
+    at bootstrap_node.js:497:3

@@ -23,7 +23,7 @@ define(function(require, exports, module) {
 
         function automation(from) {
             $.ajax({
-                url: 'commentTemplate_read?size=30&from=' + from,
+                url: '/japi/commentTemplate_read?size=30&from=' + from,
                 success: function(res) {
                     table_automation_tbody.empty();
                     console.log(res);
@@ -52,7 +52,7 @@ define(function(require, exports, module) {
         // 删除评论模板
         table_automation_tbody.on('click', '.del_automation', function() {
             $.ajax({
-                url: 'commentTemplate_delete?id=' + $(this).attr('data-id'),
+                url: '/commentTemplate_delete?id=' + $(this).attr('data-id'),
                 success: function(res) {
                     $('.del_success').show();
                     setTimeout(function() {
@@ -85,7 +85,7 @@ define(function(require, exports, module) {
                     id: mould_content.attr('data-id')
                 }
                 $.ajax({
-                    url: 'commentTemplate_update',
+                    url: '/commentTemplate_update',
                     type: 'POST',
                     data: JSON.stringify(data),
                     success: function(res) {
@@ -135,7 +135,7 @@ define(function(require, exports, module) {
             add_mould.show();
             reply_comment.show();
         });
-        // 搜索 
+        // 搜索
         $('.comment_category_sel').click(function() {
             table_automation_tbody.find('tr').hide().filter(":contains(" + $('.comment_category_sel').find('option:selected').html() + ")").show();
         });

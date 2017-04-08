@@ -27,7 +27,7 @@ define(function(require, exports, module) {
 
         function getActivityComment() {
             $.ajax({
-                url: 'http://api2.newsjet.io:8080/post/list?aid=-1',
+                url: '/japi/post/list?aid=-1',
                 success: function(res) {
                     var list = res.data.posts;
                     table_activity_tbody.empty();
@@ -141,7 +141,7 @@ define(function(require, exports, module) {
                 'post': postBean
             }
             $.ajax({
-                url: 'http://api2.newsjet.io:8080/post/save',
+                url: '/japi/post/save',
                 type: 'POST',
                 data: JSON.stringify(data),
                 success: function(res) {

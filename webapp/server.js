@@ -1,10 +1,28 @@
 var express = require('express');
 var app = express();
-var process = require('child_process');
-var PORT = 9000;
+var cmd = require('child_process');
 app.use(express.static('./'));
 var MySQLUtil = require('./jetModules/MySQLUtil');
 var mySQLUtil = new MySQLUtil();
+var log4js = require('log4js');
+
+log4js.configure({
+    appenders: [
+        { type: 'console' }
+    ],
+    replaceConsole: true
+});
+var logger = log4js.getLogger('debug');
+logger.setLevel('INFO');
+
+var PORT = process.env.PORT || '9000';
+var environment = process.env.NODE_ENV || 'development';
+
+if(environment === 'online'){
+    var connection = mySQLUtil.getConnectionProd();
+}else if(environment === 'development'){
+    var connection = mySQLUtil.getConnectionTest();
+}
 
 var connection = mySQLUtil.getConnectionTest();
 connection.connect();
@@ -34,7 +52,16 @@ function select(sql, request, response, arr) {
             log(request, action, arr, result, sql);
         }
     });
-    // connection.end();
+    connection.on('error', function(err){
+        if(err.code === 'PROTOCOL_CONNECTION_LOST') {
+            // handleDisconnect();
+            logger.info('PROTOCOL_CONNECTION_LOST');
+            // throw err;
+            return;
+        } else {
+          throw err;
+        }
+    });
 }
 
 function log(request, action, parameters, result, extra) {
@@ -387,6 +414,10 @@ app.get('/get_comments', function(request, response) {
 });
 // 获取机器人账户
 app.get('/get_username', function(request, response) {
+    // vm.$log([keyPath-optional])
+    // console.log('this is a test logger')
+    logger.info('get_username:');
+
     var sql = "select * from user where id BETWEEN 1100 and 1170 OR id BETWEEN 2020 and 2068";
     select(sql, request, response);
 });

@@ -4,4 +4,5 @@
 classes/
 target/
 build/
-
+webapp/node_modules/
+webapp/npm-debug.log
