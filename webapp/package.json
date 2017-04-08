@@ -15,7 +15,7 @@
   "scripts": {
     "dev": "export NODE_ENV=development && export PORT=3333 && nohup node server.js &",
     "online": "export NODE_ENV=online && nohup node server.js &",
-    "start": "export NODE_ENV=development && export PORT=3333 && node server.js"
+    "start": "export NODE_ENV=development && export PORT=3333 && pm2 node server.js"
   },
   "keywords": [
     "newsjet后台运营配置页面"

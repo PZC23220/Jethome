@@ -1,6 +1,6 @@
 var express = require('express');
 var app = express();
-var cmd = require('child_process');
+var child_process = require('child_process');
 app.use(express.static('./'));
 var MySQLUtil = require('./jetModules/MySQLUtil');
 var mySQLUtil = new MySQLUtil();
@@ -49,7 +49,7 @@ function select(sql, response, arr) {
             // handleDisconnect();
             logger.info('PROTOCOL_CONNECTION_LOST');
             // throw err;
-            return;
+            // return;
         } else {
           throw err;
         }
@@ -75,7 +75,7 @@ app.get('/people_push', function(request, response) {
         cmd += " " + request.query.body;
     }
     console.log(cmd);
-    cmd.exec(cmd, function(error, stdout, stderr) {
+    child_process.exec(cmd, function(error, stdout, stderr) {
         if (error) {
             console.log('exec error: ' + error);
         }
@@ -91,7 +91,7 @@ app.get('/notification_baseball', function(request, response) {
         cmd += " " + request.query.body;
     }
     console.log(cmd);
-    cmd.exec(cmd, function(error, stdout, stderr) {
+    child_process.exec(cmd, function(error, stdout, stderr) {
         if (error) {
             console.log('exec error: ' + error);
         }
