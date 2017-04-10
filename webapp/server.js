@@ -6,6 +6,8 @@ var MySQLUtil = require('./jetModules/MySQLUtil');
 var mySQLUtil = new MySQLUtil();
 var log4js = require('log4js');
 
+app.set('trust proxy', true);
+
 log4js.configure({
     appenders: [
         { type: 'console' }
@@ -67,7 +69,8 @@ function select(sql, request, response, arr) {
 function log(request, action, parameters, result, extra) {
     try {
         var time = new Date().getTime();
-        var role = request.connection.remoteAddress;
+        // var role = request.connection.remoteAddress;
+        var role =  request.ip;
         console.log("action:" + action + " parameters:" + parameters + " role:" + role + " result:" + result);
         var logSQL = 'insert into operation_log (action, parameters, role, result, extra) values (?, ?, ?, ?, ?)';
         var p = '';
