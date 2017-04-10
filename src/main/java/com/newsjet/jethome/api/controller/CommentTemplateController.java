@@ -25,131 +25,131 @@ import java.util.Objects;
 @Component("commentTemplate")
 public class CommentTemplateController extends AbstractNewsjetController {
 
-    @Resource
-    private CommentTemplateMapper commentTemplateMapper;
-    @Resource
-    private OperationLogMapper operationLogMapper;
+	@Resource
+	private CommentTemplateMapper commentTemplateMapper;
+	@Resource
+	private OperationLogMapper operationLogMapper;
 
-    public ApiResponse hello(ApiRequest request) {
-        return ApiResponse.ok().setResponseMsg("Hello");
-    }
+	public ApiResponse hello(ApiRequest request) {
+		return ApiResponse.ok().setResponseMsg("Hello");
+	}
 
-    public ApiResponse create(ApiRequest request) {
-        String result = "Unknown";
-        try {
-            String bodyString = request.getBody();
-            getLogger().debug("Body string {}. ", bodyString);
+	public ApiResponse create(ApiRequest request) {
+		String result = "Unknown";
+		try {
+			String bodyString = request.getBody();
+			getLogger().debug("Body string {}. ", bodyString);
 
-            Objects.requireNonNull(bodyString, "request body cannot be empty. ");
+			Objects.requireNonNull(bodyString, "request body cannot be empty. ");
 
-            CommentTemplate commentTemplate = JSONObject.parseObject(bodyString, CommentTemplate.class);
-            getLogger().debug("Comment Template {}. ", commentTemplate);
+			CommentTemplate commentTemplate = JSONObject.parseObject(bodyString, CommentTemplate.class);
+			getLogger().debug("Comment Template {}. ", commentTemplate);
 
-            Objects.requireNonNull(commentTemplate, "request body cannot be converted into CommentTemplate. ");
-            Objects.requireNonNull(commentTemplate.getContent(), "comment template content cannot be empty. ");
+			Objects.requireNonNull(commentTemplate, "request body cannot be converted into CommentTemplate. ");
+			Objects.requireNonNull(commentTemplate.getContent(), "comment template content cannot be empty. ");
 
-            commentTemplateMapper.insert(commentTemplate);
-            result = "success";
-            return ApiResponse.ok();
-        } catch (NullPointerException e) {
-            result = "fail";
-            return response(HttpStatus.SC_NOT_FOUND, e.getMessage());
-        } catch (Exception e) {
-            result = "fail";
-            getLogger().error(e.getMessage(), e);
-            return response(HttpStatus.SC_INTERNAL_SERVER_ERROR, "failed to insert comment template. ");
-        } finally {
-            OperationLog operationLog = new OperationLog();
-            operationLog.setResult(result);
-            operationLog.setAction(request.getInvokeMethod());
-            operationLog.setRole(request.ip());
+			commentTemplateMapper.insert(commentTemplate);
+			result = "success";
+			return ApiResponse.ok();
+		} catch (NullPointerException e) {
+			result = "fail";
+			return response(HttpStatus.SC_NOT_FOUND, e.getMessage());
+		} catch (Exception e) {
+			result = "fail";
+			getLogger().error(e.getMessage(), e);
+			return response(HttpStatus.SC_INTERNAL_SERVER_ERROR, "failed to insert comment template. ");
+		} finally {
+			OperationLog operationLog = new OperationLog();
+			operationLog.setResult(result);
+			operationLog.setAction(request.getInvokeMethod());
+			operationLog.setRole(request.ip());
+			operationLog.setTable("comment_template");
+			operationLog.setParameters(request.getBody());
+			operationLogMapper.insertSelective(operationLog);
+		}
+	}
 
-            operationLog.setParameters(request.getBody());
-            operationLogMapper.insertSelective(operationLog);
-        }
-    }
+	public ApiResponse read(ApiRequest request) {
+		try {
+			Integer from = request.getParamAsInt("from", 0);
+			Integer size = request.getParamAsInt("size", 10);
+			getLogger().debug("from {}, size {}. ", from, size);
 
-    public ApiResponse read(ApiRequest request) {
-        try {
-            Integer from = request.getParamAsInt("from", 0);
-            Integer size = request.getParamAsInt("size", 10);
-            getLogger().debug("from {}, size {}. ", from, size);
+			List<CommentTemplate> commentTemplates = commentTemplateMapper.selectRange(from, size);
+			Map<String, Object> resultMap = new HashMap<>();
+			resultMap.put("count", commentTemplates.size());
+			resultMap.put("data", commentTemplates);
 
-            List<CommentTemplate> commentTemplates = commentTemplateMapper.selectRange(from, size);
-            Map<String, Object> resultMap = new HashMap<>();
-            resultMap.put("count", commentTemplates.size());
-            resultMap.put("data", commentTemplates);
+			CommonResponse response = CommonResponse.ok();
+			response.setData(resultMap);
 
-            CommonResponse response = CommonResponse.ok();
-            response.setData(resultMap);
+			return ApiResponse.ok().setResponseMsg(response);
+		} catch (NullPointerException e) {
+			return response(HttpStatus.SC_NOT_FOUND, e.getMessage());
+		} catch (Exception e) {
+			getLogger().error(e.getMessage(), e);
+			return response(HttpStatus.SC_INTERNAL_SERVER_ERROR, "failed to get comment template(s). ");
+		}
+	}
 
-            return ApiResponse.ok().setResponseMsg(response);
-        } catch (NullPointerException e) {
-            return response(HttpStatus.SC_NOT_FOUND, e.getMessage());
-        } catch (Exception e) {
-            getLogger().error(e.getMessage(), e);
-            return response(HttpStatus.SC_INTERNAL_SERVER_ERROR, "failed to get comment template(s). ");
-        }
-    }
+	public ApiResponse update(ApiRequest request) {
+		String result = "Unknown";
+		try {
+			String requestBody = request.getBody();
+			getLogger().debug("request body {}. ", requestBody);
 
-    public ApiResponse update(ApiRequest request) {
-        String result = "Unknown";
-        try {
-            String requestBody = request.getBody();
-            getLogger().debug("request body {}. ", requestBody);
+			Objects.requireNonNull(requestBody, "request body cannot be empty. ");
 
-            Objects.requireNonNull(requestBody, "request body cannot be empty. ");
+			CommentTemplate contentTemplate = JSONObject.parseObject(requestBody, CommentTemplate.class);
 
-            CommentTemplate contentTemplate = JSONObject.parseObject(requestBody, CommentTemplate.class);
+			Objects.requireNonNull(contentTemplate, "template cannot be empty.");
+			Objects.requireNonNull(contentTemplate.getId(), "template id cannot be empty.");
+			commentTemplateMapper.updateByPrimaryKeySelective(contentTemplate);
+			result = "success";
+			return ApiResponse.ok();
+		} catch (NullPointerException e) {
+			result = "fail";
+			return response(HttpStatus.SC_NOT_FOUND, e.getMessage());
+		} catch (Exception e) {
+			result = "fail";
+			getLogger().error(e.getMessage(), e);
+			return response(HttpStatus.SC_INTERNAL_SERVER_ERROR, "failed to update template. ");
+		} finally {
+			OperationLog operationLog = new OperationLog();
+			operationLog.setResult(result);
+			operationLog.setAction(request.getInvokeMethod());
+			operationLog.setRole(request.ip());
+			operationLog.setTable("comment_template");
+			operationLog.setParameters(request.getBody());
+			operationLogMapper.insertSelective(operationLog);
+		}
+	}
 
-            Objects.requireNonNull(contentTemplate, "template cannot be empty.");
-            Objects.requireNonNull(contentTemplate.getId(), "template id cannot be empty.");
-            commentTemplateMapper.updateByPrimaryKeySelective(contentTemplate);
-            result = "success";
-            return ApiResponse.ok();
-        } catch (NullPointerException e) {
-            result = "fail";
-            return response(HttpStatus.SC_NOT_FOUND, e.getMessage());
-        } catch (Exception e) {
-            result = "fail";
-            getLogger().error(e.getMessage(), e);
-            return response(HttpStatus.SC_INTERNAL_SERVER_ERROR, "failed to update template. ");
-        } finally {
-            OperationLog operationLog = new OperationLog();
-            operationLog.setResult(result);
-            operationLog.setAction(request.getInvokeMethod());
-            operationLog.setRole(request.ip());
-            operationLog.setTable("comment_template");
-            operationLog.setParameters(request.getBody());
-            operationLogMapper.insertSelective(operationLog);
-        }
-    }
+	public ApiResponse delete(ApiRequest request) {
+		String result = "Unknown";
+		try {
+			Integer id = request.getParamAsInt("id");
+			getLogger().debug("id {}. ", id);
+			Objects.requireNonNull(id, "id cannot be empty. ");
 
-    public ApiResponse delete(ApiRequest request) {
-        String result = "Unknown";
-        try {
-            Integer id = request.getParamAsInt("id");
-            getLogger().debug("id {}. ", id);
-            Objects.requireNonNull(id, "id cannot be empty. ");
-
-            commentTemplateMapper.deleteByPrimaryKey(id);
-            result = "success";
-            return ApiResponse.ok();
-        } catch (NullPointerException e) {
-            result = "fail";
-            return response(HttpStatus.SC_NOT_FOUND, e.getMessage());
-        } catch (Exception e) {
-            result = "fail";
-            getLogger().error(e.getMessage(), e);
-            return response(HttpStatus.SC_INTERNAL_SERVER_ERROR, "failed to delete template. ");
-        } finally {
-            OperationLog operationLog = new OperationLog();
-            operationLog.setResult(result);
-            operationLog.setAction(request.getInvokeMethod());
-            operationLog.setRole(request.ip());
-            operationLog.setParameters(request.getParamMap().toString());
-            operationLog.setTable("comment_template");
-            operationLogMapper.insertSelective(operationLog);
-        }
-    }
+			commentTemplateMapper.deleteByPrimaryKey(id);
+			result = "success";
+			return ApiResponse.ok();
+		} catch (NullPointerException e) {
+			result = "fail";
+			return response(HttpStatus.SC_NOT_FOUND, e.getMessage());
+		} catch (Exception e) {
+			result = "fail";
+			getLogger().error(e.getMessage(), e);
+			return response(HttpStatus.SC_INTERNAL_SERVER_ERROR, "failed to delete template. ");
+		} finally {
+			OperationLog operationLog = new OperationLog();
+			operationLog.setResult(result);
+			operationLog.setAction(request.getInvokeMethod());
+			operationLog.setRole(request.ip());
+			operationLog.setParameters(request.getParamMap().toString());
+			operationLog.setTable("comment_template");
+			operationLogMapper.insertSelective(operationLog);
+		}
+	}
 }
