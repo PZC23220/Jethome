@@ -52,7 +52,7 @@ define(function(require, exports, module) {
         // 删除评论模板
         table_automation_tbody.on('click', '.del_automation', function() {
             $.ajax({
-                url: '/commentTemplate/delete?id=' + $(this).attr('data-id'),
+                url: '/api/commentTemplate/delete?id=' + $(this).attr('data-id'),
                 success: function(res) {
                     $('.del_success').show();
                     setTimeout(function() {
