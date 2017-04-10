@@ -68,6 +68,7 @@ function select(sql, request, response, arr) {
 
 function log(request, action, parameters, result, extra) {
     try {
+        if (action.toUpperCase() == 'SELECT') { return; }
         var time = new Date().getTime();
         // var role = request.connection.remoteAddress;
         var role =  request.ip;
