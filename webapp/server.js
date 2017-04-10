@@ -1,10 +1,12 @@
 var express = require('express');
 var app = express();
-var cmd = require('child_process');
+var child_process = require('child_process');
 app.use(express.static('./'));
 var MySQLUtil = require('./jetModules/MySQLUtil');
 var mySQLUtil = new MySQLUtil();
 var log4js = require('log4js');
+
+app.set('trust proxy', true);
 
 log4js.configure({
     appenders: [
@@ -57,7 +59,7 @@ function select(sql, request, response, arr) {
             // handleDisconnect();
             logger.info('PROTOCOL_CONNECTION_LOST');
             // throw err;
-            return;
+            // return;
         } else {
           throw err;
         }
@@ -67,7 +69,8 @@ function select(sql, request, response, arr) {
 function log(request, action, parameters, result, extra) {
     try {
         var time = new Date().getTime();
-        var role = request.connection.remoteAddress;
+        // var role = request.connection.remoteAddress;
+        var role =  request.ip;
         console.log("action:" + action + " parameters:" + parameters + " role:" + role + " result:" + result);
         var logSQL = 'insert into operation_log (action, parameters, role, result, extra) values (?, ?, ?, ?, ?)';
         var p = '';
@@ -106,7 +109,7 @@ app.get('/people_push', function(request, response) {
         cmd += " " + request.query.body;
     }
     console.log(cmd);
-    process.exec(cmd, function(error, stdout, stderr) {
+    child_process.exec(cmd, function(error, stdout, stderr) {
         var result = 'Unknown';
         if (error) {
             result = 'fail';
@@ -127,7 +130,7 @@ app.get('/notification_baseball', function(request, response) {
         cmd += " " + request.query.body;
     }
     console.log(cmd);
-    process.exec(cmd, function(error, stdout, stderr) {
+    child_process.exec(cmd, function(error, stdout, stderr) {
         var result = 'Unknown';
         if (error) {
             result = 'fail';
