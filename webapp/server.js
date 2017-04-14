@@ -40,7 +40,8 @@ var PORT = 9000;
 
 
 
-// var connection = mySQLUtil.getConnectionTest();
+var connection = mySQLUtil.getConnectionTest();
+connection.connect();
 // 执行数据库操作
 
 /**
@@ -50,18 +51,34 @@ var PORT = 9000;
  * @param  {[type]} arr      [description]
  * @return [type]            [description]
  */
+// function select(sql, response, arr) {
+//     MySQLUtil.getConnection(function(err, connection){
+//         connection.query(sql, arr, function(err, rows, fields) {
+//             //处理你的结果
+//             if (err) {
+//                 logger.error('DB ERROR:', err);
+//                 return;
+//             }
+//             response.send(rows);
+//             response.end();
+//         });
+//     })
+// }
 function select(sql, response, arr) {
-    MySQLUtil.getConnection(function(err, connection){
-        connection.query(sql, arr, function(err, rows, fields) {
-            //处理你的结果
-            if (err) {
-                logger.error('DB ERROR:', err);
-                return;
-            }
-            response.send(rows);
-            response.end();
-        });
-    })
+    // console.log(sql);
+    // console.log(arr);
+    connection.query(sql, arr, function(err, rows, fields) {
+        //处理你的结果
+        if (err) {
+            logger.error('DB ERROR:', err);
+            return;
+        }
+        // console.log(rows);
+        response.send(rows);
+        response.end();
+    });
+    // connection.end();
+    
 }
 
 //设置跨域访问
