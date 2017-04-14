@@ -23,8 +23,8 @@ var close2 = $('.close2');
 var nav_left_list = $('.nav_left_list li');
 var loading = $('.loading');
 var main_content = $('.main_content');
-var server_host = "http://jethome.newsjet.io:9000";
-// var server_host = '';
+// var server_host = "http://jethome.newsjet.io:9000";
+var server_host = '';
 
 // var server_host = "http://localhost:9000";
 
@@ -33,7 +33,7 @@ var commonFn = {
     getCategory: function() {
         var arr;
         $.ajax({
-            url: server_host + '/get_news_category',
+            url: '/get_news_category',
             async: false,
             success: function(res) {
                 arr = res;
@@ -45,7 +45,7 @@ var commonFn = {
     getUserimg: function() {
         var arr;
         $.ajax({
-            url: server_host + '/get_username',
+            url: '/get_username',
             async: false,
             success: function(res) {
                 arr = res;
