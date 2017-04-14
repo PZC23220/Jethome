@@ -56,7 +56,7 @@ function select(sql, response, arr) {
             //处理你的结果
             if (err) {
                 logger.error('DB ERROR:', err);
-                return false;
+                return;
             }
             response.send(rows);
             response.end();
