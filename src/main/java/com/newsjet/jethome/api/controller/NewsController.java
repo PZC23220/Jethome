@@ -67,7 +67,7 @@ public class NewsController extends AbstractNewsjetController {
 
     private List<String> getIDByAID(String aid) throws Exception {
         ModifiableSolrParams params = new ModifiableSolrParams();
-        params.add(CommonParams.FQ, "repeated:false");
+        params.add(CommonParams.FQ, "!repeated:true");
         params.add(CommonParams.FQ, String.format("aid:%s", aid));
 
         SolrDocumentList results = newsSolrClient.query(params).getResults();
