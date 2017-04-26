@@ -14,7 +14,7 @@
   },
   "scripts": {
     "dev": "export NODE_ENV=development && nohup node server.js &",
-    "online": "export NODE_ENV=online && nohup node server.js &",
+    "online": "export NODE_ENV=online && pm2 start server.js &",
     "start": "node server.js"
   },
   "keywords": [
