@@ -6,3 +6,4 @@ target/
 build/
 webapp/node_modules/
 webapp/npm-debug.log
+npm-debug.log

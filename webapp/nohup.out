@@ -15,3 +15,16 @@ TypeError: Cannot read property 'PORT' of undefined
     at run (bootstrap_node.js:382:7)
     at startup (bootstrap_node.js:137:9)
     at bootstrap_node.js:497:3
+[32m[2017-04-26 10:32:47.543] [INFO] console - [39m服务器创建成功，请打开http://localhost:3333
+events.js:160
+      throw er; // Unhandled 'error' event
+      ^
+
+Error: Connection lost: The server closed the connection.
+    at Protocol.end (/Users/libp/Code/newsjet/JetHome/webapp/node_modules/mysql/lib/protocol/Protocol.js:109:13)
+    at Socket.<anonymous> (/Users/libp/Code/newsjet/JetHome/webapp/node_modules/mysql/lib/Connection.js:115:28)
+    at emitNone (events.js:91:20)
+    at Socket.emit (events.js:185:7)
+    at endReadableNT (_stream_readable.js:974:12)
+    at _combinedTickCallback (internal/process/next_tick.js:74:11)
+    at process._tickCallback (internal/process/next_tick.js:98:9)
