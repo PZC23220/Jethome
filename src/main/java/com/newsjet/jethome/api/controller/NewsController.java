@@ -26,56 +26,55 @@ import java.util.stream.Collectors;
 @Component("news")
 public class NewsController extends AbstractNewsjetController {
 
-    public ApiResponse hello(ApiRequest request) {
-        return ApiResponse.ok().setResponseMsg("Hello");
-    }
+	public ApiResponse hello(ApiRequest request) {
+		return ApiResponse.ok().setResponseMsg("Hello");
+	}
 
-    @Resource
-    private SolrClient newsSolrClient;
+	@Resource
+	private SolrClient newsSolrClient;
 
-    public ApiResponse fixCID(ApiRequest request) {
-        try {
-            getLogger().info("Request = [{}]. ", JSON.toJSONString(request));
+	public ApiResponse fixCID(ApiRequest request) {
+		try {
+			getLogger().info("Request = [{}]. ", JSON.toJSONString(request));
 
-            String aid = request.getParamAsStr("aid");
+			String aid = request.getParamAsStr("aid");
 
-            Objects.requireNonNull(aid, "Aid cannot be empty. ");
+			Objects.requireNonNull(aid, "Aid cannot be empty. ");
 
-            List<String> ids = getIDByAID(aid);
+			List<String> ids = getIDByAID(aid);
 
-            for (String id : ids) {
-                SolrInputDocument solrInputDocument = new SolrInputDocument();
-                solrInputDocument.addField("id", id);
+			for (String id : ids) {
+				SolrInputDocument solrInputDocument = new SolrInputDocument();
+				solrInputDocument.addField("id", id);
 
-                String cid = request.getParamAsStr("cid");
-                Map<String, String> operation = new HashMap<>();
-                operation.put("set", cid);
+				String cid = request.getParamAsStr("cid");
+				Map<String, String> operation = new HashMap<>();
+				operation.put("set", cid);
 
-                solrInputDocument.addField("cid", operation);
-                newsSolrClient.add(solrInputDocument);
-                newsSolrClient.commit();
-            }
+				solrInputDocument.addField("cid", operation);
+				newsSolrClient.add(solrInputDocument);
+				newsSolrClient.commit();
+			}
 
-            return ApiResponse.ok();
-        } catch (NullPointerException e) {
-            getLogger().error(e.getMessage(), e);
-            return response(HttpStatus.SC_NOT_FOUND, e.getMessage());
-        } catch (Exception e) {
-            return response(HttpStatus.SC_INTERNAL_SERVER_ERROR, e.getMessage());
-        }
-    }
+			return ApiResponse.ok();
+		} catch (NullPointerException e) {
+			getLogger().error(e.getMessage(), e);
+			return response(HttpStatus.SC_NOT_FOUND, e.getMessage());
+		} catch (Exception e) {
+			return response(HttpStatus.SC_INTERNAL_SERVER_ERROR, e.getMessage());
+		}
+	}
 
-    private List<String> getIDByAID(String aid) throws Exception {
-        ModifiableSolrParams params = new ModifiableSolrParams();
-        params.add(CommonParams.FQ, "repeated:false");
-        params.add(CommonParams.FQ, String.format("aid:%s", aid));
+	private List<String> getIDByAID(String aid) throws Exception {
+		ModifiableSolrParams params = new ModifiableSolrParams();
+		params.add(CommonParams.FQ, String.format("aid:%s", aid));
 
-        SolrDocumentList results = newsSolrClient.query(params).getResults();
+		SolrDocumentList results = newsSolrClient.query(params).getResults();
 
-        getLogger().info("Result.size = [{}]. ", results.size());
+		getLogger().info("Result.size = [{}]. ", results.size());
 
-        return results.stream()
-                .map(doc -> Objects.toString(doc.getFieldValue("id")))
-                .collect(Collectors.toList());
-    }
+		return results.stream()
+			.map(doc -> Objects.toString(doc.getFieldValue("id")))
+			.collect(Collectors.toList());
+	}
 }
