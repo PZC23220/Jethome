@@ -16,7 +16,7 @@
     "browser-sync": "^2.18.8"
   },
   "scripts": {
-    "development": "export NODE_ENV=development && export PORT=9000 && nohup node bin/www &",
+    "development": "export NODE_ENV=development && export PORT=9999 && nohup node bin/www &",
     "online": "export NODE_ENV=online && nohup node bin/www &",
     "start": "export NODE_ENV=development && export PORT=3333 && supervisor bin/www"
   },
