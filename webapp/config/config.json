@@ -1,0 +1,18 @@
+{
+    "development": {
+        "host": "newsjet-test3.cluster-cjrqtvo4y0v6.ap-northeast-1.rds.amazonaws.com",
+        "username": "newsjet",
+        "password": "NewsJetTest1234",
+        "database": "newsjet"
+    },
+    "online": {
+        "host": "newsjet-1.cluster-cjrqtvo4y0v6.ap-northeast-1.rds.amazonaws.com",
+        "username": "newsjet",
+        "password": "WcG32wxQVhHK3iI4",
+        "database": "newsjet"
+    },
+  	"freezeTableName" : true,
+  	"timestamps" : false,
+    "underscored": true,
+    "underscoredAll": true
+}

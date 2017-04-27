@@ -4,10 +4,13 @@
   "description": "newsjet后台运营配置页面",
   "main": "gulpfile.js",
   "dependencies": {
+    "body-parser": "^1.17.1",
+    "cookie-parser": "^1.4.3",
     "express": "^4.14.0",
     "gulp": "^3.9.1",
     "log4js": "^1.1.1",
-    "mysql": "^2.12.0"
+    "mysql": "^2.12.0",
+    "sequelize": "^3.30.4"
   },
   "devDependencies": {
     "browser-sync": "^2.18.8"
@@ -15,7 +18,7 @@
   "scripts": {
     "dev": "export NODE_ENV=development && export PORT=3333 && nohup node server.js &",
     "online": "export NODE_ENV=online && nohup node server.js &",
-    "start": "export NODE_ENV=development && export PORT=3333 && node server.js"
+    "start": "export NODE_ENV=development && export PORT=3333 && supervisor bin/www"
   },
   "keywords": [
     "newsjet后台运营配置页面"
