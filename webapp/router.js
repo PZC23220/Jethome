@@ -25,6 +25,7 @@ if(environment === 'product'){
     var connection = mySQLUtil.getConnectionTest();
 }
 
+// <<<<<<< HEAD:webapp/router.js
 // 执行数据库操作
 function select(sql, request, response, arr) {
     try{
@@ -78,6 +79,29 @@ function log(request, action, parameters, result, extra) {
         console.log("action:" + action + " parameters:" + p + " role:" + role + " result:" + result);
     }
 }
+// =======
+// var connection = mySQLUtil.getConnectionTest();
+// connection.connect();
+// 执行数据库操作
+
+// }
+// function select(sql, response, arr) {
+//     // console.log(sql);
+//     // console.log(arr);
+//     connection.query(sql, arr, function(err, rows, fields) {
+//         //处理你的结果
+//         if (err) {
+//             logger.error('DB ERROR:', err);
+//             return;
+//         }
+//         // console.log(rows);
+//         response.send(rows);
+//         response.end();
+//     });
+//     // connection.end();
+//
+// >>>>>>> master:webapp/server.js
+
 
 // 推送新闻/视频
 router.get('/people_push', function(request, response) {

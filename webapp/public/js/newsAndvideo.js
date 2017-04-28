@@ -1062,7 +1062,7 @@ define(function(require, exports, module) {
                                 } else if ($('.push_video_title').val() && $('.push_video_desc').val()) {
                                     pushNews(aid, 'video', 'android', $('.push_video_title').val(), $('.push_video_desc').val());
                                 } else {
-                                    pushNews(aid, 'android', 'video');
+                                    pushNews(aid, 'video', 'android');
                                 }
                                 // pushNews(aid, pushtype, 'android', title, desc);
                             } else if (this.checked && $(this).val() == 'ios') {

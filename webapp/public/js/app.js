@@ -2,7 +2,6 @@ define(function(require, exports, module) {
     var main_content = $('.main_content');
     var content_text;
     var page1 = function() {
-        console.log('执行2');
         content_text = require('../html/commentContainer.html');
         content_text2 = require('../html/videoContainer.html');
         main_content.html(content_text + content_text2);
