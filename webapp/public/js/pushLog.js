@@ -10,6 +10,7 @@ define(function(require, exports, module) {
             $.ajax({
                 url: server_host + '/push_log',
                 success: function(res) {
+                    console.log('推送日志');
                     createPushLog(res);
                 }
             });
@@ -36,6 +37,10 @@ define(function(require, exports, module) {
                 } else if (list[i].pushType == 1) {
                     var td4 = $('<td/>').addClass('push_type').html('人工推送').appendTo(tr);
                 }
+
+                var td5 = $('<td/>').html(list[i].platform).appendTo(tr);
+                var td6 = $('<td/>').html(list[i].pushtitle).appendTo(tr);
+                var td7 = $('<td/>').html(list[i].pushbody).appendTo(tr);
 
                 tr.appendTo(table_pushLog_tbody);
             }

@@ -5,7 +5,7 @@
         "password": "NewsJetTest1234",
         "database": "newsjet"
     },
-    "online": {
+    "product": {
         "host": "newsjet-1.cluster-cjrqtvo4y0v6.ap-northeast-1.rds.amazonaws.com",
         "username": "newsjet",
         "password": "WcG32wxQVhHK3iI4",

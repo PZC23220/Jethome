@@ -25,6 +25,7 @@ var loading = $('.loading');
 var main_content = $('.main_content');
 var server_host = '';
 
+
 var commonFn = {
     //获取栏目
     getCategory: function() {
@@ -51,6 +52,7 @@ var commonFn = {
         return arr;
     }
 }
+
 console.log(commonFn)
 var arr10 = commonFn.getUserimg();
 var arrCategory = commonFn.getCategory();
@@ -58,7 +60,9 @@ var arrCategory = commonFn.getCategory();
 seajs.use('app', function(app) {
     app.page1();
 });
-// 左侧列表点击
+
+
+// 左侧列表点击 bindevent
 nav_left_list.click(function() {
     nav_left_list.removeClass('active');
     $(this).addClass('active');
@@ -135,11 +139,16 @@ nav_left_list.click(function() {
             break;
     }
 });
+
+
 // 判断用户有没有登录
-var obj = sessionStorage.getItem('username');
-if (!obj) {
-    window.open('./login.html', '_self');
-}
+// var obj = sessionStorage.getItem('username');
+// if (!obj) {
+//     window.open('./login.html', '_self');
+// }
+
+
+
 // 取消推送
 main_content.on('click', '.close4', function() {
     $(this).parents('.reply_comment').hide();

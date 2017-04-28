@@ -15,40 +15,15 @@ router.all('*', function(req, res, next) {
     res.header("Content-Type", "application/json;charset=utf-8");
     next();
 });
-
-router.get('/test', function(req, res, next){
-    console.log('test');
-    res.send('hello world');
-});
-
-
-// var log4js = require('log4js');
-
-
-
-// 初始化日志管理
-// log4js.configure({
-//     appenders: [
-//         { type: 'console' }
-//     ],
-//     replaceConsole: true
-// });
-// var logger = log4js.getLogger('debug');
-// logger.setLevel('INFO');
-
-
 // 根据参数配置环境变量env和端口号
-// var PORT = process.env.PORT || '9000';
-// var environment = process.env.NODE_ENV || 'development';
-//
-// if(environment === 'online'){
-//     var connection = mySQLUtil.getConnectionProd();
-// }else if(environment === 'development'){
-//     var connection = mySQLUtil.getConnectionTest();
-// }
+var environment = process.env.NODE_ENV || 'development';
 
-// 进行数据库连接
-var connection = mySQLUtil.getConnectionTest();
+// 数据库连接
+if(environment === 'product'){
+    var connection = mySQLUtil.getConnectionProd();
+}else if(environment === 'development'){
+    var connection = mySQLUtil.getConnectionTest();
+}
 
 // 执行数据库操作
 function select(sql, request, response, arr) {
@@ -103,9 +78,6 @@ function log(request, action, parameters, result, extra) {
         console.log("action:" + action + " parameters:" + p + " role:" + role + " result:" + result);
     }
 }
-
-
-
 
 // 推送新闻/视频
 router.get('/people_push', function(request, response) {
@@ -448,7 +420,4 @@ router.get('/del_comments', function(request, response) {
     select(sql, request, response);
 });
 
-// var server = router.listen(PORT, function() {
-//     console.log('服务器创建成功，请打开http://localhost:' + PORT);
-// });
 module.exports = router;

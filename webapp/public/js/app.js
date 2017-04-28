@@ -1,7 +1,8 @@
-define(function(require, exports) {
+define(function(require, exports, module) {
     var main_content = $('.main_content');
     var content_text;
     var page1 = function() {
+        console.log('执行2');
         content_text = require('../html/commentContainer.html');
         content_text2 = require('../html/videoContainer.html');
         main_content.html(content_text + content_text2);
@@ -11,73 +12,72 @@ define(function(require, exports) {
         newsAndVideo.newsAndVideo();
     }
     var page2 = function() {
-        content_text = require('../html/commentContainer.html');
-        content_text2 = require('../html/videoContainer.html');
-        main_content.html(content_text + content_text2);
-        $('#commentContainer').hide();
-        $('#videoContainer').show();
-        var newsAndVideo = require('./newsAndvideo.js');
-        newsAndVideo.newsAndVideo();
+        require.async(['../html/commentContainer.html', '../html/videoContainer.html', 'newsAndvideo.js'], function(m_html1, m_html2, newsAndVideo){
+            main_content.html(m_html1 + m_html2);
+            $('#commentContainer').hide();
+            $('#videoContainer').show();
+            newsAndVideo.newsAndVideo();
+        });
     }
     var page3 = function() {
-        content_text = require('../html/pushLog.html');
-        main_content.html(content_text);
-        var pushLog = require('./pushLog.js');
-        pushLog.pushLog();
+        require.async(['../html/pushLog.html', 'pushLog.js'], function(m_html, m_js){
+            main_content.html(m_html);
+            m_js.pushLog();
+        });
     }
     var page4 = function() {
-        content_text = require('../html/activetyComment.html');
-        main_content.html(content_text);
-        var activetyComment = require('./activetyComment.js');
-        activetyComment.activetyComment();
+        require.async(['../html/activetyComment.html', 'activetyComment.js'], function(m_html, activetyComment){
+            main_content.html(m_html);
+            activetyComment.activetyComment();
+        });
     }
     var page5 = function() {
-        content_text = require('../html/switchActivitySplash.html');
-        main_content.html(content_text);
-        var switchActivitySplash = require('./switchActivitySplash.js');
-        switchActivitySplash.switchActivitySplash();
+        require.async(['../html/switchActivitySplash.html', 'switchActivitySplash.js'], function(m_html, switchActivitySplash){
+            main_content.html(m_html);
+            switchActivitySplash.switchActivitySplash();
+        });
     }
     var page6 = function() {
-        content_text = require('../html/switchActivityAppbottombar.html');
-        main_content.html(content_text);
-        var switchActivityAppbottombar = require('./switchActivityAppbottombar.js');
-        switchActivityAppbottombar.switchActivityAppbottombar();
+        require.async(['../html/switchActivityAppbottombar.html', 'switchActivityAppbottombar.js'], function(m_html, switchActivityAppbottombar){
+            main_content.html(m_html);
+            switchActivityAppbottombar.switchActivityAppbottombar();
+        });
     }
     var page7 = function() {
-        content_text = require('../html/newsUpload.html');
-        main_content.html(content_text);
-        var newsUpload = require('./newsUpload.js');
-        newsUpload.newsUpload();
+        require.async(['../html/newsUpload.html', 'newsUpload.js'], function(m_html, newsUpload){
+            main_content.html(m_html);
+            newsUpload.newsUpload();
+        });
     }
     var page8 = function() {
-        content_text = require('../html/commentAutomation.html');
-        main_content.html(content_text);
-        var commentAutomation = require('./commentAutomation.js');
-        commentAutomation.commentAutomation();
+        require.async(['../html/commentAutomation.html', 'commentAutomation.js'], function(m_html, commentAutomation){
+            main_content.html(m_html);
+            commentAutomation.commentAutomation();
+        });
     }
     var page9 = function() {
-        content_text = require('../html/headlineOptimize.html');
-        main_content.html(content_text);
-        var headlineOptimize = require('./headlineOptimize.js');
-        headlineOptimize.headlineOptimize();
+        require.async(['../html/headlineOptimize.html', 'headlineOptimize.js'], function(m_html, headlineOptimize){
+            main_content.html(m_html);
+            headlineOptimize.headlineOptimize();
+        });
     }
     var page10 = function() {
-        content_text = require('../html/matchList.html');
-        main_content.html(content_text);
-        var matchList = require('./matchList.js');
-        matchList.matchList();
+        require.async(['../html/matchList.html', 'matchList.js'], function(m_html, matchList){
+            main_content.html(m_html);
+            matchList.matchList();
+        });
     }
     var page11 = function() {
-        content_text = require('../html/specialConfiguration.html');
-        main_content.html(content_text);
-        var specialConfiguration = require('./specialConfiguration.js');
-        specialConfiguration.specialConfiguration();
+        require.async(['../html/specialConfiguration.html', 'specialConfiguration.js'], function(m_html, specialConfiguration){
+            main_content.html(m_html);
+            specialConfiguration.specialConfiguration();
+        });
     }
     var page12 = function() {
-        content_text = require('../html/tabConfiguration.html');
-        main_content.html(content_text);
-        var tabConfiguration = require('./tabConfiguration.js');
-        tabConfiguration.tabConfiguration();
+        require.async(['../html/tabConfiguration.html', 'tabConfiguration.js'], function(m_html, tabConfiguration){
+            main_content.html(m_html);
+            tabConfiguration.tabConfiguration();
+        });
     }
 
     exports.page1 = page1;

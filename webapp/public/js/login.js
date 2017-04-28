@@ -34,12 +34,12 @@
     }
 
     document.onkeydown = function(event) {　　
-        if (event.keyCode == 13) //回车键的键值为13 
-        　　　　 submit();　　 
+        if (event.keyCode == 13) //回车键的键值为13
+        　　　　 submit();　　
 	};
 
 	function submit() {
-		
+
         if (a & b) {
             window.open('./index.html', '_self');
             sessionStorage.setItem('username', 'newsJet');
