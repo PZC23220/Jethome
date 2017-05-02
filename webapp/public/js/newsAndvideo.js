@@ -1,5 +1,15 @@
 var c = true;
 define(function(require, exports, module) {
+    // var newsAndVideo = {
+    //     _bindEvent: function(){
+    //         var self = this;
+    //
+    //     },
+    //     init: function(){
+    //         var self = this;
+    //
+    //     }
+    // }
     var newsAndVideo = function() {
         var video_li = $('.video_li li');
         var news_li = $('.news_li li');

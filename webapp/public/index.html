@@ -49,7 +49,10 @@
 <script src="lib/sea-text.js"></script>
 <script>
 seajs.config({
-    base: "./js"
+    base: "/js",
+    preload:[
+        '/lib/template-web.js'
+    ]
 })
 </script>
 <script src="js/common.js"></script>
