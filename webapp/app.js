@@ -31,9 +31,12 @@ app.use('/api/v1/', api_v1);
 
 
 // catch 404 and forward to error handler
+app.get('/favicon.ico', function(req, res, next){
+    res.status(404);
+});
 app.use(function(req, res, next) {
   var err = new Error('Not Found');
-  err.status = 404;
+  err.statusCode = 404;
   next(err);
 });
 

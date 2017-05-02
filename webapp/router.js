@@ -25,7 +25,6 @@ if(environment === 'product'){
     var connection = mySQLUtil.getConnectionTest();
 }
 
-// <<<<<<< HEAD:webapp/router.js
 // 执行数据库操作
 function select(sql, request, response, arr) {
     try{
