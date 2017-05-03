@@ -344,7 +344,7 @@ define(function(require, exports, module) {
                     data: {
                         keyword: tit || '',
                         beforeDays: 7,
-                        rows: 10
+                        rows: 100
                     },
                     success: function(res) {
                         console.log('搜索结果');
@@ -354,7 +354,7 @@ define(function(require, exports, module) {
                         for (var i = 0; i < lists.length; i++) {
                             var list = lists[i];
                             var tr = $('<tr/>');
-                            var td1 = $('<td/>').html(i).appendTo(tr);
+                            var td1 = $('<td/>').html(i + 1).appendTo(tr);
                             var td2 = $('<td/>').html(list.id).addClass('newsid').appendTo(tr);
                             var td3 = $('<td/>').html(list.title).addClass('newstitle').appendTo(tr);
                             var td4 = $('<td/>').html(list.commentCount).addClass('commentCount').appendTo(tr);
@@ -396,7 +396,7 @@ define(function(require, exports, module) {
             if (tit) {
                 // table_video_tbody.find('tr').hide().filter(":contains(" + tit + ")").show();
                 $.ajax({
-                    url: '/solr/video_select?wt=json&fl=title,vid,commentCount,category_id:cid,desc&sort=score%20desc&q=title:' + tit + '&rows=100',
+                    url: '/solr/tvideos/select?wt=json&fl=title,vid,commentCount,category_id:cid,desc&sort=score%20desc&q=title:' + tit + '&rows=100',
                     success: function(res) {
                         console.log(res);
                         table_video_tbody.empty();
@@ -404,7 +404,7 @@ define(function(require, exports, module) {
                         for (var i = 0; i < lists.length; i++) {
                             var list = lists[i];
                             var tr = $('<tr/>');
-                            var td1 = $('<td/>').html(1).appendTo(tr);
+                            var td1 = $('<td/>').html(i + 1).appendTo(tr);
                             var td2 = $('<td/>').html(list.vid).addClass('videoid').attr('data-id', list.videoId).appendTo(tr);
                             var td3 = $('<td/>').html(list.title).addClass('videotitle').appendTo(tr);
                             var td4 = $('<td/>').html(list.commentCount).addClass('commentCount').appendTo(tr);
