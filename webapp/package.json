@@ -17,7 +17,7 @@
   },
   "scripts": {
     "development": "export NODE_ENV=development && export PORT=9999 && nohup node bin/www &",
-    "product": "export NODE_ENV=product && nohup node bin/www &",
+    "product": "export NODE_ENV=product && export PORT=8899 &&  pm2 node bin/www &",
     "start": "export NODE_ENV=development && export PORT=3333 && supervisor bin/www"
   },
   "keywords": [
