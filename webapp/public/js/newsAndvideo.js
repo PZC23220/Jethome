@@ -396,7 +396,7 @@ define(function(require, exports, module) {
             if (tit) {
                 // table_video_tbody.find('tr').hide().filter(":contains(" + tit + ")").show();
                 $.ajax({
-                    url: '/solr/tvideos/select?wt=json&fl=title,vid,commentCount,category_id:cid,desc&sort=score%20desc&q=title:' + tit + '&rows=100',
+                    url: '/solr/videos/select?wt=json&fl=title,vid,commentCount,category_id:cid,desc&sort=score%20desc&q=title:' + tit + '&rows=100',
                     success: function(res) {
                         console.log(res);
                         table_video_tbody.empty();
