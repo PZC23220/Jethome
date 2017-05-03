@@ -324,12 +324,7 @@ router.get('/news_special_topic_active', function(request, response) {
 });
 router.post('/set_news_special_topic', function(request, response) {
     var sql = "INSERT INTO news_category(cid,channel,pos,status,fixed,icon,plus_weight,minus_weight,plus_init) VALUES(?,?,?,?,0,?,?,?,?)";
-    var jsonData = "";
-    request.on('data', function(chunk) {
-        jsonData += chunk;
-    });
-    request.on('end', function() {
-        var reqObj = JSON.parse(jsonData);
+    var reqObj = request.body;
         var resObj = {
             title: reqObj.title,
             cid: reqObj.cid,
@@ -353,7 +348,7 @@ router.post('/set_news_special_topic', function(request, response) {
             arr.push(resObj[i]);
         }
         select(sql, request, response, arr);
-    });
+    // });
 });
 // 专题新闻
 router.get('/news_special_topic_info', function(request, response) {

@@ -82,9 +82,12 @@ define(function(require, exports, module) {
                 }
                 console.log(data);
                 $.ajax({
-                    url: server_host + '/set_news_special_topic',
+                    url: '/set_news_special_topic',
                     type: 'POST',
+                    processData: false,
                     data: JSON.stringify(data),
+                    contentType: 'application/json',
+                    dataType: 'json',
                     success: function(res) {
                         console.log(res);
                         $('.modify_success').show();
