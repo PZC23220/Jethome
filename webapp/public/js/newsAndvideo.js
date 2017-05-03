@@ -1209,7 +1209,7 @@ define(function(require, exports, module) {
         c_news_sure.click(function() {
             console.log(c_news_category.find('option:selected').attr('data-id'));
             $.ajax({
-                url: 'news_fixCID?aid=' + c_news_id.val() + '&cid=' + c_news_category.find('option:selected').attr('data-id'),
+                url: '/news/fixCID?aid=' + c_news_id.val() + '&cid=' + c_news_category.find('option:selected').attr('data-id'),
                 success: function(res) {
                     console.log(res);
                     $('.share_success').show();
