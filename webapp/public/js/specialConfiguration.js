@@ -13,7 +13,7 @@ define(function(require, exports, module) {
                 $('<option/>').html(arrCategory[i].channel).attr('data-id',arrCategory[i].cid).appendTo(category);
             }
         }
-        
+
         // 创建专题
         special_create.click(function() {
             $('.special_title').val('');
@@ -89,7 +89,7 @@ define(function(require, exports, module) {
                         console.log(res);
                         $('.modify_success').show();
                         $.ajax({
-                            url: 'news_topic?title=' + data.title + '&topic_time=' + Date.parse(data.topic_time) / 1000,
+                            url: '/news_topic/init?title=' + data.title + '&topic_time=' + Date.parse(data.topic_time) / 1000,
                             success: function(res) {
                                 console.log(res);
                             }
