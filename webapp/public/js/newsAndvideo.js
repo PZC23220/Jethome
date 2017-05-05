@@ -320,6 +320,7 @@ define(function(require, exports, module) {
             var commentCount = $('.commentCount');
             var nid = $('.news_id').val();
             var tit = $('.news_title').val();
+            var news_category = $('#news_category').val();
             if (nid) {
                 table_comment_tbody.empty();
                 getSinglenews(nid);
@@ -371,6 +372,36 @@ define(function(require, exports, module) {
                 });
 
             }
+            if(news_category && news_category.length > 0){
+                // 按照新闻分类进行搜索
+                $.ajax({
+                    url: '/api/v1/news/category/search',
+                    data: {cid: news_category},
+                    success: function(res){
+                        console.log(res);
+                        table_comment_tbody.empty();
+                        var lists = res.data;
+                        for (var i = 0; i < lists.length; i++) {
+                            var list = lists[i];
+                            var tr = $('<tr/>');
+                            var td1 = $('<td/>').html(i + 1).appendTo(tr);
+                            var td2 = $('<td/>').html(list.aid).addClass('newsid').appendTo(tr);
+                            var td3 = $('<td/>').html(list.title).addClass('newstitle').appendTo(tr);
+                            var td4 = $('<td/>').html(list.commentCount).addClass('commentCount').appendTo(tr);
+                            var td5 = $('<td/>').html('0').addClass('pComments').attr('data-id', list.id).appendTo(tr);
+                            var td6 = $('<td/>').addClass('comment').attr('data-newsInfo', JSON.stringify(list));
+                            var a = $('<a/>').attr('href', '#').html('评论').appendTo(td6);
+                            td6.appendTo(tr);
+                            var td7 = $('<td class="system_push"><input type="checkbox" value="noon" class="noon_push">午间<input type="checkbox" value="night" class="night_push">晚间</td>').appendTo(tr);
+                            var td8 = $('<td class="people_push"><a href="#">立即推送</a></td>').appendTo(tr);
+                            // var td4 = $('<td/>').html(list.cid).appendTo(tr);
+                            transCategory(list.cid, list.aid, tr);
+                            tr.appendTo(table_comment_tbody);
+                        }
+                    }
+                })
+            }
+
         }
         // 搜索
         function searchVideo() {
@@ -609,6 +640,7 @@ define(function(require, exports, module) {
                 var td7 = $('<td class="system_push"><input type="checkbox" value="noon" class="noon_push">午间<input type="checkbox" value="night" class="night_push">晚间</td>').appendTo(tr);
                 var td8 = $('<td class="people_push"><a href="#">立即推送</a></td>').appendTo(tr);
                 transCategory(list[i].category_id, list[i].id, tr);
+                var td10 = $('<td class="distinct"><a href="javascript:;">去重</a></td>').attr('data-id', list[i].id).appendTo(tr);
                 tr.appendTo(table_comment_tbody);
             }
             noon_push = $('.noon_push');
@@ -1224,6 +1256,41 @@ define(function(require, exports, module) {
             });
 
         });
+
+        ;!function(){
+            // 初始化新闻分类
+            var $news_category = $('#news_category');
+            $.ajax({
+                url: '/api/v1/news/category',
+                success: function(res){
+                    if(res.success){
+                        for(var i=0; i<res.data.length; i++){
+                            var option = $('<option/>').attr('value', res.data[i].cid).html(res.data[i].channel);
+                            $news_category.append(option);
+                        }
+                    }
+                }
+            });
+
+            $('.distinct').on("click", function(){
+                var id = $(this).attr('data-id');
+                console.log(id);
+                var con = window.confirm('去重后，这条新闻不会再出现');
+                console.log(con);
+                if(con){
+                    $.ajax({
+                        url: '/api/v1/news/edit_status',
+                        data: {aid: id},
+                        success: function(res){
+                            if(res.success){
+                                alert('去重成功');
+                                location.reload();
+                            }
+                        }
+                    });
+                }
+            })
+        }();
     }
     exports.newsAndVideo = newsAndVideo;
 });

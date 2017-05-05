@@ -20,6 +20,13 @@
                 <span class="input-group-addon">新闻标题</span>
                 <input type="text" class="form-control news_title" placeholder="News Title">
             </div>
+            <div class="input-group">
+                <span class="input-group-addon">新闻分类</span>
+                <select class="form-control" id="news_category">
+                    <option value="">不限</option>
+                </select>
+            </div>
+
             <button type="button" class="btn btn-success search_comment">搜索</button>
         </div>
         <!-- 新闻列表 -->
@@ -36,6 +43,7 @@
                         <th>系统推送</th>
                         <th>立即推送</th>
                         <th>修改新闻分类</th>
+                        <th>去重</th>
                     </tr>
                 </thead>
                 <tbody>

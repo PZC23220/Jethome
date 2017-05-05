@@ -12,7 +12,7 @@ var sequelize = new Sequelize(config.database, config.username, config.password,
     pool:{
         max: 5,
         min: 0,
-        idle: 10000
+        idle: 100000
     },
     define:{
         timestamps: false
