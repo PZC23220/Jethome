@@ -207,6 +207,7 @@ define(function(require, exports, module) {
                             var td7 = $('<td class="system_push"><input type="checkbox" value="noon" class="noon_push">午间<input type="checkbox" value="night" class="night_push">晚间</td>').appendTo(tr);
                             var td8 = $('<td class="people_push"><a href="#">立即推送</a></td>').appendTo(tr);
                             transCategory(list.category_id, list.id, tr);
+                            var td10 = $('<td class="distinct"><a href="javascript:;">去重</a></td>').attr('data-id', list.aid).appendTo(tr);
                             tr.appendTo(table_comment_tbody);
                         }
                     }
@@ -233,6 +234,7 @@ define(function(require, exports, module) {
                     var td7 = $('<td class="system_push"><input type="checkbox" value="noon" class="noon_push">午间<input type="checkbox" value="night" class="night_push">晚间</td>').appendTo(tr);
                     var td8 = $('<td class="people_push"><a href="#">立即推送</a></td>').appendTo(tr);
                     transCategory(list.category_id, list.id, tr);
+                    var td10 = $('<td class="distinct"><a href="javascript:;">去重</a></td>').attr('data-id', list.id).appendTo(tr);
                     tr.appendTo(table_comment_tbody);
                 }
             });
@@ -366,6 +368,7 @@ define(function(require, exports, module) {
                             var td7 = $('<td class="system_push"><input type="checkbox" value="noon" class="noon_push">午间<input type="checkbox" value="night" class="night_push">晚间</td>').appendTo(tr);
                             var td8 = $('<td class="people_push"><a href="#">立即推送</a></td>').appendTo(tr);
                             transCategory(list.category_id, list.id, tr);
+                            var td10 = $('<td class="distinct"><a href="javascript:;">去重</a></td>').attr('data-id', list.id).appendTo(tr);
                             tr.appendTo(table_comment_tbody);
                         }
                     }
@@ -396,6 +399,7 @@ define(function(require, exports, module) {
                             var td8 = $('<td class="people_push"><a href="#">立即推送</a></td>').appendTo(tr);
                             // var td4 = $('<td/>').html(list.cid).appendTo(tr);
                             transCategory(list.cid, list.aid, tr);
+                            var td10 = $('<td class="distinct"><a href="javascript:;">去重</a></td>').attr('data-id', list.aid).appendTo(tr);
                             tr.appendTo(table_comment_tbody);
                         }
                     }
@@ -1275,7 +1279,7 @@ define(function(require, exports, module) {
             $('.distinct').on("click", function(){
                 var id = $(this).attr('data-id');
                 console.log(id);
-                var con = window.confirm('去重后，这条新闻不会再出现');
+                var con = window.confirm('去重后，这条新闻会下线');
                 console.log(con);
                 if(con){
                     $.ajax({
