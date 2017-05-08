@@ -70,7 +70,10 @@ router.get('/news/category/search', function(req, res, next){
             limit: 100,
             where:{
                 cid: cid
-            }
+            },
+            order:[
+                ['created_time', 'DESC']
+            ]
         }).then(function(result){
             res.send({success: true, data: result, code: 200});
         });
