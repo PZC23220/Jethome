@@ -556,7 +556,7 @@ define(function(require, exports, module) {
         function getNews(idx, start, news) {
             $.ajax({
                 url: '/japi/news/hot?version=2&start=' + start + '&rows=' + idx,
-                async: false,
+                async: true,
                 success: function(res) {
                     if (news == 'video') {
                         createVideo(res.data.video, idx);
@@ -576,6 +576,7 @@ define(function(require, exports, module) {
             selPush(arr);
 
         }
+
         // 查看推送新闻
         function selPush(arr) {
             $.ajax({
