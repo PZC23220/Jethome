@@ -555,7 +555,7 @@ define(function(require, exports, module) {
         // 获取新闻列表
         function getNews(idx, start, news) {
             $.ajax({
-                url: '/japi/news/hot?version=2&start=' + start + '&rows=' + idx,
+                url: 'http://api2.newsjet.io:8080/news/hot?version=2&start=' + start + '&rows=' + idx,
                 async: true,
                 success: function(res) {
                     if (news == 'video') {
