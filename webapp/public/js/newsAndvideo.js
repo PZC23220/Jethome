@@ -556,7 +556,7 @@ define(function(require, exports, module) {
         function getNews(idx, start, news) {
             $.ajax({
                 url: 'http://api2.newsjet.io:8080/news/hot?version=2&start=' + start + '&rows=' + idx,
-                async: true,
+                async: false,
                 success: function(res) {
                     if (news == 'video') {
                         createVideo(res.data.video, idx);
