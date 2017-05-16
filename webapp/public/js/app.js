@@ -2,6 +2,12 @@ define(function(require, exports, module) {
     var main_content = $('.main_content');
     var content_text;
     var page1 = function() {
+        // require.async(['../html/commentContainer.html', '../html/videoContainer.html', 'newsAndvideo.js'], function(m_html1, m_html2, newsAndVideo){
+        //     main_content.html(m_html1 + m_html2);
+        //     $('#commentContainer').hide();
+        //     $('#videoContainer').show();
+        //     newsAndVideo.newsAndVideo();
+        // });
         content_text = require('../html/commentContainer.html');
         content_text2 = require('../html/videoContainer.html');
         main_content.html(content_text + content_text2);

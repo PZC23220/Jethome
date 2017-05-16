@@ -236,9 +236,11 @@ define(function(require, exports, module) {
                     transCategory(list.category_id, list.id, tr);
                     var td10 = $('<td class="distinct"><a href="javascript:;">去重</a></td>').attr('data-id', list.id).appendTo(tr);
                     tr.appendTo(table_comment_tbody);
+
+                    selPush(newsid)
                 }
             });
-            selPush(newsid)
+
         }
 
         // 失去焦点事件
@@ -555,7 +557,7 @@ define(function(require, exports, module) {
         // 获取新闻列表
         function getNews(idx, start, news) {
             $.ajax({
-                url: 'http://api2.newsjet.io:8080/news/hot?version=2&start=' + start + '&rows=' + idx,
+                url: 'http://api3.newsjet.io:8088/news/hot?version=2&start=' + start + '&rows=' + idx,
                 async: false,
                 success: function(res) {
                     if (news == 'video') {
@@ -583,20 +585,22 @@ define(function(require, exports, module) {
                 url: server_host + '/sel_push?aid=' + arr,
                 success: function(res) {
                     var arr1 = res;
-                    noon_push.each(function(idx, ele) {
+                    $('.noon_push').each(function(idx, ele) {
                         var nid = $(this).parents('tr').find('.newsid').html();
                         for (var j = 0; j < arr1.length; j++) {
+                            // console.log(arr1[j])
                             if (nid == arr1[j].aid && arr1[j].type == 2 && arr1[j].isPush == 0) {
-                                $(this).attr("checked", 'checked');
+                                console.log('选中id', nid);
+                                $(this).prop("checked", 'true');
                             }
                         }
                     });
 
-                    night_push.each(function(idx, ele) {
+                    $('.night_push').each(function(idx, ele) {
                         var nid = $(this).parents('tr').find('.newsid').html();
                         for (var k = 0; k < arr1.length; k++) {
                             if (nid == arr1[k].aid && arr1[k].type == 3 && arr1[k].isPush == 0) {
-                                $(this).attr("checked", 'checked');
+                                $(this).prop("checked", 'checked');
                             }
                         }
                     });
@@ -1171,18 +1175,28 @@ define(function(require, exports, module) {
                 }
             });
         }
-        // 午间新闻
-        noon_push.each(function(idx, ele) {
-            $(this).click(function() {
-                if (this.checked) {
-                    var aid = $(this).parents('tr').find('.newsid').html();
-                    addPush(aid, 2);
-                } else {
-                    var aid = $(this).parents('tr').find('.newsid').html();
-                    delPush(aid);
-                }
-            });
+        $(document).on('click', '.noon_push', function(){
+            if (this.checked) {
+                var aid = $(this).parents('tr').find('.newsid').html();
+                addPush(aid, 2);
+            } else {
+                var aid = $(this).parents('tr').find('.newsid').html();
+                delPush(aid);
+            }
         });
+
+        // // 午间新闻
+        // noon_push.each(function(idx, ele) {
+        //     $(this).click(function() {
+        //         if (this.checked) {
+        //             var aid = $(this).parents('tr').find('.newsid').html();
+        //             addPush(aid, 2);
+        //         } else {
+        //             var aid = $(this).parents('tr').find('.newsid').html();
+        //             delPush(aid);
+        //         }
+        //     });
+        // });
         // 午间视频
         noon_push2.each(function(idx, ele) {
             $(this).click(function() {
@@ -1196,17 +1210,28 @@ define(function(require, exports, module) {
             });
         });
         // 晚间新闻
-        night_push.each(function(idx, ele) {
-            $(this).click(function() {
+        $(document).on('click', '.night_push', function(){
                 if (this.checked) {
                     var aid = $(this).parents('tr').find('.newsid').html();
                     addPush(aid, 3);
                 } else {
+                    console.log('取消');
                     var aid = $(this).parents('tr').find('.newsid').html();
                     delPush(aid);
                 }
-            });
         });
+        // 晚间新闻
+        // night_push.each(function(idx, ele) {
+        //     $(this).click(function() {
+        //         if (this.checked) {
+        //             var aid = $(this).parents('tr').find('.newsid').html();
+        //             addPush(aid, 3);
+        //         } else {
+        //             var aid = $(this).parents('tr').find('.newsid').html();
+        //             delPush(aid);
+        //         }
+        //     });
+        // });
         // 晚间视频
         night_push2.each(function(idx, ele) {
             $(this).click(function() {
@@ -1227,7 +1252,7 @@ define(function(require, exports, module) {
                 type: 'POST',
                 data: JSON.stringify(data),
                 contentType: 'application/json',
-                dataType: 'json',                
+                dataType: 'json',
                 success: function(res) {
                     console.log(res);
                 }
