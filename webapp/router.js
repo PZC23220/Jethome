@@ -150,12 +150,7 @@ router.get('/notification_baseball', function(request, response) {
 // 午间/晚间新闻添加推送
 router.post('/add_push', function(request, response) {
     var sql = "INSERT INTO pushSetting(aid,type,createTime,isPush) VALUES(?,?,?,0)";
-    var jsonData = "";
-    request.on('data', function(chunk) {
-        jsonData += chunk;
-    });
-    request.on('end', function() {
-        var reqObj = JSON.parse(jsonData);
+        var reqObj =request.body;
         var resObj = {
             aid: reqObj.aid,
             type: reqObj.type,
@@ -163,7 +158,6 @@ router.post('/add_push', function(request, response) {
         };
         var arr = [resObj.aid, resObj.type, resObj.time];
         select(sql, request, response, arr);
-    });
 });
 // 午间/晚间新闻删除推送
 router.get('/del_push', function(request, response) {

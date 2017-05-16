@@ -1226,6 +1226,8 @@ define(function(require, exports, module) {
                 url: server_host + '/add_push',
                 type: 'POST',
                 data: JSON.stringify(data),
+                contentType: 'application/json',
+                dataType: 'json',                
                 success: function(res) {
                     console.log(res);
                 }
