@@ -78,6 +78,22 @@ router.get('/news/category/search', function(req, res, next){
             res.send({success: true, data: result, code: 200});
         });
     }
-})
+});
+// 修改新闻分类
+router.post('/news/editcid', function(req, res, next){
+    var data = req.body;
+    console.log(data);
+    if(!data || data.aid === undefined || data.cid === undefined){
+        res.send({success: false, data: null, msg: '缺少必填参数', code: 400});
+        return false;
+    }
+    models.material_news.update(data, {where: {aid: data.aid}}).then(function(result){
+        console.log(result);        
+        res.send({success: true, data: null, code: 200, msg: '修改新闻分类成功'});
+    }).catch(function(err){
+        res.send({success: false, msg: err.message, data: null, code: 500});
+        return false;
+    })
+});
 
 module.exports = router;

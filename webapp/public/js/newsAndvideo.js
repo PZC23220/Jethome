@@ -557,7 +557,7 @@ define(function(require, exports, module) {
         // 获取新闻列表
         function getNews(idx, start, news) {
             $.ajax({
-                url: 'http://api2.newsjet.io:8080/news/hot?version=2&start=' + start + '&rows=' + idx,
+                url: '/japi/news/hot?version=2&start=' + start + '&rows=' + idx,
                 async: false,
                 success: function(res) {
                     if (news == 'video') {
@@ -1272,8 +1272,16 @@ define(function(require, exports, module) {
         // 点击修改新闻分类
         c_news_sure.click(function() {
             console.log(c_news_category.find('option:selected').attr('data-id'));
+            var postData = {
+                aid: c_news_id.val(),
+                cid: c_news_category.find('option:selected').attr('data-id')
+            }
             $.ajax({
-                url: '/news/fixCID?aid=' + c_news_id.val() + '&cid=' + c_news_category.find('option:selected').attr('data-id'),
+                url: '/api/v1/news/editcid',
+                data: JSON.stringify(postData),
+                type: 'POST',
+                contentType: 'application/json',
+                dataType: 'json',
                 success: function(res) {
                     console.log(res);
                     $('.share_success').show();
