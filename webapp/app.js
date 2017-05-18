@@ -7,6 +7,8 @@ var bodyParser = require('body-parser');
 var app = express();
 var router = require('./router');
 var api_v1 = require('./api/v1');
+var authorization = require('./api/authorization');
+
 
 app.set('trust proxy', true);
 
@@ -26,7 +28,7 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 // init router
-app.use('/', router);
+app.use('/', [router, authorization]);
 app.use('/api/v1/', api_v1);
 
 
