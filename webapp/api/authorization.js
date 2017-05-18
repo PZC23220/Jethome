@@ -17,7 +17,7 @@ function isEmptyObj(obj){
     return true;
 }
 
-// 博主提交授权
+// api: 博主提交授权
 router.post('/api/authorization', function(req, res, next){
     var data = req.body || {};
     if(isEmptyObj(data)){
@@ -26,6 +26,8 @@ router.post('/api/authorization', function(req, res, next){
     }
     models.authorization.upsert(data, {validate: true}).then(function(result){
         res.send(result);
+    }).catch(function(err){
+        res.send(err);
     });
 });
 
