@@ -20,6 +20,8 @@ function isEmptyObj(obj){
 // api: 博主提交授权
 router.post('/api/authorization', function(req, res, next){
     var data = req.body || {};
+    console.log(req.body);
+
     if(isEmptyObj(data)){
         res.send({msg: '缺少必要的参数'});
         return false;

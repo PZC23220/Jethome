@@ -27,6 +27,10 @@ module.exports = function(sequelize, DataTypes) {
       type: DataTypes.STRING(128),
       allowNull: false,
       defaultValue: ''
+    },
+    remarks: {
+      type: DataTypes.TEXT,
+      allowNull: true
     }
   }, {
     tableName: 'authorization'
