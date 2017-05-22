@@ -135,6 +135,11 @@ nav_left_list.click(function() {
                 app.page12();
             });
             break;
+        case 12:
+            seajs.use('app', function(app) {
+                app.page13();
+            });
+            break;
         default:
             break;
     }

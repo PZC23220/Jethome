@@ -84,6 +84,12 @@ define(function(require, exports, module) {
             tabConfiguration.tabConfiguration();
         });
     }
+    var page13 = function() {
+        require.async(['../html/materialGif.html', 'materialGif.js'], function(m_html, materialGif){
+            main_content.html(m_html);
+            materialGif.materialGif();
+        });
+    }
 
     exports.page1 = page1;
     exports.page2 = page2;
@@ -97,4 +103,5 @@ define(function(require, exports, module) {
     exports.page10 = page10;
     exports.page11 = page11;
     exports.page12 = page12;
+    exports.page13 = page13;
 });

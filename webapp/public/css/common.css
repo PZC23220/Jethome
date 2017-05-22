@@ -985,3 +985,18 @@ td span {
     color: #f00;
     font-size: 16px;
 }
+
+.material_gif p {
+    float: left;
+    width: 300px;
+}
+
+.material_gif p img{
+    width: 300px;
+    height: 300px;
+    display: block;
+}
+
+.material_gif p img span {
+    display: block;
+}

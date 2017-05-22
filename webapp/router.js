@@ -432,4 +432,19 @@ router.get('/del_comments', function(request, response) {
     select(sql, request, response);
 });
 
+// 筛选GIF图
+// router.get('/get_gif', function(request, response) {
+//     var sql = "select aid, url, status from material_gif";
+//     select(sql, request, response);
+// });
+// router.get('/update_gif', function(request, response) {
+//     var sql = "UPDATE material_gif set status = "+ request.query.value +" WHERE id = " + request.query.id;
+//     select(sql, request, response);
+// });
+// router.get('/select_gif', function(request, response) {
+//     var sql = "SELECT aid, url, status from post_greped where status = ?";
+//     var arr = request.query.value;
+//     select(sql, request, response, arr);
+// });
+
 module.exports = router;

@@ -96,4 +96,47 @@ router.post('/news/editcid', function(req, res, next){
     })
 });
 
+// 获取GIF
+router.get('/gif/get', function(req, res, next){
+    models.news_top.findAll({
+        include:[models.material_gif],
+        attributes: ['aid','url','status'],
+    }).then(function(result){
+        res.send(result);
+    })
+});
+
+// 修改GIF状态
+router.post('/gif/update', function(req, res, next){
+    var data = req.body;
+    console.log(data);
+    if(!data || data.aid === undefined || data.status === undefined){
+        res.send({success: false, data: null, msg: '缺少必填参数', code: 400});
+        return false;
+    }
+    models.material_gif.update(data, {where: {aid: data.aid}}).then(function(result){
+        console.log(result);        
+        res.send({success: true, data: null, code: 200, msg: '修改新闻分类成功'});
+    }).catch(function(err){
+        res.send({success: false, msg: err.message, data: null, code: 500});
+        return false;
+    })
+});
+
+// 根据分类查询所有新闻列表
+router.get('/gif/search', function(req, res, next){
+    var status = req.query.status;
+    if(!status){
+        res.send({success: false, data: null, code: 400, msg: '缺少status'});
+    }else{
+        models.material_gif.findAll({
+            where:{
+                status: status
+            }
+        }).then(function(result){
+            res.send({success: true, data: result, code: 200});
+        });
+    }
+});
+
 module.exports = router;
