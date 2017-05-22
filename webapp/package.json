@@ -20,7 +20,7 @@
   "scripts": {
     "development": "cross-env NODE_ENV=development && cross-env PORT=9999 && nohup node bin/www &",
     "product": "cross-env NODE_ENV=product && cross-env PORT=8899 &&  pm2 start bin/www",
-    "start": "cross-env NODE_ENV=development && cross-env PORT=3333 && supervisor bin/www"
+    "start": "cross-env NODE_ENV=development && cross-env PORT=3000 && supervisor bin/www"
   },
   "keywords": [
     "newsjet后台运营配置页面"
