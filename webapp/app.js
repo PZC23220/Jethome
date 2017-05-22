@@ -8,6 +8,7 @@ var app = express();
 var router = require('./router');
 var api_v1 = require('./api/v1');
 var authorization = require('./api/authorization');
+var girls = require('./api/girls');
 
 
 app.set('trust proxy', true);
@@ -28,7 +29,7 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 // init router
-app.use('/', [router, authorization]);
+app.use('/', [router, authorization, girls]);
 app.use('/api/v1/', api_v1);
 
 
