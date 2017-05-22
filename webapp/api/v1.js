@@ -57,7 +57,7 @@ router.get('/news/category', function(req, res, next){
         attributes: ['cid', 'channel']
     }).then(function(result){
         res.send({success: true, data: result, code: 200});
-    })
+    });
 });
 
 // 根据分类查询所有新闻列表
@@ -88,7 +88,7 @@ router.post('/news/editcid', function(req, res, next){
         return false;
     }
     models.material_news.update(data, {where: {aid: data.aid}}).then(function(result){
-        console.log(result);        
+        console.log(result);
         res.send({success: true, data: null, code: 200, msg: '修改新闻分类成功'});
     }).catch(function(err){
         res.send({success: false, msg: err.message, data: null, code: 500});

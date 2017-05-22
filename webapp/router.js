@@ -166,7 +166,7 @@ router.get('/del_push', function(request, response) {
 });
 // 查看午间/晚间新闻推送
 router.get('/sel_push', function(request, response) {
-    var sql = "SELECT aid, type, isPush from pushSetting where aid IN (" + request.query.aid + ") GROUP BY aid";
+    var sql = "SELECT aid, newstype, isPush from pushSetting where aid IN (" + request.query.aid + ") GROUP BY aid";
     select(sql, request, response);
 });
 
