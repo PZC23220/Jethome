@@ -57,8 +57,6 @@ router.get('/api/girls/list', function(req, res){
 });
 
 router.get('/api/girls/category', function(req, res, next){
-    // res.send({'name': 'test'});
-    // return false;
     models.girls_category.findAll({
         attributes: ['cid','name_cn']
     }).then(function(result){
