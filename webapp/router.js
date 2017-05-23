@@ -433,18 +433,18 @@ router.get('/del_comments', function(request, response) {
 });
 
 // 筛选GIF图
-// router.get('/get_gif', function(request, response) {
-//     var sql = "select aid, url, status from material_gif";
-//     select(sql, request, response);
-// });
-// router.get('/update_gif', function(request, response) {
-//     var sql = "UPDATE material_gif set status = "+ request.query.value +" WHERE id = " + request.query.id;
-//     select(sql, request, response);
-// });
-// router.get('/select_gif', function(request, response) {
-//     var sql = "SELECT aid, url, status from post_greped where status = ?";
-//     var arr = request.query.value;
-//     select(sql, request, response, arr);
-// });
+router.get('/update_gif', function(request, response) {
+    var sql = "UPDATE material_gif set status = "+ request.query.status +" WHERE aid = " + request.query.aid;
+    select(sql, request, response);
+});
+router.get('/select_gif', function(request, response) {
+    if(request.query.status && request.query.status != '') {
+        var sql = "select aid, url, status from material_gif where status = "+ request.query.status +" order by aid desc limit "+ request.query.start +", 50";
+    }else {
+        var sql = "select aid, url, status from material_gif order by aid desc limit "+ request.query.start+ ", 50";
+    }
+    console.log(sql)
+    select(sql, request, response);
+});
 
 module.exports = router;

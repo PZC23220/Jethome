@@ -988,7 +988,8 @@ td span {
 
 .material_gif p {
     float: left;
-    width: 300px;
+    width: 310px;
+    padding: 4px;
 }
 
 .material_gif p img{
@@ -999,4 +1000,23 @@ td span {
 
 .material_gif p img span {
     display: block;
+}
+
+.love {
+    display: block;
+    width: 100px; height: 100px;
+    background: url(web_heart_animation.png) 0 0 no-repeat;
+    background-size: 2900%;
+    animation: heart-burst steps(28) 0.8s infinite both;
+}
+.stop {
+    animation-play-state: paused;
+}
+@keyframes heart-burst {
+  0% {
+    background-position: 0%;
+  }
+  100% {
+    background-position: 100%;
+  }
 }

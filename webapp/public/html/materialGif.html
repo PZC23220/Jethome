@@ -1,21 +1,40 @@
-<!-- 推送日志 -->
+<!-- GIF筛选 -->
 <div class="push_log table_container" id="pushLog">
     <div class="news_opa">
         <div class="input-group">
             <span class="input-group-addon">GIF状态</span>
             <select class="form-control gif_opa">
                 <option>全部</option>
-                <option>通过</option>
-                <option>不通过</option>
+                <option value="1">通过</option>
+                <option value="0">不通过</option>
             </select>
         </div>
+        <!-- <button type="button" class="btn btn-success create">添加GIF</button> -->
     </div>
     <div class="table table-responsive">
         <div class="material_gif">
-            <p class="gif_concainer">
+            <!-- <p class="gif_concainer">
                 <img src="http://jetfiles.newsjet.io/gif/Lake-jump-girl-chickens-out.gif" alt="">
+                <span class="glyphicon glyphicon-play-circle"></span>
                 <span><input type="radio">通过<input type="radio">不通过</span>
-            </p>
+            </p> -->
         </div>
     </div>
+    <nav class="page_nav">
+        <ul class="pagination gif_li">
+            <li class="disabled"><a href="#">&laquo;</a></li>
+            <li class="active"><a href="#">1</a></li>
+            <li><a href="#">2</a></li>
+            <li><a href="#">3</a></li>
+            <li><a href="#">4</a></li>
+            <li><a href="#">5</a></li>
+            <li><a href="#">6</a></li>
+            <li><a href="#">7</a></li>
+            <li><a href="#">8</a></li>
+            <li><a href="#">9</a></li>
+            <li><a href="#">10</a></li>
+            <li class="disabled"><a href="#">&raquo;</a></li>
+        </ul>
+    </nav>
+    
 </div>

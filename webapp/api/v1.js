@@ -98,7 +98,8 @@ router.post('/news/editcid', function(req, res, next){
 
 // 获取GIF
 router.get('/gif/get', function(req, res, next){
-    models.news_top.findAll({
+    console.log('gif')
+    models.material_gif.findAll({
         include:[models.material_gif],
         attributes: ['aid','url','status'],
     }).then(function(result){
