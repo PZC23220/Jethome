@@ -95,49 +95,31 @@ router.post('/news/editcid', function(req, res, next){
         return false;
     })
 });
-
-// 获取GIF
-router.get('/gif/get', function(req, res, next){
-    console.log('gif')
-    models.material_gif.findAll({
-        include:[models.material_gif],
-        attributes: ['aid','url','status'],
-    }).then(function(result){
-        res.send(result);
-    })
-});
-
-// 修改GIF状态
-router.post('/gif/update', function(req, res, next){
+// 新增和编辑闪屏
+router.post('/splash/update', function(req, res, next){
     var data = req.body;
-    console.log(data);
-    if(!data || data.aid === undefined || data.status === undefined){
-        res.send({success: false, data: null, msg: '缺少必填参数', code: 400});
-        return false;
-    }
-    models.material_gif.update(data, {where: {aid: data.aid}}).then(function(result){
-        console.log(result);        
-        res.send({success: true, data: null, code: 200, msg: '修改新闻分类成功'});
-    }).catch(function(err){
-        res.send({success: false, msg: err.message, data: null, code: 500});
-        return false;
-    })
-});
-
-// 根据分类查询所有新闻列表
-router.get('/gif/search', function(req, res, next){
-    var status = req.query.status;
-    if(!status){
-        res.send({success: false, data: null, code: 400, msg: '缺少status'});
+    var id = data.id;
+    if(id !== undefined){
+        // 编辑
+        models.switch_activity_splash.update(data, {where: {id: id}, validate: false}).then(function(result){
+            console.log(result);
+            res.send({'success': true})
+        });
     }else{
-        models.material_gif.findAll({
-            where:{
-                status: status
-            }
-        }).then(function(result){
-            res.send({success: true, data: result, code: 200});
+        // 新增
+        models.switch_activity_splash.create(data).then(function(result){
+            console.log(result);
+            res.send({'success': true})
         });
     }
+});
+
+// 获取闪屏
+router.get('/splash/get', function(req, res, next){
+    models.switch_activity_splash.findAll({
+    }).then(function(result){
+        res.send({success: true, data: result, code: 200});
+    });
 });
 
 module.exports = router;

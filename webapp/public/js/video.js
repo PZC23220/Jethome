@@ -1,15 +1,5 @@
 var c = true;
 define(function(require, exports, module) {
-    // var newsAndVideo = {
-    //     _bindEvent: function(){
-    //         var self = this;
-    //
-    //     },
-    //     init: function(){
-    //         var self = this;
-    //
-    //     }
-    // }
     var newsAndVideo = function() {
         var video_li = $('.video_li li');
         var news_li = $('.news_li li');
@@ -377,12 +367,12 @@ define(function(require, exports, module) {
                 });
 
             }
-            if (news_category && news_category.length > 0) {
+            if(news_category && news_category.length > 0){
                 // 按照新闻分类进行搜索
                 $.ajax({
                     url: '/api/v1/news/category/search',
-                    data: { cid: news_category },
-                    success: function(res) {
+                    data: {cid: news_category},
+                    success: function(res){
                         console.log(res);
                         table_comment_tbody.empty();
                         var lists = res.data;
@@ -556,91 +546,76 @@ define(function(require, exports, module) {
         var noon_push, night_push, noon_push2, night_push2;
         // 获取新闻列表
         function getNews(idx, start, news) {
-            if (news == 'video') {
-                 $.ajax({
-                    url: '/select_video?start=' + start + '&rows=' + idx,
-                    async: false,
-                    success: function(res) {
-                        console.log(res);
-                        createVideo(res, idx);
-                        searchNews();
-                    }
-                });
-                var nid = $('.pComments');
-                var arr = [];
-                nid.each(function(idx, ele) {
-                    arr.push($(this).attr('data-id'));
-                });
-                getPickComments(arr, nid);
-                // selPush(arr);
-            } else {
-
-                $.ajax({
-                    url: '/japi/news/hot?version=2&start=' + start + '&rows=' + idx,
-                    async: false,
-                    success: function(res) {
+            $.ajax({
+                url: '/japi/news/hot?version=2&start=' + start + '&rows=' + idx,
+                async: false,
+                success: function(res) {
+                    if (news == 'video') {
+                        createVideo(res.data.video, idx);
+                        searchVideo();
+                    } else {
                         createNews(res.data.top, idx);
                         searchNews();
                     }
-                });
-                var nid = $('.pComments');
-                var arr = [];
-                nid.each(function(idx, ele) {
-                    arr.push($(this).attr('data-id'));
-                });
-                getPickComments(arr, nid);
-                // selPush(arr);
+                }
+            });
+            var nid = $('.pComments');
+            var arr = [];
+            nid.each(function(idx, ele) {
+                arr.push($(this).attr('data-id'));
+            });
+            getPickComments(arr, nid);
+            selPush(arr);
 
-            }
         }
 
         // 查看推送新闻
-        // function selPush(arr) {
-        //     $.ajax({
-        //         url: server_host + '/sel_push?aid=' + arr,
-        //         success: function(res) {
-        //             var arr1 = res;
-        //             $('.noon_push').each(function(idx, ele) {
-        //                 var nid = $(this).parents('tr').find('.newsid').html();
-        //                 for (var j = 0; j < arr1.length; j++) {
-        //                     // console.log(arr1[j])
-        //                     if (nid == arr1[j].aid && arr1[j].type == 2 && arr1[j].isPush == 0) {
-        //                         console.log('选中id', nid);
-        //                         $(this).prop("checked", 'true');
-        //                     }
-        //                 }
-        //             });
+        function selPush(arr) {
+            $.ajax({
+                url: server_host + '/sel_push?aid=' + arr,
+                success: function(res) {
+                    var arr1 = res;
+                    $('.noon_push').each(function(idx, ele) {
+                        var nid = $(this).parents('tr').find('.newsid').html();
+                        for (var j = 0; j < arr1.length; j++) {
+                            // console.log(arr1[j])
+                            if (nid == arr1[j].aid && arr1[j].type == 2 && arr1[j].isPush == 0) {
+                                console.log('选中id', nid);
+                                $(this).prop("checked", 'true');
+                            }
+                        }
+                    });
 
-        //             $('.night_push').each(function(idx, ele) {
-        //                 var nid = $(this).parents('tr').find('.newsid').html();
-        //                 for (var k = 0; k < arr1.length; k++) {
-        //                     if (nid == arr1[k].aid && arr1[k].type == 3 && arr1[k].isPush == 0) {
-        //                         $(this).prop("checked", 'checked');
-        //                     }
-        //                 }
-        //             });
+                    $('.night_push').each(function(idx, ele) {
+                        var nid = $(this).parents('tr').find('.newsid').html();
+                        for (var k = 0; k < arr1.length; k++) {
+                            if (nid == arr1[k].aid && arr1[k].type == 3 && arr1[k].isPush == 0) {
+                                $(this).prop("checked", 'checked');
+                            }
+                        }
+                    });
 
-        //             // noon_push2.each(function(idx, ele) {
-        //             //     var nid = $(this).parents('tr').find('.videoid').html();
-        //             //     for (var j = 0; j < arr1.length; j++) {
-        //             //         if (nid == arr1[j].aid && arr1[j].type == 2 && arr1[j].isPush == 0) {
-        //             //             $(this).attr("checked", 'checked');
-        //             //         }
-        //             //     }
-        //             // });
+                    noon_push2.each(function(idx, ele) {
+                        var nid = $(this).parents('tr').find('.videoid').html();
+                        for (var j = 0; j < arr1.length; j++) {
+                            if (nid == arr1[j].aid && arr1[j].type == 2 && arr1[j].isPush == 0) {
+                                $(this).attr("checked", 'checked');
+                            }
+                        }
+                    });
 
-        //             // night_push2.each(function(idx, ele) {
-        //             //     var nid = $(this).parents('tr').find('.videoid').html();
-        //             //     for (var k = 0; k < arr1.length; k++) {
-        //             //         if (nid == arr1[k].aid && arr1[k].type == 3 && arr1[k].isPush == 0) {
-        //             //             $(this).attr("checked", 'checked');
-        //             //         }
-        //             //     }
-        //             // });
+                    night_push2.each(function(idx, ele) {
+                        var nid = $(this).parents('tr').find('.videoid').html();
+                        for (var k = 0; k < arr1.length; k++) {
+                            if (nid == arr1[k].aid && arr1[k].type == 3 && arr1[k].isPush == 0) {
+                                $(this).attr("checked", 'checked');
+                            }
+                        }
+                    });
 
-        //         }
-        //     });
-        // }
+                }
+            });
+        }
         var index;
         // 创建新闻表格
         function createNews(list, number) {
@@ -667,8 +642,8 @@ define(function(require, exports, module) {
                 var td10 = $('<td class="distinct"><a href="javascript:;">去重</a></td>').attr('data-id', list[i].id).appendTo(tr);
                 tr.appendTo(table_comment_tbody);
             }
-            // noon_push = $('.noon_push');
-            // night_push = $('.night_push');
+            noon_push = $('.noon_push');
+            night_push = $('.night_push');
         }
         var index2;
         // // 创建视频表格
@@ -683,8 +658,8 @@ define(function(require, exports, module) {
             for (var i = 0; i < list.length; i++) {
                 var tr = $('<tr/>');
                 var td1 = $('<td/>').html(j++).appendTo(tr);
-                var td2 = $('<td/>').html(list[i].aid).addClass('videoid').attr('data-id', list[i].aid).appendTo(tr);
-                var td3 = $('<td/>').html(list[i].title).addClass('title').appendTo(tr);
+                var td2 = $('<td/>').html(list[i].id).addClass('videoid').attr('data-id', list[i].videoId).appendTo(tr);
+                var td3 = $('<td/>').html(list[i].title).addClass('videotitle').appendTo(tr);
                 var td4 = $('<td/>').html(list[i].commentCount).addClass('commentCount').appendTo(tr);
                 var td5 = $('<td/>').html('0').addClass('pComments').attr('data-id', list[i].id).appendTo(tr);
                 var td6 = $('<td/>').addClass('comment').attr('data-newsInfo', JSON.stringify(list[i]));
@@ -694,8 +669,8 @@ define(function(require, exports, module) {
                 var td8 = $('<td class="people_push"><a href="#">立即推送</a></td>').appendTo(tr);
                 tr.appendTo(table_video_tbody);
             }
-            // noon_push2 = $('.noon_push2');
-            // night_push2 = $('.night_push2');
+            noon_push2 = $('.noon_push2');
+            night_push2 = $('.night_push2');
         }
         // 点击显示评论  视频
         table_video_tbody.on('click', '.comment', function() {
@@ -1190,7 +1165,7 @@ define(function(require, exports, module) {
                 }
             });
         }
-        $(document).on('click', '.noon_push', function() {
+        $(document).on('click', '.noon_push', function(){
             if (this.checked) {
                 var aid = $(this).parents('tr').find('.newsid').html();
                 addPush(aid, 2);
@@ -1213,27 +1188,27 @@ define(function(require, exports, module) {
         //     });
         // });
         // 午间视频
-        // noon_push2.each(function(idx, ele) {
-        //     $(this).click(function() {
-        //         if (this.checked) {
-        //             var aid = $(this).parents('tr').find('.videoid').html();
-        //             addPush(aid, 2);
-        //         } else {
-        //             var aid = $(this).parents('tr').find('.videoid').html();
-        //             delPush(aid);
-        //         }
-        //     });
-        // });
+        noon_push2.each(function(idx, ele) {
+            $(this).click(function() {
+                if (this.checked) {
+                    var aid = $(this).parents('tr').find('.videoid').html();
+                    addPush(aid, 2);
+                } else {
+                    var aid = $(this).parents('tr').find('.videoid').html();
+                    delPush(aid);
+                }
+            });
+        });
         // 晚间新闻
-        $(document).on('click', '.night_push', function() {
-            if (this.checked) {
-                var aid = $(this).parents('tr').find('.newsid').html();
-                addPush(aid, 3);
-            } else {
-                console.log('取消');
-                var aid = $(this).parents('tr').find('.newsid').html();
-                delPush(aid);
-            }
+        $(document).on('click', '.night_push', function(){
+                if (this.checked) {
+                    var aid = $(this).parents('tr').find('.newsid').html();
+                    addPush(aid, 3);
+                } else {
+                    console.log('取消');
+                    var aid = $(this).parents('tr').find('.newsid').html();
+                    delPush(aid);
+                }
         });
         // 晚间新闻
         // night_push.each(function(idx, ele) {
@@ -1248,17 +1223,17 @@ define(function(require, exports, module) {
         //     });
         // });
         // 晚间视频
-        // night_push2.each(function(idx, ele) {
-        //     $(this).click(function() {
-        //         if (this.checked) {
-        //             var aid = $(this).parents('tr').find('.videoid').html();
-        //             addPush(aid, 3);
-        //         } else {
-        //             var aid = $(this).parents('tr').find('.videoid').html();
-        //             delPush(aid);
-        //         }
-        //     });
-        // });
+        night_push2.each(function(idx, ele) {
+            $(this).click(function() {
+                if (this.checked) {
+                    var aid = $(this).parents('tr').find('.videoid').html();
+                    addPush(aid, 3);
+                } else {
+                    var aid = $(this).parents('tr').find('.videoid').html();
+                    delPush(aid);
+                }
+            });
+        });
         // 新闻推送
         function addPush(aid, type) {
             var data = { 'aid': aid, 'type': type, 'time': new Date() }
@@ -1312,15 +1287,14 @@ define(function(require, exports, module) {
 
         });
 
-        ;
-        ! function() {
+        ;!function(){
             // 初始化新闻分类
             var $news_category = $('#news_category');
             $.ajax({
                 url: '/api/v1/news/category',
-                success: function(res) {
-                    if (res.success) {
-                        for (var i = 0; i < res.data.length; i++) {
+                success: function(res){
+                    if(res.success){
+                        for(var i=0; i<res.data.length; i++){
                             var option = $('<option/>').attr('value', res.data[i].cid).html(res.data[i].channel);
                             $news_category.append(option);
                         }
@@ -1328,17 +1302,17 @@ define(function(require, exports, module) {
                 }
             });
 
-            $('.distinct').on("click", function() {
+            $('.distinct').on("click", function(){
                 var id = $(this).attr('data-id');
                 console.log(id);
                 var con = window.confirm('去重后，这条新闻会下线');
                 console.log(con);
-                if (con) {
+                if(con){
                     $.ajax({
                         url: '/api/v1/news/edit_status',
-                        data: { aid: id },
-                        success: function(res) {
-                            if (res.success) {
+                        data: {aid: id},
+                        success: function(res){
+                            if(res.success){
                                 alert('去重成功');
                                 location.reload();
                             }

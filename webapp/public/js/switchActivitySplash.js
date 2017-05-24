@@ -19,13 +19,12 @@ define(function(require, exports, module) {
         var reply_comment = $('.reply_comment');
         // 设置闪屏表格
         getSplash();
-
         function getSplash() {
             $.ajax({
-                url: '/japi/switchconfig/splash',
+                url: '/api/v1/splash/get',
                 success: function(res) {
                     console.log(res);
-                    var list = res.data;
+                    var list = res;
                     table_splash_tbody.empty();
                     for (var i = list.length - 1; i >= 0; i--) {
                         createSplash(list[i]);

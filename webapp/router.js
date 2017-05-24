@@ -447,4 +447,15 @@ router.get('/select_gif', function(request, response) {
     select(sql, request, response);
 });
 
+// 获取视频
+router.get('/select_video', function(request, response) {
+    if(request.query.aid && request.query.aid != '') {
+        var sql = "select aid, title from video_site_top where aid = "+ request.query.aid;
+    }else {
+        var sql = "select aid, title from video_site_top order by id desc limit "+ request.query.start+ ", "+ request.query.rows;
+    }
+    console.log(sql)
+    select(sql, request, response);
+});
+
 module.exports = router;
