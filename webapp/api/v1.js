@@ -99,10 +99,10 @@ router.post('/news/editcid', function(req, res, next){
 router.post('/splash/update', function(req, res, next){
     var data = req.body;
     var id = data.id;
-    if(id !== undefined){
+    if(id !== undefined && id!= " "){
         // 编辑
         models.switch_activity_splash.update(data, {where: {id: id}, validate: false}).then(function(result){
-            console.log(result);
+            console.log(id);
             res.send({'success': true})
         });
     }else{
@@ -120,6 +120,23 @@ router.get('/splash/get', function(req, res, next){
     }).then(function(result){
         res.send({success: true, data: result, code: 200});
     });
+});
+
+// 修改新闻的status， 新闻去重
+router.get('/splash/delete', function(req, res, next){
+    console.log(req.query.id);
+    var aid = req.query.id;
+    if(!id){
+        res.send({success: false, data: null, code: 400, msg: '缺少闪屏id'});
+    }else{
+        models.switch_activity_splash.update({status: 0}, {where: {id: id}}).then(function(result){
+            if(result[0] > 0){
+                res.send({success: true, data: null, code: 200});
+            }else{
+                res.send({success: false, data: null, code: 200, msg: '找不到闪屏id'})
+            }
+        })
+    }
 });
 
 module.exports = router;

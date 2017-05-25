@@ -19,12 +19,13 @@ define(function(require, exports, module) {
         var reply_comment = $('.reply_comment');
         // 设置闪屏表格
         getSplash();
+
         function getSplash() {
             $.ajax({
                 url: '/api/v1/splash/get',
                 success: function(res) {
                     console.log(res);
-                    var list = res;
+                    var list = res.data;
                     table_splash_tbody.empty();
                     for (var i = list.length - 1; i >= 0; i--) {
                         createSplash(list[i]);
@@ -40,16 +41,17 @@ define(function(require, exports, module) {
             var td1 = $('<td/>').addClass('sp_id').html(list.id).appendTo(tr);
             var td2 = $('<td/>').html(list.image2x).appendTo(tr);
             var td3 = $('<td/>').html(list.image3x).appendTo(tr);
-            var td4 = $('<td/>').html(list.actUrl).appendTo(tr);
+            var td4 = $('<td/>').html(list.act_url).appendTo(tr);
             var td13 = $('<td/>').html(list.shareImage).appendTo(tr);
             if (list.skip == 1) {
                 var td5 = $('<td/>').html('有').appendTo(tr);
             } else {
                 var td5 = $('<td/>').html('无').appendTo(tr);
             }
-            var td6 = $('<td/>').html(list.skipDuration).appendTo(tr);
-            var td7 = $('<td/>').html(getTime(list.validityStart - (8 * 60 * 60 * 1000))).appendTo(tr);
-            var td8 = $('<td/>').html(getTime(list.validityEnd - (8 * 60 * 60 * 1000))).appendTo(tr);
+            var td6 = $('<td/>').html(list.skip_duration).appendTo(tr);
+            console.log(getTime(Date.parse(list.validity_start) - 8 * 60 * 60 * 1000))
+            var td7 = $('<td/>').html(getTime(Date.parse(list.validity_start) - 8 * 60 * 60 * 1000)).appendTo(tr);
+            var td8 = $('<td/>').html(getTime(Date.parse(list.validity_end) - 8 * 60 * 60 * 1000)).appendTo(tr);
 
             switch (list.showtimes) {
                 case 1:
@@ -70,7 +72,7 @@ define(function(require, exports, module) {
 
             var td10 = $('<td/>').html(list.active).appendTo(tr);
             var td13 = $('<td/>').html(list.platform).appendTo(tr);
-            var td14 = $('<td/>').html(list.appPlatform).appendTo(tr);
+            var td14 = $('<td/>').html(list.app_platform).appendTo(tr);
             var td11 = $('<td/>').html('<a href="#">修改</a>').addClass('modify_splash').attr('data-info', JSON.stringify(list)).appendTo(tr);
             var td12 = $('<td/>').html('<a href="#">删除</a>').addClass('del_splash').attr('data-id', list.id).appendTo(tr);
             tr.appendTo(table_splash_tbody);
@@ -87,8 +89,8 @@ define(function(require, exports, module) {
         }
 
         add_splash.click(function() {
-            var sp_id = $('.sp_id')[0].innerHTML;
-            splash_id.val(++sp_id);
+            // var sp_id = $('.sp_id')[0].innerHTML;
+            splash_id.val(' ');
             reply_comment.show();
         });
 
@@ -102,46 +104,45 @@ define(function(require, exports, module) {
             var image2x = splash_image2x.val();
             var image3x = splash_image3x.val();
             var a_url = acticity_url.val();
-            var s_time = (new Date(start_time.val())).valueOf();
-            var e_time = (new Date(end_time.val())).valueOf();
+            var s_time = getTime(new Date(start_time.val()));
+            var e_time = getTime(new Date(end_time.val()));
             var skipDuration = splash_time.val();
             var skip = splash_skip.find('option:selected').attr('data-id');
             var showtimes = splash_showtimes.find('option:selected').attr('data-id');
             var active = splash_active.find('option:selected').attr('data-id');
+            var platform = $('.platform').find('option:selected').html();
+            var app_platform = $('.app_platform').find('option:selected').html();
             var shareImage = splash_shareimg.val();
             if (image2x && image3x && a_url && s_time && e_time) {
                 var data = {
-                    id: parseInt(s_id), // 若源ID存在则更新, 若不存在源ID则是新增数据
-                    actUrl: a_url,
+                    id: s_id, // 若源ID存在则更新, 若不存在源ID则是新增数据
+                    act_url: a_url,
                     active: parseInt(active), // 0 Inactive; 1 Active
                     shareImage: shareImage,
                     image2x: image2x,
                     image3x: image3x,
                     showtimes: parseInt(showtimes), // 1 everytime; 2 once a day; 3 once; 4 stop after skip
                     skip: parseInt(skip), // 0 no skip; 1 skip
-                    skipDuration: parseInt(skipDuration), // For second
-                    validityEnd: e_time, // TIMESTAMP
-                    validityStart: s_time // TIMESTAMP
+                    skip_duration: parseInt(skipDuration), // For second
+                    validity_end: e_time,
+                    validity_start: s_time,
+                    platform: platform,
+                    app_platform: app_platform
                 }
-                console.log(JSON.stringify(data));
+                console.log(data);
                 $.ajax({
-                    url: '/japi/switchconfig/updateSplash',
+                    url: '/api/v1/splash/update',
                     type: 'POST',
                     data: JSON.stringify(data),
+                    contentType: 'application/json',
+                    dataType: 'json',
                     success: function(res) {
-                        if (res.status == 200) {
-                            $('.share_success').show();
-                            setTimeout(function() {
-                                getSplash();
-                                $('.share_success').hide();
-                                reply_comment.hide();
-                            }, 2000);
-                        } else {
-                            $('.tips_success').show();
-                            setTimeout(function() {
-                                $('.tips_success').hide();
-                            }, 2000);
-                        }
+                        $('.share_success').show();
+                        setTimeout(function() {
+                            getSplash();
+                            $('.share_success').hide();
+                            reply_comment.hide();
+                        }, 2000);
                     }
                 });
             } else {
@@ -158,11 +159,11 @@ define(function(require, exports, module) {
             splash_id.val(info.id);
             splash_image2x.val(info.image2x);
             splash_image3x.val(info.image3x);
-            acticity_url.val(info.actUrl);
+            acticity_url.val(info.act_url);
             splash_shareimg.val(info.shareImage);
             // console.log(getTime(info.validityStart));
-            start_time.val(new Date(info.validityStart - (8 * 60 * 60 * 1000)).Format("yyyy-MM-ddThh:mm:ss"));
-            end_time.val(new Date(info.validityEnd - (8 * 60 * 60 * 1000)).Format("yyyy-MM-ddThh:mm:ss"));
+            start_time.val(new Date(Date.parse(info.validity_start) - (8 * 60 * 60 * 1000)).Format("yyyy-MM-ddThh:mm:ss"));
+            end_time.val(new Date(Date.parse(info.validity_end) - (8 * 60 * 60 * 1000)).Format("yyyy-MM-ddThh:mm:ss"));
             // console.log(start_time.val());
             // end_time.val(getTime(info.validityEnd));
             var option1 = splash_skip.find('option');
@@ -183,12 +184,12 @@ define(function(require, exports, module) {
                     option3[n].selected = 'selected';
                 }
             }
-            splash_time.val(info.skipDuration);
+            splash_time.val(info.skip_duration);
 
             // 默认选中平台，app
-            if(info.platform == 'ios'){
+            if (info.platform == 'ios') {
                 $('.j-ios').prop('selected', 'true')
-            }else if(info.platform == 'android'){
+            } else if (info.platform == 'android') {
                 $('.j-android').prop('selected', 'true')
             }
             var select = '.j-' + info.appPlatform;
@@ -202,7 +203,7 @@ define(function(require, exports, module) {
         // 删除闪屏
         table_splash_tbody.on('click', '.del_splash', function() {
             $.ajax({
-                url: '/japi/switchconfig/deleteSplash?id=' + $(this).attr('data-id'),
+                url: '/api/v1/splash/delete?id=' + $(this).attr('data-id'),
                 success: function(res) {
                     console.log(res);
                     $('.del_success').show();

@@ -458,4 +458,42 @@ router.get('/select_video', function(request, response) {
     select(sql, request, response);
 });
 
+// 设置/更新视频
+// router.post('/set_switch_activity_splash', function(request, response) {
+//     var jsonData = "";
+
+//     request.on('data', function(chunk) {
+//         jsonData += chunk;
+//     });
+//     request.on('end', function() {
+//         var reqObj = request.body;
+//         var resObj = {
+//             image2x: reqObj.image2x,
+//             image3x: reqObj.image3x,
+//             act_url: reqObj.act_url,
+//             shareImage: reqObj.shareImage,
+//             skip: reqObj.skip,
+//             skip_duration: reqObj.skip_duration,
+//             validity_start: reqObj.validity_start,
+//             validity_end: reqObj.validity_end,
+//             showtimes: reqObj.showtimes,
+//             platform: reqObj.platform,
+//             app_platform: reqObj.app_platform,
+//             active: reqObj.active
+//         };
+//         if (reqObj.id) {
+//             resObj.id = reqObj.id;
+//             var sql = "UPDATE switch_appbottom_tab SET image2x = ?,image3x = ?,act_url = ?,shareImage = ?,skip = ?,skip_duration = ?,validity_start = ?,validity_end = ?,showtimes = ?,platform = ?,app_platform = ?,active=? WHERE id = ?";
+//         } else {
+//             var sql = "INSERT INTO switch_activity_splash(image2x,image3x,act_url,shareImage,skip,skip_duration,validity_start,validity_end,showtimes,platform,app_platform,active) VALUES(?,?,?,?,?,?,?,?,?,?,?,?)";
+//         }
+//         var arr = []
+//         for (var i in resObj) {
+//             arr.push(resObj[i]);
+//         }
+//         console.log(arr);
+//         select(sql, request, response, arr);
+//     });
+// });
+
 module.exports = router;
