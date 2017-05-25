@@ -123,20 +123,20 @@ router.get('/splash/get', function(req, res, next){
 });
 
 // 修改新闻的status， 新闻去重
-router.get('/splash/delete', function(req, res, next){
-    console.log(req.query.id);
-    var aid = req.query.id;
-    if(!id){
-        res.send({success: false, data: null, code: 400, msg: '缺少闪屏id'});
-    }else{
-        models.switch_activity_splash.update({status: 0}, {where: {id: id}}).then(function(result){
-            if(result[0] > 0){
-                res.send({success: true, data: null, code: 200});
-            }else{
-                res.send({success: false, data: null, code: 200, msg: '找不到闪屏id'})
-            }
-        })
-    }
-});
+// router.get('/splash/delete', function(req, res, next){
+//     console.log(req.query.id);
+//     var aid = req.query.id;
+//     if(!id){
+//         res.send({success: false, data: null, code: 400, msg: '缺少闪屏id'});
+//     }else{
+//         models.switch_activity_splash.delete({where: {id: id}}).then(function(result){
+//             if(result[0] > 0){
+//                 res.send({success: true, data: null, code: 200});
+//             }else{
+//                 res.send({success: false, data: null, code: 200, msg: '找不到闪屏id'})
+//             }
+//         })
+//     }
+// });
 
 module.exports = router;

@@ -203,7 +203,7 @@ define(function(require, exports, module) {
         // 删除闪屏
         table_splash_tbody.on('click', '.del_splash', function() {
             $.ajax({
-                url: '/api/v1/splash/delete?id=' + $(this).attr('data-id'),
+                url: '/del_splash?id=' + $(this).attr('data-id'),
                 success: function(res) {
                     console.log(res);
                     $('.del_success').show();
