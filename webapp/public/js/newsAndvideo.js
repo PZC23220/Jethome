@@ -168,7 +168,7 @@ define(function(require, exports, module) {
         function searchNews() {
             var commentCount = $('.commentCount');
             var nid = news_id.val();
-            var tit = news_title.val();
+            var tit = news_title.val().replace(/\s/g,"");
             if (nid) {
                 table_comment_tbody.empty();
                 getSinglenews(nid);
@@ -323,7 +323,7 @@ define(function(require, exports, module) {
         function searchNews() {
             var commentCount = $('.commentCount');
             var nid = $('.news_id').val();
-            var tit = $('.news_title').val();
+            var tit = $('.news_title').val().replace(/\s/g,"");
             var news_category = $('#news_category').val();
             if (nid) {
                 table_comment_tbody.empty();
