@@ -444,8 +444,6 @@ define(function(require, exports, module) {
                             var td1 = $('<td/>').html(i + 1).appendTo(tr);
                             var td2 = $('<td/>').html(list.vid).addClass('videoid').attr('data-id', list.videoId).appendTo(tr);
                             var td3 = $('<td/>').html(list.title).addClass('videotitle').appendTo(tr);
-                            var td4 = $('<td/>').html(list.commentCount).addClass('commentCount').appendTo(tr);
-                            var td5 = $('<td/>').html('0').addClass('pComments').attr('data-id', list.id).appendTo(tr);
                             var td6 = $('<td/>').addClass('comment').attr('data-newsInfo', JSON.stringify(list));
                             var a = $('<a/>').attr('href', '#').html('评论').appendTo(td6);
                             td6.appendTo(tr);
@@ -683,10 +681,8 @@ define(function(require, exports, module) {
             for (var i = 0; i < list.length; i++) {
                 var tr = $('<tr/>');
                 var td1 = $('<td/>').html(j++).appendTo(tr);
-                var td2 = $('<td/>').html(list[i].aid).addClass('videoid').attr('data-id', list[i].aid).appendTo(tr);
+                var td2 = $('<td/>').html(list[i].id).addClass('videoid').attr('data-id', list[i].aid).appendTo(tr);
                 var td3 = $('<td/>').html(list[i].title).addClass('title').appendTo(tr);
-                var td4 = $('<td/>').html(list[i].commentCount).addClass('commentCount').appendTo(tr);
-                var td5 = $('<td/>').html('0').addClass('pComments').attr('data-id', list[i].id).appendTo(tr);
                 var td6 = $('<td/>').addClass('comment').attr('data-newsInfo', JSON.stringify(list[i]));
                 var a = $('<a/>').attr('href', '#').html('评论').appendTo(td6);
                 td6.appendTo(tr);
@@ -938,7 +934,6 @@ define(function(require, exports, module) {
             };
             var postBean = {
                 'aid': newsInfo.id,
-                'atime': newsInfo.publishTime,
                 'cid': newsInfo.cid,
                 'uid': userInfo.id,
                 'content': content,
@@ -950,6 +945,11 @@ define(function(require, exports, module) {
                 'url': 'https://youtube.com/watch?v=' + newsInfo.videoId,
                 'imgUrl': newsInfo.imgs
             };
+            if (newsInfo.publishTime) {
+                postBean.atime = newsInfo.publishTime;
+            } else if (newsInfo.publish_time) {
+                postBean.atime = newsInfo.publish_time;
+            }
             if (reference) {
                 postBean.reference = reference;
             }

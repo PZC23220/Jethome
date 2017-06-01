@@ -172,12 +172,19 @@ router.get('/sel_push', function(request, response) {
 
 // 查看推送日志
 router.get('/push_log', function(request, response) {
-    var sql = "SELECT * from pushLog";
+    var sql = "SELECT * from pushLog order by id desc";
     select(sql, request, response);
 });
 // 搜索推送日志
 router.get('/push_log_news', function(request, response) {
-    var sql = "SELECT * from pushLog where aid = " + request.query.aid;
+    if(request.query.aid) {
+        var sql = "SELECT * from pushLog where aid = " + request.query.aid + " order by id desc";
+    } else if (request.query.pushType) {
+        var sql = "SELECT * from pushLog where pushType = " + request.query.pushType + " order by id desc";
+    } else {
+        var sql = "SELECT * from pushLog order by id desc";
+    }
+    
     select(sql, request, response);
 });
 // 闪屏配置获取
@@ -450,9 +457,9 @@ router.get('/select_gif', function(request, response) {
 // 获取视频
 router.get('/select_video', function(request, response) {
     if(request.query.aid && request.query.aid != '') {
-        var sql = "select aid, title from video_site_top where aid = "+ request.query.aid;
+        var sql = "select * from material_video where id = "+ request.query.aid;
     }else {
-        var sql = "select aid, title from video_site_top order by id desc limit "+ request.query.start+ ", "+ request.query.rows;
+        var sql = "select * from material_video order by id desc limit "+ request.query.start+ ", "+ request.query.rows;
     }
     console.log(sql)
     select(sql, request, response);
